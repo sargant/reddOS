@@ -1,0 +1,36 @@
+.reddos-topmenu {
+	background-color: #CEE3F8;
+}
+
+.reddos-topmenu-buttongroup {
+	padding: 10px 15px 10px 10px;
+}
+
+.reddos-topmenu-divider {
+	margin: 10px 15px 0 25px;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+}
+
+.reddos-topmenu-subreddit-button {
+	background-color: white;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	padding: 7px 15px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+
+.reddos-topmenu-subreddit-button-down {
+	color: #FF4500;
+	background-color: #DDDDDD;
+}
+
+
+.reddos-topmenu-subreddit-button-loading {
+	text-align: center;
+	color: #666666;
+}

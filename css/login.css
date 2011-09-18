@@ -1,0 +1,16 @@
+.reddos-login-popup {
+	width: 600px;
+}
+
+.reddos-login-title {
+	font-weight: bold;
+	text-align: center;
+}
+
+.reddos-login-message {
+	color: #cc0000;
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+	margin: 8px 0 4px 0;
+}

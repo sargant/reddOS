@@ -1,0 +1,12 @@
+.reddos-subreddit {
+	background-color: white;
+}
+
+.reddos-subreddit-item {
+	border: 0;
+	font-size: 16px;
+}
+
+.reddos-subreddit-item-title {
+	font-weight: bold;
+}

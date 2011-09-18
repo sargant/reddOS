@@ -1,0 +1,10 @@
+{
+  "id": "com.sargant.reddos",
+  "version": "0.0.3",
+  "vendor": "Robert Sargant",
+  "type": "web",
+  "main": "index.html",
+  "icon": "icon.png",
+  "title": "reddOS",
+  "uiRevision": "2"
+}

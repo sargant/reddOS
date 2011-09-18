@@ -1,0 +1,11 @@
+.reddos-header-bar {
+	height: 56px;
+	font-size: 18px;
+	padding-right: 12px;
+	padding-left: 12px;
+	
+	background-color: #CEE3F8;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#cee3f8), color-stop(100%,#679ed2));
+	border: 0px solid #04396c;
+	border-bottom-width: 2px;
+}
