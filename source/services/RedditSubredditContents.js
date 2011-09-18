@@ -57,7 +57,6 @@ enyo.kind({
 	},
 	
 	reset: function() {
-		this.currentSubreddit = "/";
 		this.loadedStories = [];
 		this.loadedStoryHashes = [];
 	},

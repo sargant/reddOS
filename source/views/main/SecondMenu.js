@@ -8,8 +8,6 @@ enyo.kind({
 		this.addClass("reddos-secondmenu");
 	},
 	
-	subredditContentsCache: [],
-	
 	/***************************************************************************
 	 * Published Items
 	 */
@@ -23,16 +21,6 @@ enyo.kind({
 	 */
 	
 	components: [
-	
-		{name: "subredditContentsService",
-			kind: "reddOS.service.RedditSubredditContents",
-			onSuccess: "incomingSubredditContents",
-			onFailure: "incomingSubredditContents",
-		},
-		
-		//
-		// UI
-		//
 		
 		{kind: "enyo.Toolbar", 
 			className: "reddos-toolbar",
@@ -69,7 +57,9 @@ enyo.kind({
 				// Subreddit view
 				
 				{name: "secondMenuSubreddit",
-					kind: "reddOS.view.MainSecondSubreddit"},
+					kind: "reddOS.view.MainSecondSubreddit",
+					onReady: "subredditViewReady",
+				},
 			],
 		},
 		
@@ -83,39 +73,36 @@ enyo.kind({
 				
 				{kind: "enyo.Spacer"},
 			
-				{kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png"},
+				{kind: "enyo.ToolButton", 
+					icon: "images/menu-icon-refresh.png",
+					onclick: "refresh",
+				},
 			]
 		},
 	],
 		
+	/***************************************************************************
+	 * Methods
+	 */
+		
 	loadSubreddit: function(inSender) {
+		this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
 		this.$.secondMenuTitle.setContent(inSender.caption);
-		this.$.subredditContentsService.setSubreddit(inSender.subreddit);
-		this.$.subredditContentsService.loadStories();
+		this.$.secondMenuSubreddit.loadSubreddit(inSender.subreddit);
 	},
 	
-	loadSubredditMore: function() {
-		this.$.subredditContentsService.loadStories();
-	},
-	
-	incomingSubredditContents: function(inSender, inData) {
-		this.subredditContentsCache = inData;
-		this.$.subredditContents.render();
-	},
-	
-	subredditContentsRender: function(inSender, inIndex) {
+	refresh: function() {
 		
-		var r = this.subredditContentsCache[inIndex];
+		var currentView = this.$.secondMenuContent.getView();
 		
-		if (r) {
-			this.$.subredditContents.setStyle("border: 0");
-			if(inIndex % 2 == 1) { this.$.subredditSingleItem.setStyle("border:0; background-color: #eee"); }
-			this.$.postTitle.setContent(r.title);
-			this.$.postWhen.setContent("<b>"+r.score+"</b> posted "+reddOS_Date.timeSince(r.created_utc)+" ago");
-			this.$.postWhoWhere.setContent("Posted by "+r.author+" to "+r.subreddit);
-			this.$.commentCount.setCaption(r.num_comments);
-			return true;
+		if(typeof currentView.refresh == "function") {
+			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
+			currentView.refresh();
 		}
-		return false;
 	},
+	
+	subredditViewReady: function() {
+		this.$.secondMenuContent.selectView(this.$.secondMenuSubreddit);
+	},
+
 })
