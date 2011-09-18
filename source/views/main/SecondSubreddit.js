@@ -88,6 +88,7 @@ enyo.kind({
 	 */
 	
 	loadSubreddit: function(subredditName) {
+		this.setScrollTop(0);
 		this.$.subredditContentsService.setSubreddit(subredditName);
 		this.$.subredditContentsService.loadStories();
 	},
@@ -97,6 +98,7 @@ enyo.kind({
 	},
 	
 	refresh: function() {
+		this.setScrollTop(0);
 		this.$.subredditContentsService.reset();
 		this.$.subredditContentsService.loadStories();
 	},
