@@ -7,6 +7,11 @@ enyo.kind({
 	
 	subredditContentsCache: [],
 	
+	moreButtonCaptions: {
+		ok: "Tap to load more...",
+		loading: "Loading...",
+	},
+	
 	/***************************************************************************
 	 * Published Items
 	 */
@@ -14,6 +19,7 @@ enyo.kind({
 	events: {
 		onReady: "",
 	},
+
 	
 	/***************************************************************************
 	 * Components
@@ -77,7 +83,7 @@ enyo.kind({
 			
 		{name: "loadMoreStoriesButton", 
 			kind: "enyo.CustomButton", 
-			caption: "Tap to load more...", 
+			caption: "",
 			onclick: "loadSubredditMore",
 			style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center"
 		},
@@ -94,6 +100,7 @@ enyo.kind({
 	},
 	
 	loadSubredditMore: function() {
+		this.$.loadMoreStoriesButton.setCaption(this.moreButtonCaptions.loading);
 		this.$.subredditContentsService.loadStories();
 	},
 	
@@ -106,6 +113,7 @@ enyo.kind({
 	incomingSubredditContents: function(inSender, inData) {
 		this.subredditContentsCache = inData;
 		this.$.subredditContents.render();
+		this.$.loadMoreStoriesButton.setCaption(this.moreButtonCaptions.ok);
 		this.doReady();
 	},
 	
