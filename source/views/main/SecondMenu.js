@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.MainSubreddit",
+	name: "reddOS.view.MainSecondMenu",
 	kind: "VFlexBox",
 	
 	create: function() {

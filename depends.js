@@ -19,7 +19,7 @@ enyo.depends(
 	"source/views/main/Login.js",
 	"source/views/main/HeaderBar.js",
 	"source/views/main/TopMenu.js",
-	"source/views/main/Subreddit.js",
+	"source/views/main/SecondMenu.js",
 	"source/views/main/StoryViewer.js",
 	"source/views/Main.js"
 	

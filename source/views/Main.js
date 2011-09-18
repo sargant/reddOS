@@ -73,8 +73,8 @@ enyo.kind({
 			
 			{dragAnywhere: false, width: "350px", components: [
 				
-				{name: "paneSubredditListing",
-					kind: "reddOS.view.MainSubreddit", 
+				{name: "paneSecondMenu",
+					kind: "reddOS.view.MainSecondMenu", 
 					flex: 1, 
 					onSubredditStoryLoad: "subredditStoryLoad"
 				}
@@ -153,6 +153,6 @@ enyo.kind({
 	//
 	
 	subredditSelect: function(inSender, subredditButton) {
-		this.$.paneSubredditListing.loadSubreddit(subredditButton);
+		this.$.paneSecondMenu.loadSubreddit(subredditButton);
 	},
 })
