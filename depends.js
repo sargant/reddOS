@@ -3,8 +3,8 @@ enyo.depends(
 	"css/global.css",
 	"css/headerbar.css",
 	"css/login.css",
+	"css/secondmenu.css",
 	"css/storyviewer.css",
-	"css/subreddit.css",
 	"css/topmenu.css",
 	
 	"source/utilities/Date.js",

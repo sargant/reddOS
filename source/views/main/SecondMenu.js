@@ -5,7 +5,7 @@ enyo.kind({
 	
 	create: function() {
 		this.inherited(arguments);
-		this.addClass("reddos-subreddit");
+		this.addClass("reddos-secondmenu");
 	},
 	
 	subredditContentsCache: [],
@@ -37,7 +37,7 @@ enyo.kind({
 		{kind: "enyo.Toolbar", 
 			className: "reddos-toolbar",
 			components: [
-				{name: "subredditTitle", 
+				{name: "secondMenuTitle", 
 					kind: "enyo.HtmlContent", 
 					style: "color: white; font-weight: bold"
 				},
@@ -118,7 +118,7 @@ enyo.kind({
 	],
 		
 	loadSubreddit: function(inSender) {
-		this.$.subredditTitle.setContent(inSender.caption);
+		this.$.secondMenuTitle.setContent(inSender.caption);
 		this.$.subredditContentsService.setSubreddit(inSender.subreddit);
 		this.$.subredditContentsService.loadStories();
 	},
@@ -134,10 +134,7 @@ enyo.kind({
 	
 	subredditContentsRender: function(inSender, inIndex) {
 		
-		var i = inIndex;
 		var r = this.subredditContentsCache[inIndex];
-		
-		var z = 42;
 		
 		if (r) {
 			this.$.subredditContents.setStyle("border: 0");
