@@ -130,7 +130,7 @@ enyo.kind({
 		
 		if (r) {
 			this.$.subredditContents.setStyle("border: 0");
-			if(inIndex % 2 == 1) { this.$.subredditSingleItem.setStyle("border:0; background-color: #eee"); }
+			if(inIndex % 2 == 1) { this.$.subredditSingleItem.addClass("reddos-subreddit-item-odd"); }
 			this.$.postTitle.setContent(r.title);
 			this.$.postDomain.setContent(r.domain);
 			this.$.postWhen.setContent("<span class=\"reddos-subreddit-item-score\">"+r.score+"</span> posted "+reddOS_Date.timeSince(r.created_utc)+" ago");

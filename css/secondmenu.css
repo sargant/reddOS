@@ -7,6 +7,10 @@
 	font-size: 14px;
 }
 
+.reddos-subreddit-item-odd {
+	background-color: #E4F0FC;
+}
+
 .reddos-subreddit-item-title {
 	font-weight: bold;
 	font-size: 15px;
