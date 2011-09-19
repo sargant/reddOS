@@ -77,14 +77,17 @@ enyo.kind({
 								},
 							],
 						},
+
+						{kind: "VFlexBox", components: [
 								
-						{name: "commentCount", 
-							kind: "enyo.CustomButton", 
-							className: "reddos-subreddit-item-commentbutton",
-							cssNamespace: "reddos-subreddit-item-commentbutton",
-							content: "0", 
-							onclick: "subredditStoryCommentClick"
-						},
+							{name: "commentCount", 
+								kind: "enyo.CustomButton", 
+								className: "reddos-subreddit-item-commentbutton",
+								cssNamespace: "reddos-subreddit-item-commentbutton",
+								content: "0", 
+								onclick: "subredditStoryCommentClick"
+							}
+						]},
 					],
 				},
 			],
