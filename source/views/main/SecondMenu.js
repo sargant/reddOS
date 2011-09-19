@@ -40,17 +40,45 @@ enyo.kind({
 			
 				// Simple plain view
 				
-				{name: "secondMenuPlain"}, 
+				{name: "secondMenuPlain",
+                    layoutKind: "VFlexLayout",
+                    pack: "end",
+                    components: [
+                        {kind: "enyo.Toolbar",
+                            className: "reddos-toolbar",
+                            components: [
+			
+                                {kind: "enyo.GrabButton",
+                                    slidingHandler: true
+                                },
+                            ]
+                        },
+                    ],
+                },
 				
 				// Loading view
 				
 				{name: "secondMenuLoading", 
-					layoutKind: "VFlexLayout", 
-					flex: 1, 
-					pack: "center", 
-					align: "center", 
+					layoutKind: "VFlexLayout",
+                    pack: "end",
 					components: [
-						{kind: "enyo.SpinnerLarge", showing: true},
+						{kind: "enyo.VFlexBox",
+                            flex: 1,
+                            pack: "center",
+                            align: "center",
+                            components: [
+                                {kind: "enyo.SpinnerLarge", showing: true},
+                            ]
+                        },
+                        {kind: "enyo.Toolbar",
+                            className: "reddos-toolbar",
+                            components: [
+			
+                                {kind: "enyo.GrabButton",
+                                    slidingHandler: true
+                                },
+                            ]
+                        },
 					]
 				},
 				
@@ -61,27 +89,6 @@ enyo.kind({
 					onReady: "subredditViewReady",
 				},
 			],
-		},
-		
-		{kind: "enyo.Toolbar",
-			className: "reddos-toolbar",
-			components: [
-			
-				{kind: "enyo.GrabButton",
-					slidingHandler: true
-				},
-				
-				{kind: "enyo.Spacer"},
-				
-				{kind: "enyo.ToolButton", 
-					icon: "images/menu-icon-share.png",
-				},
-			
-				{kind: "enyo.ToolButton", 
-					icon: "images/menu-icon-refresh.png",
-					onclick: "refresh",
-				},
-			]
 		},
 	],
 		

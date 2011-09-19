@@ -102,6 +102,27 @@ enyo.kind({
                 style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center"
             },
         ]},
+        
+        {kind: "enyo.Toolbar",
+			className: "reddos-toolbar",
+			components: [
+			
+				{kind: "enyo.GrabButton",
+					slidingHandler: true
+				},
+				
+				{kind: "enyo.Spacer"},
+				
+				{kind: "enyo.ToolButton", 
+					icon: "images/menu-icon-share.png",
+				},
+			
+				{kind: "enyo.ToolButton", 
+					icon: "images/menu-icon-refresh.png",
+					onclick: "refresh",
+				},
+			]
+		},
 	],
 		
 	/***************************************************************************
