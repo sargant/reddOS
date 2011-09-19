@@ -18,6 +18,7 @@ enyo.kind({
 	
 	events: {
 		onReady: "",
+		onNotReady: "",
 	},
 
 	
@@ -142,7 +143,8 @@ enyo.kind({
 	},
 	
 	refresh: function() {
-		this.setScrollTop(0);
+		this.$.subredditScroller.setScrollTop(0);
+		this.doNotReady();
 		this.$.subredditContentsService.reset();
 		this.$.subredditContentsService.loadStories();
 	},

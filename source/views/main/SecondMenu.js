@@ -87,6 +87,7 @@ enyo.kind({
 				{name: "secondMenuSubreddit",
 					kind: "reddOS.view.MainSecondSubreddit",
 					onReady: "subredditViewReady",
+					onNotReady: "notReady",
 				},
 			],
 		},
@@ -110,6 +111,10 @@ enyo.kind({
 			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
 			currentView.refresh();
 		}
+	},
+    
+	notReady: function() {
+		this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
 	},
 	
 	subredditViewReady: function() {
