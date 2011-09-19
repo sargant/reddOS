@@ -59,6 +59,11 @@ enyo.kind({
 									allowHtml: true,
 								},
 								
+								{name: "postDomain",
+									className: "reddos-subreddit-item-domain",
+									allowHtml: true,
+								},
+								
 								{name: "postWhen",
 									className: "reddos-subreddit-item-date",
 									allowHtml: true,
@@ -127,7 +132,8 @@ enyo.kind({
 			this.$.subredditContents.setStyle("border: 0");
 			if(inIndex % 2 == 1) { this.$.subredditSingleItem.setStyle("border:0; background-color: #eee"); }
 			this.$.postTitle.setContent(r.title);
-			this.$.postWhen.setContent("<b>"+r.score+"</b> posted "+reddOS_Date.timeSince(r.created_utc)+" ago");
+			this.$.postDomain.setContent(r.domain);
+			this.$.postWhen.setContent("<span class=\"reddos-subreddit-item-score\">"+r.score+"</span> posted "+reddOS_Date.timeSince(r.created_utc)+" ago");
 			this.$.postWhoWhere.setContent("Posted by "+r.author+" to "+r.subreddit);
 			this.$.commentCount.setCaption(r.num_comments);
 			return true;

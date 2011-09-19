@@ -4,17 +4,24 @@
 
 .reddos-subreddit-item {
 	border: 0;
-	font-size: 15px;
+	font-size: 14px;
 }
 
 .reddos-subreddit-item-title {
 	font-weight: bold;
+	font-size: 15px;
+}
+
+.reddos-subreddit-item-score {
+	font-weight: bold;
+	color: #FF4500;
 }
 
 .reddos-subreddit-item-commentbutton {
 	background-color: #679ED2;
 	color: white;
 	padding: 6px 30px 7px 6px;
+	margin-left: 5px;
 	border-radius: 4px;
 	font-weight: bold;
 	background-image: url("../images/solid-icon-conversation.png");

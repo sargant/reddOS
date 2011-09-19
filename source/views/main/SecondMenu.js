@@ -72,6 +72,10 @@ enyo.kind({
 				},
 				
 				{kind: "enyo.Spacer"},
+				
+				{kind: "enyo.ToolButton", 
+					icon: "images/menu-icon-share.png",
+				},
 			
 				{kind: "enyo.ToolButton", 
 					icon: "images/menu-icon-refresh.png",
