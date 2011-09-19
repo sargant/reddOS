@@ -16,9 +16,30 @@
 	font-size: 15px;
 }
 
+.reddos-subreddit-item-domain,
+.reddos-subreddit-item-date,
+.reddos-subreddit-item-user {
+	margin-bottom: 2px;
+}
+
+.reddos-subreddit-item-domain {
+	color: #04396C;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
 .reddos-subreddit-item-score {
 	font-weight: bold;
 	color: #FF4500;
+}
+
+
+.reddos-subreddit-item-held {
+	background-color: #DDDDDD;
+}
+
+.reddos-subreddit-item-held .reddos-subreddit-item-title {
+	color: #04396C;
 }
 
 .reddos-subreddit-item-commentbutton {

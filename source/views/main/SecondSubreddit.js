@@ -45,7 +45,9 @@ enyo.kind({
 				{name: "subredditSingleItem", 
 					kind: "enyo.Item",
 					className: "reddos-subreddit-item",
-					layoutKind: "HFlexLayout", 
+					cssNamespace: "reddos-subreddit-item",
+					tapHighlight: true,
+					layoutKind: "HFlexLayout",
 					align: "start", 
 					components: [
 						
