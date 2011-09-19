@@ -87,6 +87,7 @@ enyo.kind({
                                     className: "reddos-subreddit-item-commentbutton",
                                     cssNamespace: "reddos-subreddit-item-commentbutton",
                                     content: "0", 
+                                    allowDrag: true,
                                     onclick: "subredditStoryCommentClick"
                                 }
                             ]},
