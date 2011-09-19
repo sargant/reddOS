@@ -72,7 +72,9 @@ enyo.kind({
 						},
 								
 						{name: "commentCount", 
-							kind: "enyo.Button", 
+							kind: "enyo.CustomButton", 
+							className: "reddos-subreddit-item-commentbutton",
+							cssNamespace: "reddos-subreddit-item-commentbutton",
 							content: "0", 
 							onclick: "subredditStoryCommentClick"
 						},

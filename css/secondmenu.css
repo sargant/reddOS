@@ -10,3 +10,18 @@
 .reddos-subreddit-item-title {
 	font-weight: bold;
 }
+
+.reddos-subreddit-item-commentbutton {
+	background-color: #679ED2;
+	color: white;
+	padding: 6px 30px 7px 6px;
+	border-radius: 4px;
+	font-weight: bold;
+	background-image: url("../images/solid-icon-conversation.png");
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.reddos-subreddit-item-commentbutton-down {
+	background-color: #FF4500;
+}
