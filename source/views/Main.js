@@ -59,6 +59,7 @@ enyo.kind({
 			onRequestRefresh: "refreshUserInfo",
 		},
 		
+		
 		{kind: "SlidingPane", flex: 1, components: [
 			
 			{dragAnywhere: false, width: "250px", components: [

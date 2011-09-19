@@ -28,12 +28,14 @@ enyo.kind({
 				components: [
 				
 					{kind: "reddOS.component.SubredditButton",
+						className: "reddos-topmenu-subreddit-button-first",
 						onclick: "clickSubredditSelect",
 						content: "Front Page",
 						subreddit: "/",
 					},
 					
 					{kind: "reddOS.component.SubredditButton",
+						className: "reddos-topmenu-subreddit-button-last",
 						onclick: "clickSubredditSelect",
 						content: "All Subreddits",
 						subreddit: "/r/all",
@@ -47,7 +49,7 @@ enyo.kind({
 				className: "reddos-topmenu-buttongroup", 
 				components: [
 					{kind: "reddOS.component.SubredditButton",
-						className: "reddos-topmenu-subreddit-button-loading",
+						className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-first reddos-topmenu-subreddit-button-last",
 						content: "Loading...",
 					},
 				]
@@ -66,13 +68,23 @@ enyo.kind({
 		
 		for(var i in inSubredditData) {
 			
-			c.createComponent({
+			var temp =	{
 				owner: this,
 				onclick: "clickSubredditSelect", 
 				kind: "reddOS.component.SubredditButton",
 				content: inSubredditData[i].display_name,
 				subreddit: inSubredditData[i].url,
-			});
+			};
+			
+			if(i == 0) {
+				temp.className = "reddos-topmenu-subreddit-button-first";
+			}
+			
+			if(i == (inSubredditData.length - 1)) {
+				temp.className = "reddos-topmenu-subreddit-button-last";
+			}
+			
+			c.createComponent(temp);
 			
 		}
 		
