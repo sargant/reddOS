@@ -1,7 +1,7 @@
 enyo.kind({
 	
 	name: "reddOS.view.MainSecondSubreddit",
-	kind: "enyo.Scroller", 
+	kind: "enyo.VFlexBox", 
 	
 	flex: 1, 
 	
@@ -36,69 +36,72 @@ enyo.kind({
 		//
 		// UI
 		//
+        
+        {kind: "enyo.Scroller", name: "subredditScroller", flex: 1, components: [
 		
-		{name: "subredditContents", 
-			kind: "VirtualRepeater", 
-			onSetupRow: "subredditContentsRender",
-			components: [
-				
-				{name: "subredditSingleItem", 
-					kind: "enyo.Item",
-					className: "reddos-subreddit-item",
-					cssNamespace: "reddos-subreddit-item",
-					tapHighlight: true,
-					layoutKind: "HFlexLayout",
-					align: "start", 
-					components: [
-						
-						{kind: "VFlexBox", 
-							flex: 1, 
-							onclick: "subredditStoryItemClick",
-							components: [
-							
-								{name: "postTitle", 
-									className: "reddos-subreddit-item-title",
-									allowHtml: true,
-								},
-								
-								{name: "postDomain",
-									className: "reddos-subreddit-item-domain",
-									allowHtml: true,
-								},
-								
-								{name: "postWhen",
-									className: "reddos-subreddit-item-date",
-									allowHtml: true,
-								},
-								
-								{name: "postWhoWhere", 
-									className: "reddos-subreddit-item-user",
-									allowHtml: true, 
-								},
-							],
-						},
+            {name: "subredditContents", 
+                kind: "VirtualRepeater", 
+                onSetupRow: "subredditContentsRender",
+                components: [
+                    
+                    {name: "subredditSingleItem", 
+                        kind: "enyo.Item",
+                        className: "reddos-subreddit-item",
+                        cssNamespace: "reddos-subreddit-item",
+                        tapHighlight: true,
+                        layoutKind: "HFlexLayout",
+                        align: "start", 
+                        components: [
+                            
+                            {kind: "VFlexBox", 
+                                flex: 1, 
+                                onclick: "subredditStoryItemClick",
+                                components: [
+                                
+                                    {name: "postTitle", 
+                                        className: "reddos-subreddit-item-title",
+                                        allowHtml: true,
+                                    },
+                                    
+                                    {name: "postDomain",
+                                        className: "reddos-subreddit-item-domain",
+                                        allowHtml: true,
+                                    },
+                                    
+                                    {name: "postWhen",
+                                        className: "reddos-subreddit-item-date",
+                                        allowHtml: true,
+                                    },
+                                    
+                                    {name: "postWhoWhere", 
+                                        className: "reddos-subreddit-item-user",
+                                        allowHtml: true, 
+                                    },
+                                ],
+                            },
 
-						{kind: "VFlexBox", components: [
+                            {kind: "VFlexBox", components: [
 								
-							{name: "commentCount", 
-								kind: "enyo.CustomButton", 
-								className: "reddos-subreddit-item-commentbutton",
-								cssNamespace: "reddos-subreddit-item-commentbutton",
-								content: "0", 
-								onclick: "subredditStoryCommentClick"
-							}
-						]},
-					],
-				},
-			],
-		},
+                                {name: "commentCount", 
+                                    kind: "enyo.CustomButton", 
+                                    className: "reddos-subreddit-item-commentbutton",
+                                    cssNamespace: "reddos-subreddit-item-commentbutton",
+                                    content: "0", 
+                                    onclick: "subredditStoryCommentClick"
+                                }
+                            ]},
+                        ],
+                    },
+                ],
+            },
 			
-		{name: "loadMoreStoriesButton", 
-			kind: "enyo.CustomButton", 
-			caption: "",
-			onclick: "loadSubredditMore",
-			style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center"
-		},
+            {name: "loadMoreStoriesButton", 
+                kind: "enyo.CustomButton", 
+                caption: "",
+                onclick: "loadSubredditMore",
+                style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center"
+            },
+        ]},
 	],
 		
 	/***************************************************************************
@@ -106,7 +109,7 @@ enyo.kind({
 	 */
 	
 	loadSubreddit: function(subredditName) {
-		this.setScrollTop(0);
+		this.$.subredditScroller.setScrollTop(0);
 		this.$.subredditContentsService.setSubreddit(subredditName);
 		this.$.subredditContentsService.loadStories();
 	},
