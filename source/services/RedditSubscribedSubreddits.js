@@ -52,7 +52,8 @@ enyo.kind({
 	
 	subscribedSubredditsWebServiceSuccess: function(inSender, inResponse, inRequest) {
 		
-		if(typeof inResponse.data.children == "undefined") {
+		if(typeof inResponse.data == "undefined" 
+            || typeof inResponse.data.children == "undefined") {
 			
 			this.doFailure();
 			
