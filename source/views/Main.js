@@ -24,12 +24,12 @@ enyo.kind({
 	},
     
     userInfoChanged: function() {
-        enyo.setCookie("userInfo", enyo.json.stringify(this.getUserInfo()));
+        localStorage.setItem("reddOS_userInfo", enyo.json.stringify(this.getUserInfo()));
     },
     
-    //subredditsChanged: function() {
-    //    enyo.setCookie("subreddits", enyo.json.stringify(this.getSubreddits()));
-    //},
+    subredditsChanged: function() {
+        localStorage.setItem("reddOS_subreddits", enyo.json.stringify(this.getSubreddits()));
+    },
 	
 	/***************************************************************************
 	 * Components
@@ -131,18 +131,18 @@ enyo.kind({
 	appEventLoad: function() {
         
         // Load cached user info, if none exists attempt a login
-        if(enyo.getCookie("userInfo") != null) {
-            this.incomingUserInfo(null, enyo.json.parse(enyo.getCookie("userInfo")));
+        if(localStorage.getItem("reddOS_userInfo") != null) {
+            this.incomingUserInfo(null, enyo.json.parse(localStorage.getItem("reddOS_userInfo")));
         } else {
             this.refreshUserInfo();
         }
 		
         // Load cached subreddit info, if none exists attempt to download a new list
-        //if(enyo.getCookie("subreddits") != null) {
-        //    this.incomingSubscribedSubreddits(null, enyo.json.parse(enyo.getCookie("subreddits")));
-        //} else {
+        if(localStorage.getItem("reddOS_subreddits") != null) {
+            this.incomingSubscribedSubreddits(null, enyo.json.parse(localStorage.getItem("reddOS_subreddits")));
+        } else {
             this.refreshSubredditInfo();
-        //}
+        }
 	},
     
     //
