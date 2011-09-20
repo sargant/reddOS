@@ -36,6 +36,14 @@ enyo.kind({
 		//
 		// Services
 		//
+        
+        {name: "authService",
+			kind: "reddOS.service.RedditAuthentication",
+			onLoginSuccess: "authLoginSuccess",
+			onLoginFailure: "authLoginFailure",
+            onLogoutSuccess: "authLogoutSuccess",
+            onLogoutFailure: "authLogoutFailure",
+		},
 	
 		{name: "userInfoService",
 			kind: "reddOS.service.RedditUserInformation",
@@ -55,7 +63,7 @@ enyo.kind({
         
 		{name: "loginPopup",
 			kind: "reddOS.view.main.popup.Login", 
-			onSuccessfulLogin: "loginPopupSuccess",
+			onLoginRequest: "authLoginRequest",
 		},
 		
 		//
@@ -65,6 +73,7 @@ enyo.kind({
 		{name: "headerBar",
 			kind: "reddOS.view.main.HeaderBar",
             onRequestLogin: "openLoginPopup",
+            onRequestLogout: "authLogoutRequest",
 		},
 		
 		
@@ -124,14 +133,43 @@ enyo.kind({
         this.$.loginPopup.openAtCenter();
     },
     
-    loginPopupSuccess: function() {
-		this.$.headerBar.setNotReady();
-		this.refreshUserInfo();
+    //
+    // Authentication Callbacks
+    //
+    
+    authLoginRequest: function(inSender, username, password) {
+        this.$.authService.doLogin(username, password);
+    },
+    
+    authLoginSuccess: function() {
+        this.$.loginPopup.dismiss();
+        this.$.headerBar.setNotReady();
+        this.refreshUserInfo();
         this.refreshSubredditInfo();
+    },
+    
+    authLoginFailure: function(inSender, message) {
+        this.$.loginPopup.loginFailure(message);
+    },
+    
+    authLogoutRequest: function() {
+        if(typeof this.getUserInfo().modhash != "undefined") {
+            this.$.headerBar.setNotReady();
+            this.$.authService.doLogout(this.getUserInfo().modhash);
+        }
+    },
+    
+    authLogoutSuccess: function() {
+        this.setUserInfo(null);
+        this.$.headerBar.refreshUserData(this.getUserInfo());
+    },
+    
+    authLogoutFailure: function() {
+        this.$.headerBar.refreshUserData(this.getUserInfo());
     },
 		
 	// 
-	// User Info
+	// User Info Callbacks
 	//
 	
 	refreshUserInfo: function() {
@@ -151,7 +189,7 @@ enyo.kind({
 	},
 	
 	//
-	// Subreddit Info
+	// Subscribed Subreddits Callbacks
 	//
 	
 	refreshSubredditInfo: function() {

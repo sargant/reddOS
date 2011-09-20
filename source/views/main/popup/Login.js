@@ -19,7 +19,7 @@ enyo.kind({
 	 */
 	
 	events: {
-		onSuccessfulLogin: "",
+		onLoginRequest: "",
 	},
 	
 	/***************************************************************************
@@ -27,22 +27,10 @@ enyo.kind({
 	 */
 	
 	components: [
-	
-		{name: "authService", 
-			kind: "reddOS.service.RedditAuthentication",
-			onLoginSuccess: "loginSuccess", 
-			onLoginFailure: "loginFailure",
-		},
 		
 		{name: "loginPopupTitle", 
 			className: "reddos-login-title",
 			content: "Login to Reddit",
-		},
-		
-		{name: "loginMessage", 
-			className: "reddos-login-message", 
-			allowHtml: true, 
-			content: "&nbsp;"
 		},
 		
 		{kind: "enyo.RowGroup", components: [
@@ -61,20 +49,26 @@ enyo.kind({
 				hint: "Password"
 			},
 		]},
+        
+		{name: "loginMessage", 
+			className: "reddos-login-message", 
+			allowHtml: true, 
+			content: "",
+		},
 		
 		{kind: "enyo.HFlexBox", components: [
-			
-			{kind: "enyo.Button", 
-				className: "enyo-button-affirmative", 
-				content: "Login", 
-				flex: 2, 
-				onclick: "submitLogin"
-			},
 			
 			{kind: "enyo.Button", 
 				content: "Cancel", 
 				flex: 1, 
 				onclick: "dismiss"
+			},
+            
+			{kind: "enyo.Button", 
+				className: "enyo-button-affirmative", 
+				content: "Login", 
+				flex: 2, 
+				onclick: "submitLogin"
 			},
 			
 		]},
@@ -87,7 +81,7 @@ enyo.kind({
 	dismiss: function () {
 		this.$.loginUsername.setValue("");
 		this.$.loginPassword.setValue("");
-		this.$.loginMessage.setContent("&nbsp;");
+		this.$.loginMessage.setContent("");
 		this.close();
 	},
 	
@@ -95,15 +89,10 @@ enyo.kind({
 		var u = this.$.loginUsername.getValue();
 		var p = this.$.loginPassword.getValue();
 		this.$.loginMessage.setContent("Checking...");
-		this.$.authService.doLogin(u,p);
+		this.doLoginRequest(u,p);
 	},
 	
-	loginSuccess: function() {
-		this.doSuccessfulLogin();
-		this.dismiss();
-	},
-	
-	loginFailure: function(inSender, errorMessage) {
+	loginFailure: function(errorMessage) {
 		this.$.loginMessage.setContent("Error: "+errorMessage);
 	},
 })
