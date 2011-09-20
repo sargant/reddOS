@@ -92,7 +92,7 @@ enyo.kind({
 				{name: "paneTopMenu", 
 					kind: "reddOS.view.main.TopMenu",
 					flex: 1, 
-					onMessageSend: "subredditSelect"
+					onObjectSend: "subredditSelect"
 				},
 				
 			]},

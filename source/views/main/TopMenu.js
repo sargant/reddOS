@@ -13,7 +13,7 @@ enyo.kind({
 	 */
 	
 	events: {
-		onMessageSend: "",
+		onObjectSend: "",
 	},
 	
 	/***************************************************************************
@@ -29,7 +29,7 @@ enyo.kind({
 				
 					{kind: "reddOS.component.SubredditButton",
 						className: "reddos-topmenu-subreddit-button-first",
-						onclick: "sendMessage",
+						onclick: "sendObject",
 						content: "Front Page",
 						subreddit: {
 							kind: reddOS_Kind.SUBREDDIT,
@@ -42,7 +42,7 @@ enyo.kind({
 					
 					{kind: "reddOS.component.SubredditButton",
 						className: "reddos-topmenu-subreddit-button-last",
-						onclick: "sendMessage",
+						onclick: "sendObject",
 						content: "All Subreddits",
 						subreddit: {
 							kind: reddOS_Kind.SUBREDDIT,
@@ -90,7 +90,7 @@ enyo.kind({
 			
 			var temp =	{
 				owner: this,
-				onclick: "sendMessage", 
+				onclick: "sendObject", 
 				kind: "reddOS.component.SubredditButton",
 				content: inSubredditData[i].data.display_name,
 				subreddit: inSubredditData[i],
@@ -112,9 +112,9 @@ enyo.kind({
 		
 	},
 	
-	sendMessage: function(inSender) {
+	sendObject: function(inSender) {
 		if(typeof inSender.subreddit != "undefined") {
-			this.doMessageSend(inSender.subreddit);
+			this.doObjectSend(inSender.subreddit);
 		}
 	},
 	
