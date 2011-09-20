@@ -45,9 +45,10 @@
 .reddos-subreddit-item-commentbutton {
 	background-color: #679ED2;
 	color: white;
-	padding: 6px 30px 7px 6px;
+	padding: 6px 31px 7px 8px;
 	margin-left: 15px;
 	border-radius: 4px;
+	font-size: 16px;
 	font-weight: bold;
 	background-image: url("../images/solid-icon-conversation.png");
 	background-repeat: no-repeat;
