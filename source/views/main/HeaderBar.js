@@ -17,8 +17,8 @@ enyo.kind({
 	 */
 	
 	events: {
-		onRequestRefresh: "",
-        onRequestLoginPopup: "",
+        onRequestLogin: "",
+        onRequestLogout: "",
 	},
 	
 	/***************************************************************************
@@ -57,7 +57,7 @@ enyo.kind({
 						},
 						
 						{kind: "Button", className: "enyo-button-dark", 
-							content:"Login", onclick: "openLoginPopup"
+							content:"Login", onclick: "login"
 						},
 					]
 				},
@@ -93,8 +93,12 @@ enyo.kind({
 	 * Methods
 	 */
     
-    openLoginPopup: function() {
-		this.doRequestLoginPopup();
+    login: function() {
+		this.doRequestLogin();
+	},
+    
+    logout: function() {
+		this.doRequestLogout();
 	},
         
     setNotReady: function() {

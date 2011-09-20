@@ -64,8 +64,7 @@ enyo.kind({
 		
 		{name: "headerBar",
 			kind: "reddOS.view.main.HeaderBar",
-            onRequestLoginPopup: "openLoginPopup",
-			onRequestRefresh: "refreshUserInfo",
+            onRequestLogin: "openLoginPopup",
 		},
 		
 		
