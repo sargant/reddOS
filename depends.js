@@ -16,12 +16,14 @@ enyo.depends(
 	"source/services/RedditSubscribedSubreddits.js",
 	"source/services/RedditUserInformation.js",
 	
-	"source/views/main/Login.js",
+	"source/views/main/popup/Login.js",
+    
 	"source/views/main/HeaderBar.js",
 	"source/views/main/TopMenu.js",
 	"source/views/main/SecondMenu.js",
 	"source/views/main/SecondSubreddit.js",
 	"source/views/main/StoryViewer.js",
+    
 	"source/views/Main.js"
 	
 );

@@ -27,7 +27,7 @@ enyo.kind({
 	components: [
 	
 		{name: "loginPopup",
-			kind: "reddOS.view.Login", 
+			kind: "reddOS.view.popup.Login", 
 			onSuccessfulLogin: "loadUserInfo"
 		},
 		
