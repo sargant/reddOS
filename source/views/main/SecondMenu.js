@@ -97,10 +97,16 @@ enyo.kind({
 	 * Methods
 	 */
 		
-	loadSubreddit: function(inSender) {
+	loadSubreddit: function(inMessage) {
+		
+		if(typeof inMessage.kind == "undefined" || reddOS_Kind.isSubreddit(inMessage.kind) == false)
+		{
+			return;
+		}
+		
 		this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
-		this.$.secondMenuTitle.setContent(inSender.caption);
-		this.$.secondMenuSubreddit.loadSubreddit(inSender.subreddit);
+		this.$.secondMenuTitle.setContent(inMessage.data.display_name);
+		this.$.secondMenuSubreddit.loadSubreddit(inMessage.data.url);
 	},
 	
 	refresh: function() {

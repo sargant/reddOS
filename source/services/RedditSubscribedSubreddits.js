@@ -62,7 +62,7 @@ enyo.kind({
 			var sS = [];
 			
 			for(var i in inResponse.data.children) {
-				sS.push(inResponse.data.children[i].data)
+				sS.push(inResponse.data.children[i])
 			}
 			
 			this.doSuccess(sS);

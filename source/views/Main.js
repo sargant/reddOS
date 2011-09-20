@@ -92,7 +92,7 @@ enyo.kind({
 				{name: "paneTopMenu", 
 					kind: "reddOS.view.main.TopMenu",
 					flex: 1, 
-					onSubredditSelect: "subredditSelect"
+					onMessageSend: "subredditSelect"
 				},
 				
 			]},
@@ -233,7 +233,15 @@ enyo.kind({
 	// Message Passing
 	//
 	
-	subredditSelect: function(inSender, subredditButton) {
-		this.$.paneSecondMenu.loadSubreddit(subredditButton);
+	subredditSelect: function(inSender, inMessage) {
+		
+		if(typeof inMessage.kind == "undefined") { return; }
+		
+		switch(inMessage.kind) {
+			
+			case reddOS_Kind.SUBREDDIT:
+				this.$.paneSecondMenu.loadSubreddit(inMessage);
+				break;
+		}
 	},
 })

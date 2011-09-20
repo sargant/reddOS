@@ -13,7 +13,7 @@ enyo.kind({
 	 */
 	
 	events: {
-		onSubredditSelect: "",
+		onMessageSend: "",
 	},
 	
 	/***************************************************************************
@@ -29,16 +29,28 @@ enyo.kind({
 				
 					{kind: "reddOS.component.SubredditButton",
 						className: "reddos-topmenu-subreddit-button-first",
-						onclick: "clickSubredditSelect",
+						onclick: "sendMessage",
 						content: "Front Page",
-						subreddit: "/",
+						subreddit: {
+							kind: reddOS_Kind.SUBREDDIT,
+							data: {
+								display_name: "Front Page",
+								url: "/",
+							}
+						},
 					},
 					
 					{kind: "reddOS.component.SubredditButton",
 						className: "reddos-topmenu-subreddit-button-last",
-						onclick: "clickSubredditSelect",
+						onclick: "sendMessage",
 						content: "All Subreddits",
-						subreddit: "/r/all",
+						subreddit: {
+							kind: reddOS_Kind.SUBREDDIT,
+							data: {
+								display_name: "All Subreddits",
+								url: "/r/all",
+							}
+						},
 					},
 				],
 			},
@@ -68,12 +80,20 @@ enyo.kind({
 		
 		for(var i in inSubredditData) {
 			
+			if (typeof inSubredditData[i].kind == "undefined"
+				|| typeof inSubredditData[i].data == "undefined"
+				|| reddOS_Kind.isSubreddit(inSubredditData[i].kind) == false
+			)
+			{
+				continue;
+			}
+			
 			var temp =	{
 				owner: this,
-				onclick: "clickSubredditSelect", 
+				onclick: "sendMessage", 
 				kind: "reddOS.component.SubredditButton",
-				content: inSubredditData[i].display_name,
-				subreddit: inSubredditData[i].url,
+				content: inSubredditData[i].data.display_name,
+				subreddit: inSubredditData[i],
 			};
 			
 			if(i == 0) {
@@ -92,8 +112,10 @@ enyo.kind({
 		
 	},
 	
-	clickSubredditSelect: function(inSender) {
-		this.doSubredditSelect(inSender);
+	sendMessage: function(inSender) {
+		if(typeof inSender.subreddit != "undefined") {
+			this.doMessageSend(inSender.subreddit);
+		}
 	},
 	
 })
