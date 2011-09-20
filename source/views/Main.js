@@ -22,6 +22,14 @@ enyo.kind({
 		userInfo: null,
 		subreddits: null,
 	},
+    
+    userInfoChanged: function() {
+        enyo.setCookie("userInfo", enyo.json.stringify(this.getUserInfo()));
+    },
+    
+    //subredditsChanged: function() {
+    //    enyo.setCookie("subreddits", enyo.json.stringify(this.getSubreddits()));
+    //},
 	
 	/***************************************************************************
 	 * Components
@@ -121,8 +129,20 @@ enyo.kind({
 	//
 		
 	appEventLoad: function() {
-		this.refreshUserInfo();
-		this.refreshSubredditInfo();
+        
+        // Load cached user info, if none exists attempt a login
+        if(enyo.getCookie("userInfo") != null) {
+            this.incomingUserInfo(null, enyo.json.parse(enyo.getCookie("userInfo")));
+        } else {
+            this.refreshUserInfo();
+        }
+		
+        // Load cached subreddit info, if none exists attempt to download a new list
+        //if(enyo.getCookie("subreddits") != null) {
+        //    this.incomingSubscribedSubreddits(null, enyo.json.parse(enyo.getCookie("subreddits")));
+        //} else {
+            this.refreshSubredditInfo();
+        //}
 	},
     
     //
