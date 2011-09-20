@@ -6,27 +6,41 @@ reddOS_Kind = {
 	MESSAGE: "t4",
 	SUBREDDIT: "t5",
 	
-	isKind: function(string, kind) {
-		return (string == kind);
+	isKind: function(a, k) {
+		
+		if(typeof a == "string") {
+			return (a == k);
+		}
+		else if(typeof a == "object") {
+			
+			if(typeof a.kind == "undefined") {
+				return false;
+			} else {
+				return (a.kind == k);
+			}
+			
+		} else {
+			return false;
+		}
 	},
 	
-	isComment: function(string) {
+	isComment: function(a) {
 		return this.isKind(string, this.COMMENT);
 	},
 	
-	isAccount: function(string) {
-		return this.isKind(string, this.ACCOUNT);
+	isAccount: function(a) {
+		return this.isKind(a, this.ACCOUNT);
 	},
 		
-	isLink: function(string) {
+	isLink: function(a) {
 		return this.isKind(string, this.LINK);
 	},
 	
-	isMessage: function(string) {
+	isMessage: function(a) {
 		return this.isKind(string, this.MESSAGE);
 	},
 	
-	isSubreddit: function(string) {
-		return this.isKind(string, this.SUBREDDIT);
+	isSubreddit: function(a) {
+		return this.isKind(a, this.SUBREDDIT);
 	},
 };

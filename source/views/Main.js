@@ -235,13 +235,11 @@ enyo.kind({
 	
 	subredditSelect: function(inSender, inMessage) {
 		
-		if(typeof inMessage.kind == "undefined") { return; }
-		
-		switch(inMessage.kind) {
+		if(reddOS_Kind.isSubreddit(inMessage)) {
 			
-			case reddOS_Kind.SUBREDDIT:
-				this.$.paneSecondMenu.loadSubreddit(inMessage);
-				break;
+			this.$.paneSecondMenu.loadSubreddit(inMessage);
+			
 		}
+		
 	},
 })

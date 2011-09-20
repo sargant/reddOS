@@ -99,14 +99,12 @@ enyo.kind({
 		
 	loadSubreddit: function(inMessage) {
 		
-		if(typeof inMessage.kind == "undefined" || reddOS_Kind.isSubreddit(inMessage.kind) == false)
-		{
-			return;
-		}
+		if(reddOS_Kind.isSubreddit(inMessage)) {
 		
-		this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
-		this.$.secondMenuTitle.setContent(inMessage.data.display_name);
-		this.$.secondMenuSubreddit.loadSubreddit(inMessage.data.url);
+			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
+			this.$.secondMenuTitle.setContent(inMessage.data.display_name);
+			this.$.secondMenuSubreddit.loadSubreddit(inMessage.data.url);
+		}
 	},
 	
 	refresh: function() {
