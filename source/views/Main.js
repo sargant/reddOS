@@ -49,13 +49,22 @@ enyo.kind({
 			onFailure: "incomingSubscribedSubreddits",
 		},
 		
+        //
+        // Popups
+        //
+        
+		{name: "loginPopup",
+			kind: "reddOS.view.main.popup.Login", 
+			onSuccessfulLogin: "loginPopupSuccess",
+		},
 		
 		//
-		// UI
+		// Main UI
 		//
 		
 		{name: "headerBar",
-			kind: "reddOS.view.main.HeaderBar", 
+			kind: "reddOS.view.main.HeaderBar",
+            onRequestLoginPopup: "openLoginPopup",
 			onRequestRefresh: "refreshUserInfo",
 		},
 		
@@ -107,6 +116,20 @@ enyo.kind({
 		this.refreshUserInfo();
 		this.refreshSubredditInfo();
 	},
+    
+    //
+    // Popup Handling
+    //
+    
+    openLoginPopup: function () {
+        this.$.loginPopup.openAtCenter();
+    },
+    
+    loginPopupSuccess: function() {
+		this.$.headerBar.setNotReady();
+		this.refreshUserInfo();
+        this.refreshSubredditInfo();
+    },
 		
 	// 
 	// User Info

@@ -18,6 +18,7 @@ enyo.kind({
 	
 	events: {
 		onRequestRefresh: "",
+        onRequestLoginPopup: "",
 	},
 	
 	/***************************************************************************
@@ -25,11 +26,6 @@ enyo.kind({
 	 */
 	
 	components: [
-	
-		{name: "loginPopup",
-			kind: "reddOS.view.main.popup.Login", 
-			onSuccessfulLogin: "loadUserInfo"
-		},
 		
 		{name: "viewTitle", 
 			content: "reddOS", 
@@ -96,15 +92,14 @@ enyo.kind({
 	/***************************************************************************
 	 * Methods
 	 */
-		
-	openLoginPopup: function() {
-		this.$.loginPopup.openAtCenter();
+    
+    openLoginPopup: function() {
+		this.doRequestLoginPopup();
 	},
-	
-	loadUserInfo: function() {
-		this.$.userStatusPane.selectView(this.$.refreshingView);
-		this.doRequestRefresh();
-	},
+        
+    setNotReady: function() {
+        this.$.userStatusPane.selectView(this.$.refreshingView);
+    },
 	
 	refreshUserData: function(inUserData) {
 		if(inUserData == null) {
