@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.MainSecondMenu",
+	name: "reddOS.view.main.SecondMenu",
 	kind: "VFlexBox",
 	
 	create: function() {
@@ -85,7 +85,7 @@ enyo.kind({
 				// Subreddit view
 				
 				{name: "secondMenuSubreddit",
-					kind: "reddOS.view.MainSecondSubreddit",
+					kind: "reddOS.view.main.SecondSubreddit",
 					onReady: "subredditViewReady",
 					onNotReady: "notReady",
 				},

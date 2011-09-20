@@ -55,7 +55,7 @@ enyo.kind({
 		//
 		
 		{name: "headerBar",
-			kind: "reddOS.view.MainHeaderBar", 
+			kind: "reddOS.view.main.HeaderBar", 
 			onRequestRefresh: "refreshUserInfo",
 		},
 		
@@ -65,7 +65,7 @@ enyo.kind({
 			{dragAnywhere: false, width: "250px", components: [
 				
 				{name: "paneTopMenu", 
-					kind: "reddOS.view.MainTopMenu",
+					kind: "reddOS.view.main.TopMenu",
 					flex: 1, 
 					onSubredditSelect: "subredditSelect"
 				},
@@ -75,7 +75,7 @@ enyo.kind({
 			{dragAnywhere: false, width: "350px", components: [
 				
 				{name: "paneSecondMenu",
-					kind: "reddOS.view.MainSecondMenu", 
+					kind: "reddOS.view.main.SecondMenu", 
 					flex: 1, 
 					onSubredditStoryLoad: "subredditStoryLoad"
 				}
@@ -86,7 +86,7 @@ enyo.kind({
 			
 				{name: "paneStoryViewer",
 					flex: 1,
-					kind: "reddOS.view.MainStoryViewer"
+					kind: "reddOS.view.main.StoryViewer"
 				}
 			
 			]},

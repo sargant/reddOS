@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.MainStoryViewer",
+	name: "reddOS.view.main.StoryViewer",
 	kind: "VFlexBox",
 	
 	create: function() {

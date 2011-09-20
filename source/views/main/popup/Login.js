@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.popup.Login", 
+	name: "reddOS.view.main.popup.Login", 
 	kind: "enyo.Popup",
 	
 	layoutKind: "VFlexLayout",

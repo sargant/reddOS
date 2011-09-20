@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.MainHeaderBar",
+	name: "reddOS.view.main.HeaderBar",
 	kind: "enyo.Control",
 	
 	layoutKind: "enyo.HFlexLayout",
@@ -27,7 +27,7 @@ enyo.kind({
 	components: [
 	
 		{name: "loginPopup",
-			kind: "reddOS.view.popup.Login", 
+			kind: "reddOS.view.main.popup.Login", 
 			onSuccessfulLogin: "loadUserInfo"
 		},
 		

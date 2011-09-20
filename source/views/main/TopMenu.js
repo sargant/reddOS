@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.MainTopMenu",
+	name: "reddOS.view.main.TopMenu",
 	kind: "enyo.VFlexBox",
 	
 	create: function() {
