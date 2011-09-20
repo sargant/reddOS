@@ -97,13 +97,13 @@ enyo.kind({
 	 * Methods
 	 */
 		
-	loadSubreddit: function(inMessage) {
+	receiveObject: function(inObject) {
 		
-		if(reddOS_Kind.isSubreddit(inMessage)) {
+		if(reddOS_Kind.isSubreddit(inObject)) {
 		
 			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
-			this.$.secondMenuTitle.setContent(inMessage.data.display_name);
-			this.$.secondMenuSubreddit.loadSubreddit(inMessage.data.url);
+			this.$.secondMenuTitle.setContent(inObject.data.display_name);
+			this.$.secondMenuSubreddit.loadSubreddit(inObject.data.url);
 		}
 	},
 	

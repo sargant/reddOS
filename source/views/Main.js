@@ -92,7 +92,7 @@ enyo.kind({
 				{name: "paneTopMenu", 
 					kind: "reddOS.view.main.TopMenu",
 					flex: 1, 
-					onObjectSend: "subredditSelect"
+					onObjectSend: "dispatchObject"
 				},
 				
 			]},
@@ -233,11 +233,11 @@ enyo.kind({
 	// Message Passing
 	//
 	
-	subredditSelect: function(inSender, inMessage) {
+	dispatchObject: function(inSender, inObject) {
 		
-		if(reddOS_Kind.isSubreddit(inMessage)) {
+		if(reddOS_Kind.isSubreddit(inObject)) {
 			
-			this.$.paneSecondMenu.loadSubreddit(inMessage);
+			this.$.paneSecondMenu.receiveObject(inObject);
 			
 		}
 		
