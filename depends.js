@@ -8,6 +8,7 @@ enyo.depends(
 	"css/topmenu.css",
 	
 	"source/utilities/Date.js",
+	"source/utilities/Kind.js",
 	
 	"source/components/SubredditButton.js",
 	
