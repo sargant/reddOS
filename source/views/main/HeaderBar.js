@@ -29,7 +29,7 @@ enyo.kind({
 		
 		{name: "viewTitle", 
 			content: "reddOS", 
-			style: "font-weight: bold"
+			className: "reddos-header-title",
 		},
 	
 		{name: "userStatusPane", 
@@ -56,8 +56,11 @@ enyo.kind({
 							style: "margin-right: 8px"
 						},
 						
-						{kind: "Button", className: "enyo-button-dark", 
-							content:"Login", onclick: "login"
+						{kind: "CustomButton", 
+                            className: "reddos-header-button", 
+                            cssNamespace: "reddos-header-button",
+							content: "Login", 
+                            onclick: "login"
 						},
 					]
 				},
@@ -80,8 +83,11 @@ enyo.kind({
 							style: "margin-right: 8px"
 						},
 						
-						{kind: "Button", className: "enyo-button-dark", 
-							content:"Logout", onclick: "logout"
+						{kind: "CustomButton", 
+                            className: "reddos-header-button", 
+                            cssNamespace: "reddos-header-button",
+							content:"Logout", 
+                            onclick: "logout"
 						},
 					]
 				},
