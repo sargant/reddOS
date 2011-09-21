@@ -5,6 +5,7 @@ enyo.kind({
 	
 	flex: 1, 
 	
+	subredditCache: null,
 	subredditContentsCache: [],
 	
 	moreButtonCaptions: {
@@ -167,6 +168,7 @@ enyo.kind({
 	
 	loadSubreddit: function(inObject) {
 		this.$.subredditScroller.setScrollTop(0);
+		this.$.subredditCache = inObject;
 		this.$.secondMenuTitle.setContent(inObject.data.display_name);
 		this.$.subredditContentsService.setSubreddit(inObject.data.url);
 		this.$.subredditContentsService.loadStories();
