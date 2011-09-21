@@ -106,10 +106,10 @@ enyo.kind({
     },
 	
 	refreshUserData: function(inUserData) {
-		if(inUserData == null) {
+		if(reddOS_Kind.isAccount(inUserData) == false) {
 			this.$.userStatusPane.selectView(this.$.loggedOutView);
 		} else {
-			this.$.loggedInUsername.setContent("Logged in as " + inUserData.name + " (" + inUserData.link_karma + ")");
+			this.$.loggedInUsername.setContent("Logged in as " + inUserData.data.name + " (" + inUserData.data.link_karma + ")");
 			this.$.userStatusPane.selectView(this.$.loggedInView);
 		}
 	},

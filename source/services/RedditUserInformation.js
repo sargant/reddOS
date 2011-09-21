@@ -51,10 +51,10 @@ enyo.kind({
 	},
 	
 	userInformationWebServiceSuccess: function(inSender, inResponse, inRequest) {
-		if(typeof inResponse.data == "undefined") {
+		if(reddOS_Kind.isAccount(inResponse) == false) {
 			this.doFailure();
 		} else {
-			this.doSuccess(inResponse.data);
+			this.doSuccess(inResponse);
 		}
 	},
 	

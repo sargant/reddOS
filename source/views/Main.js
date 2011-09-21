@@ -198,7 +198,7 @@ enyo.kind({
 	
 	incomingUserInfo: function(inSender, inUserData) {
 		
-		if(typeof inUserData == 'undefined') {
+		if(reddOS_Kind.isAccount(inUserData) == false) {
 			this.setUserInfo(null);
 		} else {
 			this.setUserInfo(inUserData);
