@@ -1,11 +1,11 @@
 enyo.kind({
 	
-	name: "reddOS.view.main.SecondMenu",
+	name: "reddOS.view.main.SecondColumn",
 	kind: "VFlexBox",
 	
 	create: function() {
 		this.inherited(arguments);
-		this.addClass("reddos-secondmenu");
+		this.addClass("reddos-secondcolumn");
 	},
 	
 	/***************************************************************************
@@ -22,7 +22,7 @@ enyo.kind({
 	
 	components: [
 		
-		{name: "secondMenuContent", 
+		{name: "secondColumnContent", 
 			kind: "enyo.Pane",
 			transitionKind: "enyo.transitions.Simple",
 			flex: 1,
@@ -30,7 +30,7 @@ enyo.kind({
 			
 				// Simple plain view
 				
-				{name: "secondMenuPlain",
+				{name: "secondColumnPlain",
                     layoutKind: "VFlexLayout",
                     pack: "end",
                     components: [
@@ -38,7 +38,7 @@ enyo.kind({
 						{kind: "enyo.Toolbar", 
 							className: "reddos-toolbar",
 							components: [
-								{name: "secondMenuTitle", 
+								{name: "secondColumnTitle", 
 									kind: "enyo.HtmlContent", 
 									style: "color: white; font-weight: bold"
 								},
@@ -60,7 +60,7 @@ enyo.kind({
 				
 				// Loading view
 				
-				{name: "secondMenuLoading", 
+				{name: "secondColumnLoading", 
 					layoutKind: "VFlexLayout",
                     pack: "end",
 					components: [
@@ -68,7 +68,7 @@ enyo.kind({
 						{kind: "enyo.Toolbar", 
 							className: "reddos-toolbar",
 							components: [
-								{name: "secondMenuLoadingTitle", 
+								{name: "secondColumnLoadingTitle", 
 									kind: "enyo.HtmlContent", 
 									style: "color: white; font-weight: bold"
 								},
@@ -97,7 +97,7 @@ enyo.kind({
 				
 				// Subreddit view
 				
-				{name: "secondMenuSubreddit",
+				{name: "secondColumnSubreddit",
 					kind: "reddOS.view.main.SecondSubreddit",
 					onReady: "subredditViewReady",
 					onNotReady: "notReady",
@@ -114,27 +114,27 @@ enyo.kind({
 		
 		if(reddOS_Kind.isSubreddit(inObject)) {
 		
-			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
-			this.$.secondMenuSubreddit.loadSubreddit(inObject);
+			this.$.secondColumnContent.selectView(this.$.secondColumnLoading);
+			this.$.secondColumnSubreddit.loadSubreddit(inObject);
 		}
 	},
 	
 	refresh: function() {
 		
-		var currentView = this.$.secondMenuContent.getView();
+		var currentView = this.$.secondColumnContent.getView();
 		
 		if(typeof currentView.refresh == "function") {
-			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
+			this.$.secondColumnContent.selectView(this.$.secondColumnLoading);
 			currentView.refresh();
 		}
 	},
     
 	notReady: function() {
-		this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
+		this.$.secondColumnContent.selectView(this.$.secondColumnLoading);
 	},
 	
 	subredditViewReady: function() {
-		this.$.secondMenuContent.selectView(this.$.secondMenuSubreddit);
+		this.$.secondColumnContent.selectView(this.$.secondColumnSubreddit);
 	},
 
 })

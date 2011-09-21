@@ -100,7 +100,7 @@ enyo.kind({
 			{dragAnywhere: false, width: "350px", components: [
 				
 				{name: "paneSecondMenu",
-					kind: "reddOS.view.main.SecondMenu", 
+					kind: "reddOS.view.main.SecondColumn", 
 					flex: 1, 
 					onSubredditStoryLoad: "subredditStoryLoad"
 				}
