@@ -8,7 +8,10 @@ reddOS_Kind = {
 	
 	isKind: function(a, k) {
 		
-		if(typeof a == "string") {
+        if(a == null) {
+            return false;
+        }
+		else if(typeof a == "string") {
 			return (a == k);
 		}
 		else if(typeof a == "object") {

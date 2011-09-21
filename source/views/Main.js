@@ -173,9 +173,9 @@ enyo.kind({
     },
     
     authLogoutRequest: function() {
-        if(typeof this.getUserInfo().modhash != "undefined") {
+        if(reddOS_Kind.isAccount(this.getUserInfo())) {
             this.$.headerBar.setNotReady();
-            this.$.authService.doLogout(this.getUserInfo().modhash);
+            this.$.authService.doLogout(this.getUserInfo().data.modhash);
         }
     },
     
