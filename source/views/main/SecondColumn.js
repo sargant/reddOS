@@ -13,7 +13,6 @@ enyo.kind({
 	 */
 	
 	events: {
-		onSubredditStoryLoad: "",
 	},
 	
 	/***************************************************************************
@@ -75,24 +74,6 @@ enyo.kind({
 			this.$.secondColumnSubreddit.receiveObject(inObject);
 			this.$.secondColumnContent.selectView(this.$.secondColumnSubreddit);
 		}
-	},
-	
-	refresh: function() {
-		
-		var currentView = this.$.secondColumnContent.getView();
-		
-		if(typeof currentView.refresh == "function") {
-			this.$.secondColumnContent.selectView(this.$.secondColumnLoading);
-			currentView.refresh();
-		}
-	},
-    
-	notReady: function() {
-		this.$.secondColumnContent.selectView(this.$.secondColumnLoading);
-	},
-	
-	subredditViewReady: function() {
-		this.$.secondColumnContent.selectView(this.$.secondColumnSubreddit);
 	},
 
 })

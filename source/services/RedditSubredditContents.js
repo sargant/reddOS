@@ -54,6 +54,8 @@ enyo.kind({
 			this.reset();
 			this.currentSubreddit = url;
 		}
+		
+		this.$.subredditContentsWebService.setUrl("http://www.reddit.com"+this.currentSubreddit+".json");
 	},
 	
 	reset: function() {
@@ -62,13 +64,14 @@ enyo.kind({
 	},
 		
 	loadStories: function() {
-		if(this.loadedStoryHashes.length == 0) {
-			this.$.subredditContentsWebService.setUrl("http://www.reddit.com"+this.currentSubreddit+".json?limit=25");
-		} else {
-			this.$.subredditContentsWebService.setUrl("http://www.reddit.com"+this.currentSubreddit+".json?limit=25&after="+this.loadedStories[this.loadedStories.length - 1].name);
+		
+		var args = { limit: 25 };
+		
+		if(this.loadedStoryHashes.length != 0) {
+			args.after = this.loadedStories[this.loadedStories.length - 1].name;
 		}
 		
-		this.$.subredditContentsWebService.call();
+		this.$.subredditContentsWebService.call(args);
 	},
 	
 	subredditContentsWebServiceSuccess: function(inSender, inResponse, inRequest) {
