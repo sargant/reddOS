@@ -73,6 +73,18 @@ enyo.kind({
 			kind: "reddOS.view.main.popup.Login", 
 			onLoginRequest: "authLoginRequest",
 		},
+        
+        {name: "aboutPopup",
+			kind: "reddOS.view.main.popup.About",
+		},
+        
+        //
+        // App Menu
+        //
+        
+        {kind: "enyo.AppMenu", components: [
+            {caption: "About", onclick: "openAboutPopup"},
+        ]},
 		
 		//
 		// Main UI
@@ -151,6 +163,10 @@ enyo.kind({
     
     openLoginPopup: function () {
         this.$.loginPopup.openAtCenter();
+    },
+    
+    openAboutPopup: function () {
+        this.$.aboutPopup.openAtCenter();
     },
     
     //

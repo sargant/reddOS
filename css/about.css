@@ -1,0 +1,12 @@
+.reddos-about-title {
+	font-size: 36px;
+	font-weight: normal;
+	text-shadow: 2px 2px 5px #FFF, 2px -2px 5px #FFF, -2px 2px 5px #FFF, -2px -2px 5px #FFF;
+	letter-spacing: -2px;
+	color: #04396C;
+}
+
+.reddos-about-version {
+    font-size: 16px;
+    margin-bottom: 12px;
+}

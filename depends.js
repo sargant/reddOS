@@ -1,5 +1,6 @@
 enyo.depends(
 
+    "css/about.css",
 	"css/global.css",
 	"css/headerbar.css",
 	"css/login.css",
@@ -10,13 +11,14 @@ enyo.depends(
 	"source/utilities/Date.js",
 	"source/utilities/Kind.js",
 	
-	"source/components/SubredditButton.js",
+    "source/components/SubredditButton.js",
 	
 	"source/services/RedditAuthentication.js",
 	"source/services/RedditSubredditContents.js",
 	"source/services/RedditSubscribedSubreddits.js",
 	"source/services/RedditUserInformation.js",
 	
+    "source/views/main/popup/About.js",
 	"source/views/main/popup/Login.js",
 
 	"source/views/main/secondcolumn/Subreddit.js",
