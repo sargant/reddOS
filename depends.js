@@ -3,7 +3,7 @@ enyo.depends(
 	"css/global.css",
 	"css/headerbar.css",
 	"css/login.css",
-	"css/secondmenu.css",
+	"css/secondcolumn.css",
 	"css/storyviewer.css",
 	"css/topmenu.css",
 	
@@ -21,7 +21,7 @@ enyo.depends(
     
 	"source/views/main/HeaderBar.js",
 	"source/views/main/TopMenu.js",
-	"source/views/main/SecondMenu.js",
+	"source/views/main/SecondColumn.js",
 	"source/views/main/SecondSubreddit.js",
 	"source/views/main/StoryViewer.js",
     
