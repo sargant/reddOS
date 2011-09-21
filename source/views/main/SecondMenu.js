@@ -22,16 +22,6 @@ enyo.kind({
 	
 	components: [
 		
-		{kind: "enyo.Toolbar", 
-			className: "reddos-toolbar",
-			components: [
-				{name: "secondMenuTitle", 
-					kind: "enyo.HtmlContent", 
-					style: "color: white; font-weight: bold"
-				},
-			],
-		},
-		
 		{name: "secondMenuContent", 
 			kind: "enyo.Pane",
 			transitionKind: "enyo.transitions.Simple",
@@ -44,10 +34,22 @@ enyo.kind({
                     layoutKind: "VFlexLayout",
                     pack: "end",
                     components: [
+					
+						{kind: "enyo.Toolbar", 
+							className: "reddos-toolbar",
+							components: [
+								{name: "secondMenuTitle", 
+									kind: "enyo.HtmlContent", 
+									style: "color: white; font-weight: bold"
+								},
+							],
+						},
+						
+						{flex: 1},
+		
                         {kind: "enyo.Toolbar",
                             className: "reddos-toolbar",
                             components: [
-			
                                 {kind: "enyo.GrabButton",
                                     slidingHandler: true
                                 },
@@ -62,6 +64,17 @@ enyo.kind({
 					layoutKind: "VFlexLayout",
                     pack: "end",
 					components: [
+					
+						{kind: "enyo.Toolbar", 
+							className: "reddos-toolbar",
+							components: [
+								{name: "secondMenuLoadingTitle", 
+									kind: "enyo.HtmlContent", 
+									style: "color: white; font-weight: bold"
+								},
+							],
+						},
+						
 						{kind: "enyo.VFlexBox",
                             flex: 1,
                             pack: "center",
@@ -102,8 +115,7 @@ enyo.kind({
 		if(reddOS_Kind.isSubreddit(inObject)) {
 		
 			this.$.secondMenuContent.selectView(this.$.secondMenuLoading);
-			this.$.secondMenuTitle.setContent(inObject.data.display_name);
-			this.$.secondMenuSubreddit.loadSubreddit(inObject.data.url);
+			this.$.secondMenuSubreddit.loadSubreddit(inObject);
 		}
 	},
 	
