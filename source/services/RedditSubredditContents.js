@@ -68,7 +68,7 @@ enyo.kind({
 		var args = { limit: 25 };
 		
 		if(this.loadedStoryHashes.length != 0) {
-			args.after = this.loadedStories[this.loadedStories.length - 1].name;
+			args.after = this.loadedStories[this.loadedStories.length - 1].data.name;
 		}
 		
 		this.$.subredditContentsWebService.call(args);
@@ -76,19 +76,21 @@ enyo.kind({
 	
 	subredditContentsWebServiceSuccess: function(inSender, inResponse, inRequest) {
 		
-		if(typeof inResponse.data.children == "undefined") {
-			
+		if(reddOS_Kind.isListing(inResponse) == false) {
 			this.doFailure();
-			
 		} else {
 			
 			for(var i in inResponse.data.children) {
 				
-				var k = inResponse.data.children[i].data;
+				var k = inResponse.data.children[i];
 				
-				if(this.loadedStoryHashes.indexOf(k.name == -1)) {
+				if(reddOS_Kind.isLink(k) == false) {
+					continue;
+				}
+				
+				if(this.loadedStoryHashes.indexOf(k.data.name == -1)) {
 					this.loadedStories.push(k);
-					this.loadedStoryHashes.push(k.name);
+					this.loadedStoryHashes.push(k.data.name);
 				}
 				
 			}

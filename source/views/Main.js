@@ -114,7 +114,7 @@ enyo.kind({
 				{name: "paneSecondMenu",
 					kind: "reddOS.view.main.SecondColumn", 
 					flex: 1, 
-					onSubredditStoryLoad: "subredditStoryLoad"
+					onObjectSend: "dispatchObject"
 				}
 				
 			]},
@@ -255,7 +255,10 @@ enyo.kind({
 			
 			this.$.paneSecondMenu.receiveObject(inObject);
 			
-		}
+		} else if (reddOS_Kind.isLink(inObject)) {
 		
+			this.$.paneStoryViewer.receiveObject(inObject);
+			
+		}
 	},
 })

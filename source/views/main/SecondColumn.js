@@ -13,6 +13,7 @@ enyo.kind({
 	 */
 	
 	events: {
+		onObjectSend: ""
 	},
 	
 	/***************************************************************************
@@ -58,7 +59,10 @@ enyo.kind({
                 },
 				
 				// Subreddit view
-				{name: "secondColumnSubreddit", kind: "reddOS.view.main.secondcolumn.Subreddit"},
+				{name: "secondColumnSubreddit", 
+					kind: "reddOS.view.main.secondcolumn.Subreddit",
+					onObjectSend: "doObjectSend",
+				},
                 
 			],
 		},

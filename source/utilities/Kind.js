@@ -29,7 +29,7 @@ reddOS_Kind = {
 	},
 	
 	isComment: function(a) {
-		return this.isKind(string, this.COMMENT);
+		return this.isKind(a, this.COMMENT);
 	},
 	
 	isAccount: function(a) {
@@ -37,11 +37,11 @@ reddOS_Kind = {
 	},
 		
 	isLink: function(a) {
-		return this.isKind(string, this.LINK);
+		return this.isKind(a, this.LINK);
 	},
 	
 	isMessage: function(a) {
-		return this.isKind(string, this.MESSAGE);
+		return this.isKind(a, this.MESSAGE);
 	},
 	
 	isSubreddit: function(a) {
@@ -50,5 +50,11 @@ reddOS_Kind = {
 	
 	isListing: function(a) {
 		return this.isKind(a, this.LISTING);
+	},
+	
+	//////////
+	
+	isArray: function(a) {
+		return a.constructor == Array;
 	},
 };

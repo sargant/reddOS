@@ -17,6 +17,7 @@ enyo.kind({
 	 */
 	
 	events: {
+		onObjectSend: "",
 	},
 
 	
@@ -82,11 +83,11 @@ enyo.kind({
                             tapHighlight: true,
                             layoutKind: "HFlexLayout",
                             align: "start", 
+							onclick: "subredditStoryItemClick",
                             components: [
                                 
                                 {kind: "VFlexBox", 
                                     flex: 1, 
-                                    onclick: "subredditStoryItemClick",
                                     components: [
                                     
                                         {name: "postTitle", className: "reddos-subreddit-item-title", allowHtml: true},
@@ -105,7 +106,7 @@ enyo.kind({
                                         content: "0", 
                                         allowDrag: true,
                                         onclick: "subredditStoryCommentClick",
-                                        onmousehold: "subredditStoryCommentClick",
+                                        onmousehold: "cancelEvent",
                                     }
                                 ]}, 
                             ],
@@ -138,15 +139,31 @@ enyo.kind({
 	/***************************************************************************
      * Methods
 	 */
-        
+		
+	subredditStoryCommentClick: function(inSender, inEvent) {
+		this.cancelEvent(null, inEvent);
+		
+		var obj = this.subredditContentsCache[inEvent.rowIndex];
+		obj.target = "comments";
+		this.doObjectSend(obj);
+	},
+	
+	subredditStoryItemClick: function(inSender, inEvent) {
+		this.cancelEvent(null, inEvent);
+		
+		var obj = this.subredditContentsCache[inEvent.rowIndex];
+		obj.target = "link";
+		this.doObjectSend(obj);
+	},
+	
+	cancelEvent: function(inSender, inEvent) {
+		inEvent.stopPropagation();
+	},
+	
     receiveObject: function(inObject) {
         this.$.subredditPane.selectView(this.$.subredditLoading);
         this.loadSubreddit(inObject);
     },
-		
-	subredditStoryCommentClick: function(inSender, inEvent) {
-		inEvent.stopPropagation();
-	},
 	
 	loadSubreddit: function(inObject) {
 		this.$.subredditScroller.setScrollTop(0);
@@ -178,14 +195,14 @@ enyo.kind({
 		
 		var r = this.subredditContentsCache[inIndex];
 		
-		if (r) {
+		if (reddOS_Kind.isLink(r)) {
 			this.$.subredditContents.setStyle("border: 0");
 			if(inIndex % 2 == 1) { this.$.subredditSingleItem.addClass("reddos-subreddit-item-odd"); }
-			this.$.postTitle.setContent(r.title);
-			this.$.postDomain.setContent(r.domain);
-			this.$.postWhen.setContent("<span class=\"reddos-subreddit-item-score\">"+r.score+"</span> posted "+reddOS_Date.timeSince(r.created_utc)+" ago");
-			this.$.postWhoWhere.setContent("Posted by "+r.author+" to "+r.subreddit);
-			this.$.commentCount.setCaption(r.num_comments);
+			this.$.postTitle.setContent(r.data.title);
+			this.$.postDomain.setContent(r.data.domain);
+			this.$.postWhen.setContent("<span class=\"reddos-subreddit-item-score\">"+r.data.score+"</span> posted "+reddOS_Date.timeSince(r.data.created_utc)+" ago");
+			this.$.postWhoWhere.setContent("Posted by "+r.data.author+" to "+r.data.subreddit);
+			this.$.commentCount.setCaption(r.data.num_comments);
 			return true;
 		}
 		return false;
