@@ -1,6 +1,6 @@
 enyo.kind({
 	
-	name: "reddOS.view.main.SecondSubreddit",
+	name: "reddOS.view.main.secondcolumn.Subreddit",
 	kind: "enyo.VFlexBox", 
 	
 	flex: 1, 

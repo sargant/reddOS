@@ -98,7 +98,7 @@ enyo.kind({
 				// Subreddit view
 				
 				{name: "secondColumnSubreddit",
-					kind: "reddOS.view.main.SecondSubreddit",
+					kind: "reddOS.view.main.secondcolumn.Subreddit",
 					onReady: "subredditViewReady",
 					onNotReady: "notReady",
 				},
