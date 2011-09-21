@@ -5,6 +5,7 @@ reddOS_Kind = {
 	LINK: "t3",
 	MESSAGE: "t4",
 	SUBREDDIT: "t5",
+	LISTING: "Listing",
 	
 	isKind: function(a, k) {
 		
@@ -45,5 +46,9 @@ reddOS_Kind = {
 	
 	isSubreddit: function(a) {
 		return this.isKind(a, this.SUBREDDIT);
+	},
+	
+	isListing: function(a) {
+		return this.isKind(a, this.LISTING);
 	},
 };
