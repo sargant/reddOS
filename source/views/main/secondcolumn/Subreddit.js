@@ -47,7 +47,6 @@ enyo.kind({
 				},
 			],
 		},
-						
         
         {kind: "enyo.Scroller", name: "subredditScroller", flex: 1, components: [
 		
@@ -106,20 +105,10 @@ enyo.kind({
 			className: "reddos-toolbar",
 			components: [
 			
-				{kind: "enyo.GrabButton",
-					slidingHandler: true
-				},
-				
+				{kind: "enyo.GrabButton", slidingHandler: true},
 				{kind: "enyo.Spacer"},
-				
-				{kind: "enyo.ToolButton", 
-					icon: "images/menu-icon-share.png",
-				},
-			
-				{kind: "enyo.ToolButton", 
-					icon: "images/menu-icon-refresh.png",
-					onclick: "refresh",
-				},
+				{kind: "enyo.ToolButton", icon: "images/menu-icon-share.png"},
+                {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png",	onclick: "refresh"},
 			]
 		},
 	],
