@@ -71,7 +71,9 @@ enyo.kind({
 		
 		this.linkCache = inObject;
 		
-		if(typeof this.linkCache.target == "undefined" || this.linkCache.target == "link") {
+		if(this.linkCache.data.is_self == true) {
+			this.loadComments();
+		} else if(typeof this.linkCache.target == "undefined" || this.linkCache.target == "link") {
 			this.loadLink();
 		} else {
 			this.loadComments();
@@ -101,7 +103,9 @@ enyo.kind({
 	},
 	
 	webBrowserTitleChanged: function(inSender, inTitle) {
-		this.$.webBrowserTitle.setContent(inTitle);
+		if(inTitle != "image_title") {
+			this.$.webBrowserTitle.setContent(inTitle);
+		}
 	},
 	
 	webBrowserLoadStarted: function() {
