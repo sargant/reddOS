@@ -41,6 +41,11 @@
 	margin-left: 8px;
 }
 
+.reddos-header-user-button-down {
+	color: #FF4500;
+	background-color: #EEE;
+}
+
 .reddos-header-button-down {
 	color: #FF4500;
 	background-color: #04396C;
