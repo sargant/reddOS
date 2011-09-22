@@ -24,7 +24,9 @@ enyo.kind({
 		
 		{kind: "Scroller", flex: 1, components: [
 		
-			{className: "reddos-topmenu-buttongroup", 
+            // Default components
+            
+			{className: "reddos-topmenu-buttongroup", name: "defaultGroup",
 				components: [
 				
 					{kind: "reddOS.component.SubredditButton",
@@ -54,6 +56,43 @@ enyo.kind({
 					},
 				],
 			},
+            
+            // User-orientated lists
+            
+            {className: "reddos-topmenu-divider", content: "My Reddit", name: "myRedditDivider", showing: false},
+            
+            {name: "myRedditList", showing: false,
+				className: "reddos-topmenu-buttongroup", 
+				components: [
+					{kind: "reddOS.component.SubredditButton",
+						className: "reddos-topmenu-subreddit-button-first",
+                        name: "myRedditSubmitted",
+						onclick: "sendObject",
+                        content: "Submitted",
+					},
+                    
+                    {kind: "reddOS.component.SubredditButton",
+                        name: "myRedditLiked",
+						onclick: "sendObject",
+                        content: "Liked",
+					},
+                    
+                    {kind: "reddOS.component.SubredditButton",
+                        name: "myRedditDisliked",
+						onclick: "sendObject",
+                        content: "Disliked",
+					},
+                    
+                    {kind: "reddOS.component.SubredditButton",
+						className: "reddos-topmenu-subreddit-button-last",
+                        name: "myRedditHidden",
+						onclick: "sendObject",
+                        content: "Hidden",
+					},
+				]
+			},
+            
+            // Subreddit Lists
 			
 			{className: "reddos-topmenu-divider", content: "Subreddits"},
 			
@@ -72,6 +111,22 @@ enyo.kind({
 	/***************************************************************************
 	 * Methods
      */
+        
+    refreshUserData: function(inUserData) {
+        
+        if(inUserData == null) {
+            this.$.myRedditDivider.hide();
+            this.$.myRedditList.hide();
+        } else {
+            this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
+            this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
+            this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
+            this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
+            
+            this.$.myRedditDivider.show();
+            this.$.myRedditList.show();
+        }
+    },
 	
 	refreshSubredditData: function(inSubredditData) {
 		

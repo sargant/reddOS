@@ -221,6 +221,7 @@ enyo.kind({
 		}
 		
 		// UI Elements to update
+        this.$.paneTopMenu.refreshUserData(this.getUserInfo());
 		this.$.headerBar.refreshUserData(this.getUserInfo());
 	},
 	
