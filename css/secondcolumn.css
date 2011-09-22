@@ -51,19 +51,43 @@
 	color: #04396C;
 }
 
-.reddos-subreddit-item-commentbutton {
-	background-color: #679ED2;
+.reddos-subreddit-item-commentbutton,
+.reddos-subreddit-item-votebutton {
+
 	color: white;
-	padding: 7px 31px 7px 8px;
+	padding: 5px 31px 5px 8px;
 	margin-left: 15px;
+	margin-bottom: 5px;
 	border-radius: 4px;
 	font-size: 16px;
 	font-weight: bold;
-	background-image: url("../images/solid-icon-conversation.png");
 	background-repeat: no-repeat;
 	background-position: right center;
 }
 
+.reddos-subreddit-item-commentbutton {
+	background-color: #679ED2;
+	background-image: url("../images/solid-icon-conversation.png");
+}
+
 .reddos-subreddit-item-commentbutton-down {
+	background-color: #04396C;
+}
+
+.reddos-subreddit-item-votebutton {
+	background-color: #C6C6C6;
+	background-image: url("../images/solid-icon-vote.png");
+}
+
+.reddos-subreddit-item-votebutton-down {
+	background-color: #888;
+}
+
+.reddos-subreddit-item-votebutton-like {
 	background-color: #FF4500;
+}
+
+.reddos-subreddit-item-votebutton-dislike {
+	background-color: #9494FF;
+	background-image: url("../images/solid-icon-votedown.png");
 }
