@@ -200,9 +200,19 @@ enyo.kind({
 		if (reddOS_Kind.isLink(r)) {
 			this.$.subredditContents.setStyle("border: 0");
 			if(inIndex % 2 == 1) { this.$.subredditSingleItem.addClass("reddos-subreddit-item-odd"); }
-			this.$.postTitle.setContent(r.data.title);
+            
+            var titleLine = r.data.title;
+            
+            if(r.data.over_18) {
+                titleLine = "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span> " + titleLine;
+            }
+            
+			this.$.postTitle.setContent(titleLine);
 			this.$.postDomain.setContent(r.data.domain);
-			this.$.postWhen.setContent("<span class=\"reddos-subreddit-item-score\">"+r.data.score+"</span> posted "+reddOS_Date.timeSince(r.data.created_utc)+" ago");
+            
+            var whenLine = "<span class=\"reddos-subreddit-item-score\">"+r.data.score+"</span> posted "+reddOS_Date.timeSince(r.data.created_utc)+" ago";
+			this.$.postWhen.setContent(whenLine);
+            
 			this.$.postWhoWhere.setContent("Posted by "+r.data.author+" to "+r.data.subreddit);
 			this.$.commentCount.setCaption(r.data.num_comments);
 			return true;

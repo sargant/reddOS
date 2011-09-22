@@ -22,6 +22,15 @@
 	margin-bottom: 2px;
 }
 
+.reddos-subreddit-item-nsfw {
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #b00;
+	padding: 2px 4px 2px 4px;
+	border-radius: 4px;
+}
+
 .reddos-subreddit-item-domain {
 	color: #04396C;
 	margin-top: 6px;
