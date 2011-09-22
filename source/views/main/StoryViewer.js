@@ -103,9 +103,12 @@ enyo.kind({
 	},
 	
 	webBrowserTitleChanged: function(inSender, inTitle) {
-		if(inTitle != "image_title") {
-			this.$.webBrowserTitle.setContent(inTitle);
-		}
+        
+		if(inTitle == "image_title") {
+			inTitle = this.$.webBrowser.getUrl();
+        }
+        
+		this.$.webBrowserTitle.setContent(inTitle);
 	},
 	
 	webBrowserLoadStarted: function() {
