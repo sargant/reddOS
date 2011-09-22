@@ -143,18 +143,18 @@ enyo.kind({
 	appEventLoad: function() {
         
         // Load cached user info, if none exists attempt a login
-        if(localStorage.getItem("reddOS_userInfo") != null) {
-            this.incomingUserInfo(null, enyo.json.parse(localStorage.getItem("reddOS_userInfo")));
-        } else {
+        //if(localStorage.getItem("reddOS_userInfo") != null) {
+        //    this.incomingUserInfo(null, enyo.json.parse(localStorage.getItem("reddOS_userInfo")));
+        //} else {
             this.refreshUserInfo();
-        }
+        //}
 		
         // Load cached subreddit info, if none exists attempt to download a new list
-        if(localStorage.getItem("reddOS_subreddits") != null) {
-            this.incomingSubscribedSubreddits(null, enyo.json.parse(localStorage.getItem("reddOS_subreddits")));
-        } else {
+        //if(localStorage.getItem("reddOS_subreddits") != null) {
+        //    this.incomingSubscribedSubreddits(null, enyo.json.parse(localStorage.getItem("reddOS_subreddits")));
+        //} else {
             this.refreshSubredditInfo();
-        }
+        //}
 	},
     
     //
