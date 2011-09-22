@@ -79,8 +79,11 @@ enyo.kind({
 				{name: "loggedInView", layoutKind: "HFlexLayout", pack: "end",
 					align: "center", components: [
 					
-						{name: "loggedInUsername", content: "", 
-							style: "margin-right: 8px"
+						{kind: "CustomButton", 
+                            name: "loggedInUsername",
+                            className: "reddos-header-user-button", 
+                            cssNamespace: "reddos-header-user-button",
+							content: "", 
 						},
 						
 						{kind: "CustomButton", 
@@ -115,7 +118,7 @@ enyo.kind({
 		if(reddOS_Kind.isAccount(inUserData) == false) {
 			this.$.userStatusPane.selectView(this.$.loggedOutView);
 		} else {
-			this.$.loggedInUsername.setContent("Logged in as " + inUserData.data.name + " (" + inUserData.data.link_karma + ")");
+			this.$.loggedInUsername.setContent(inUserData.data.name + " (" + inUserData.data.link_karma + ")");
 			this.$.userStatusPane.selectView(this.$.loggedInView);
 		}
 	},

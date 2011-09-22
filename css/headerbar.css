@@ -6,7 +6,6 @@
 	
 	font-size: 18px;
 	color: #04396C;
-	text-shadow: 1px 1px 2px #FFF;
 	
 	background-color: #CEE3F8;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#cee3f8), color-stop(100%,#679ed2));
@@ -17,16 +16,24 @@
 .reddos-header-title {
 	font-size: 28px;
 	font-weight: normal;
-	text-shadow: 2px 2px 5px #FFF, 2px -2px 5px #FFF, -2px 2px 5px #FFF, -2px -2px 5px #FFF;
 	letter-spacing: -2px;
 	color: #04396C;
 	margin-left: 15px;
 }
 
 .reddos-header-button {
-	text-shadow: 0 0 0 #FFF;
 	color: white;
 	background-color: #0C5AA6;
+	border-radius: 5px;
+	padding: 8px 12px 8px 12px;
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: 8px;
+}
+
+.reddos-header-user-button {
+	color: #04396C;
+	background-color: white;
 	border-radius: 5px;
 	padding: 8px 12px 8px 12px;
 	font-size: 16px;
