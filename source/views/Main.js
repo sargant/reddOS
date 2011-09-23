@@ -99,7 +99,7 @@ enyo.kind({
         
         {kind: "SlidingPane", flex: 1, components: [
             
-            {dragAnywhere: false, width: "250px", components: [
+            {dragAnywhere: false, width: "220px", components: [
                 
                 {name: "paneTopMenu", 
                     kind: "reddOS.view.main.TopMenu",

@@ -59,13 +59,18 @@ enyo.kind({
             
             // User-orientated lists
             
-            {className: "reddos-topmenu-divider", content: "My Reddit", name: "myRedditDivider", showing: false},
-            
             {name: "myRedditList", showing: false,
                 className: "reddos-topmenu-buttongroup", 
                 components: [
+                
                     {kind: "reddOS.component.SubredditButton",
-                        className: "reddos-topmenu-subreddit-button-first",
+                        className: "reddos-topmenu-subreddit-button-header",
+                        cssNamespace: "reddos-topmenu-subreddit-button-header",
+                        name: "myRedditTitle",
+                        content: "My Reddit",
+                    },
+                
+                    {kind: "reddOS.component.SubredditButton",
                         name: "myRedditSubmitted",
                         onclick: "sendObject",
                         content: "Submitted",
@@ -94,15 +99,21 @@ enyo.kind({
             
             // Subreddit Lists
             
-            {className: "reddos-topmenu-divider", content: "Subreddits"},
-            
             {name: "subredditList", 
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                     {kind: "reddOS.component.SubredditButton",
-                        className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-first reddos-topmenu-subreddit-button-last",
-                        content: "Loading...",
+                        className: "reddos-topmenu-subreddit-button-header",
+                        cssNamespace: "reddos-topmenu-subreddit-button-header",
+                        name: "subredditListTitle",
+                        content: "Subreddits",
                     },
+                    {name: "subredditListContainer", components: [
+                        {kind: "reddOS.component.SubredditButton",
+                            className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
+                            content: "Loading...",
+                        },
+                    ]},
                 ]
             },
         ]},
@@ -123,14 +134,13 @@ enyo.kind({
             this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
             this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
             
-            this.$.myRedditDivider.show();
             this.$.myRedditList.show();
         }
     },
     
     refreshSubredditData: function(inSubredditData) {
         
-        var c = this.$.subredditList;
+        var c = this.$.subredditListContainer;
         c.destroyControls();
         
         for(var i in inSubredditData) {
@@ -150,10 +160,6 @@ enyo.kind({
                 content: inSubredditData[i].data.display_name,
                 subreddit: inSubredditData[i],
             };
-            
-            if(i == 0) {
-                temp.className = "reddos-topmenu-subreddit-button-first";
-            }
             
             if(i == (inSubredditData.length - 1)) {
                 temp.className = "reddos-topmenu-subreddit-button-last";
