@@ -1,98 +1,98 @@
 enyo.kind({
-	
-	name: "reddOS.view.main.popup.Login", 
-	kind: "enyo.Popup",
-	
-	layoutKind: "VFlexLayout",
-	
-	modal: true,
-	scrim: true, 
-	dismissWithClick: false,
-	
-	create: function() {
-		this.inherited(arguments);
-		this.addClass("reddos-login-popup");
-	},
-	
-	/***************************************************************************
-	 * Published Items
-	 */
-	
-	events: {
-		onLoginRequest: "",
-	},
-	
-	/***************************************************************************
-	 * Components
-	 */
-	
-	components: [
-		
-		{name: "loginPopupTitle", 
-			className: "reddos-login-title",
-			content: "Login to Reddit",
-		},
-		
-		{kind: "enyo.RowGroup", components: [
-			
-			{name: "loginUsername", 
-				kind: "enyo.Input", 
-				spellcheck: false, 
-				autocorrect: false, 
-				autoWordComplete: false, 
-				autoCapitalize: "lowercase", 
-				hint: "Username"
-			},
-			
-			{name: "loginPassword", 
-				kind: "enyo.PasswordInput", 
-				hint: "Password"
-			},
-		]},
+    
+    name: "reddOS.view.main.popup.Login", 
+    kind: "enyo.Popup",
+    
+    layoutKind: "VFlexLayout",
+    
+    modal: true,
+    scrim: true, 
+    dismissWithClick: false,
+    
+    create: function() {
+        this.inherited(arguments);
+        this.addClass("reddos-login-popup");
+    },
+    
+    /***************************************************************************
+     * Published Items
+     */
+    
+    events: {
+        onLoginRequest: "",
+    },
+    
+    /***************************************************************************
+     * Components
+     */
+    
+    components: [
         
-		{name: "loginMessage", 
-			className: "reddos-login-message", 
-			allowHtml: true, 
-			content: "",
-		},
-		
-		{kind: "enyo.HFlexBox", components: [
-			
-			{kind: "enyo.Button", 
-				content: "Cancel", 
-				flex: 1, 
-				onclick: "dismiss"
-			},
+        {name: "loginPopupTitle", 
+            className: "reddos-login-title",
+            content: "Login to Reddit",
+        },
+        
+        {kind: "enyo.RowGroup", components: [
             
-			{kind: "enyo.Button", 
-				className: "enyo-button-affirmative", 
-				content: "Login", 
-				flex: 2, 
-				onclick: "submitLogin"
-			},
-			
-		]},
-	],
-		
-	/***************************************************************************
-	 * Methods 
-	 */
-	
-	dismiss: function () {
-		this.$.loginUsername.setValue("");
-		this.$.loginPassword.setValue("");
-		this.$.loginMessage.setContent("");
-		this.close();
-	},
-	
-	submitLogin: function() {
-		var u = this.$.loginUsername.getValue();
-		var p = this.$.loginPassword.getValue();
-		this.$.loginMessage.setContent("Checking...");
-		this.doLoginRequest(u,p);
-	},
-	
-	loginFailure: function(errorMessage) {
-		this.$.loginMessage.setContent("Error: "+errorMessage);
-	},
-})
+            {name: "loginUsername", 
+                kind: "enyo.Input", 
+                spellcheck: false, 
+                autocorrect: false, 
+                autoWordComplete: false, 
+                autoCapitalize: "lowercase", 
+                hint: "Username"
+            },
+            
+            {name: "loginPassword", 
+                kind: "enyo.PasswordInput", 
+                hint: "Password"
+            },
+        ]},
+        
+        {name: "loginMessage", 
+            className: "reddos-login-message", 
+            allowHtml: true, 
+            content: "",
+        },
+        
+        {kind: "enyo.HFlexBox", components: [
+            
+            {kind: "enyo.Button", 
+                content: "Cancel", 
+                flex: 1, 
+                onclick: "dismiss"
+            },
+            
+            {kind: "enyo.Button", 
+                className: "enyo-button-affirmative", 
+                content: "Login", 
+                flex: 2, 
+                onclick: "submitLogin"
+            },
+            
+        ]},
+    ],
+        
+    /***************************************************************************
+     * Methods 
+     */
+    
+    dismiss: function () {
+        this.$.loginUsername.setValue("");
+        this.$.loginPassword.setValue("");
+        this.$.loginMessage.setContent("");
+        this.close();
+    },
+    
+    submitLogin: function() {
+        var u = this.$.loginUsername.getValue();
+        var p = this.$.loginPassword.getValue();
+        this.$.loginMessage.setContent("Checking...");
+        this.doLoginRequest(u,p);
+    },
+    
+    loginFailure: function(errorMessage) {
+        this.$.loginMessage.setContent("Error: "+errorMessage);
+    },
+});

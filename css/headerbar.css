@@ -1,52 +1,51 @@
 .reddos-header-bar {
-	
-	height: 56px;
-	padding-right: 12px;
-	padding-left: 12px;
-	
-	font-size: 18px;
-	color: #04396C;
-	
-	background-color: #CEE3F8;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#cee3f8), color-stop(100%,#679ed2));
-	border: 0px solid #04396c;
-	border-bottom-width: 2px;
+    height: 56px;
+    padding-right: 12px;
+    padding-left: 12px;
+    
+    font-size: 18px;
+    color: #04396C;
+    
+    background-color: #CEE3F8;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#cee3f8), color-stop(100%,#679ed2));
+    border: 0px solid #04396c;
+    border-bottom-width: 2px;
 }
 
 .reddos-header-title {
-	font-size: 28px;
-	font-weight: normal;
-	letter-spacing: -2px;
-	color: #04396C;
-	margin-left: 15px;
+    font-size: 28px;
+    font-weight: normal;
+    letter-spacing: -2px;
+    color: #04396C;
+    margin-left: 15px;
 }
 
 .reddos-header-button {
-	color: white;
-	background-color: #0C5AA6;
-	border-radius: 5px;
-	padding: 8px 12px 8px 12px;
-	font-size: 16px;
-	font-weight: bold;
-	margin-left: 8px;
+    color: white;
+    background-color: #0C5AA6;
+    border-radius: 5px;
+    padding: 8px 12px 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 8px;
 }
 
 .reddos-header-user-button {
-	color: #04396C;
-	background-color: white;
-	border-radius: 5px;
-	padding: 8px 12px 8px 12px;
-	font-size: 16px;
-	font-weight: bold;
-	margin-left: 8px;
+    color: #04396C;
+    background-color: white;
+    border-radius: 5px;
+    padding: 8px 12px 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 8px;
 }
 
 .reddos-header-user-button-down {
-	color: #FF4500;
-	background-color: #EEE;
+    color: #FF4500;
+    background-color: #EEE;
 }
 
 .reddos-header-button-down {
-	color: #FF4500;
-	background-color: #04396C;
+    color: #FF4500;
+    background-color: #04396C;
 }

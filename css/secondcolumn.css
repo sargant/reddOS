@@ -1,93 +1,93 @@
 .reddos-secondcolumn {
-	background-color: white;
+    background-color: white;
 }
 
 .reddos-subreddit-item {
-	border: 0;
-	font-size: 14px;
+    border: 0;
+    font-size: 14px;
 }
 
 .reddos-subreddit-item-odd {
-	background-color: #E4F0FC;
+    background-color: #E4F0FC;
 }
 
 .reddos-subreddit-item-title {
-	font-weight: bold;
-	font-size: 15px;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .reddos-subreddit-item-domain,
 .reddos-subreddit-item-date,
 .reddos-subreddit-item-user {
-	margin-bottom: 2px;
+    margin-bottom: 2px;
 }
 
 .reddos-subreddit-item-nsfw {
-	color: white;
-	font-weight: bold;
-	font-size: 12px;
-	background-color: #b00;
-	padding: 2px 4px 2px 4px;
-	border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #b00;
+    padding: 2px 4px 2px 4px;
+    border-radius: 4px;
 }
 
 .reddos-subreddit-item-domain {
-	color: #04396C;
-	margin-top: 6px;
-	margin-bottom: 6px;
+    color: #04396C;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 .reddos-subreddit-item-score {
-	font-weight: bold;
-	color: #FF4500;
+    font-weight: bold;
+    color: #FF4500;
 }
 
 
 .reddos-subreddit-item-held {
-	background-color: #DDDDDD;
+    background-color: #DDDDDD;
 }
 
 .reddos-subreddit-item-held .reddos-subreddit-item-title {
-	color: #04396C;
+    color: #04396C;
 }
 
 .reddos-subreddit-item-commentbutton,
 .reddos-subreddit-item-votebutton {
 
-	color: white;
-	padding: 5px 31px 5px 8px;
-	margin-left: 15px;
-	margin-bottom: 5px;
-	border-radius: 4px;
-	font-size: 16px;
-	font-weight: bold;
-	background-repeat: no-repeat;
-	background-position: right center;
+    color: white;
+    padding: 5px 31px 5px 8px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: right center;
 }
 
 .reddos-subreddit-item-commentbutton {
-	background-color: #679ED2;
-	background-image: url("../images/solid-icon-conversation.png");
+    background-color: #679ED2;
+    background-image: url("../images/solid-icon-conversation.png");
 }
 
 .reddos-subreddit-item-commentbutton-down {
-	background-color: #04396C;
+    background-color: #04396C;
 }
 
 .reddos-subreddit-item-votebutton {
-	background-color: #C6C6C6;
-	background-image: url("../images/solid-icon-vote.png");
+    background-color: #C6C6C6;
+    background-image: url("../images/solid-icon-vote.png");
 }
 
 .reddos-subreddit-item-votebutton-down {
-	background-color: #888;
+    background-color: #888;
 }
 
 .reddos-subreddit-item-votebutton-like {
-	background-color: #FF4500;
+    background-color: #FF4500;
 }
 
 .reddos-subreddit-item-votebutton-dislike {
-	background-color: #9494FF;
-	background-image: url("../images/solid-icon-votedown.png");
+    background-color: #9494FF;
+    background-image: url("../images/solid-icon-votedown.png");
 }
