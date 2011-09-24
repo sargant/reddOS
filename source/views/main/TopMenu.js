@@ -157,7 +157,6 @@ enyo.kind({
     refreshUserData: function(inUserData) {
         
         if(inUserData == null) {
-            this.$.myRedditDivider.hide();
             this.$.myRedditList.hide();
         } else {
             this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
