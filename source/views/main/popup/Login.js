@@ -1,17 +1,14 @@
 enyo.kind({
     
     name: "reddOS.view.main.popup.Login", 
-    kind: "enyo.Popup",
+    kind: "enyo.ModalDialog",
     
     layoutKind: "VFlexLayout",
     
-    modal: true,
-    scrim: true, 
-    dismissWithClick: false,
+    caption: "Login to Reddit",
     
     create: function() {
         this.inherited(arguments);
-        this.addClass("reddos-login-popup");
     },
     
     /***************************************************************************
@@ -27,11 +24,6 @@ enyo.kind({
      */
     
     components: [
-        
-        {name: "loginPopupTitle", 
-            className: "reddos-login-title",
-            content: "Login to Reddit",
-        },
         
         {kind: "enyo.RowGroup", components: [
             

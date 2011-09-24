@@ -1,22 +1,17 @@
 enyo.kind({
     
     name: "reddOS.view.main.popup.About", 
-    kind: "enyo.Popup",
+    kind: "enyo.ModalDialog",
     
     layoutKind: "VFlexLayout",
     
     pack: "start",
     align: "center",
     
-    modal: true,
-    scrim: true,
     lazy: false,
-    
-    dismissWithClick: false,
     
     create: function() {
         this.inherited(arguments);
-        this.addClass("reddos-about-popup");
         this.$.aboutPopupVersion.setContent("v "+enyo.fetchAppInfo().version);
     },
     
