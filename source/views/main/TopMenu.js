@@ -103,7 +103,7 @@ enyo.kind({
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                     {kind: "reddOS.component.SubredditButton",
-                        className: "reddos-topmenu-subreddit-button-header",
+                        className: "reddos-topmenu-subreddit-button-header reddos-topmenu-subreddit-button-header-hasmenu",
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "subredditListTitle",
                         content: "Subreddits",

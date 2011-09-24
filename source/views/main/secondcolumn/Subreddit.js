@@ -93,8 +93,7 @@ enyo.kind({
                                     
                                         {name: "postTitle", className: "reddos-subreddit-item-title", allowHtml: true},
                                         {name: "postDomain", className: "reddos-subreddit-item-domain", allowHtml: true},
-                                        {name: "postWhen", className: "reddos-subreddit-item-date",allowHtml: true},
-                                        {name: "postWhoWhere", className: "reddos-subreddit-item-user", allowHtml: true},
+                                        {name: "postMeta", className: "reddos-subreddit-item-meta",allowHtml: true},
                                     ],
                                 },
     
@@ -224,9 +223,7 @@ enyo.kind({
             
             this.$.postTitle.setContent(titleLine);
             this.$.postDomain.setContent(r.data.domain);
-            this.$.postWhen.setContent("posted "+reddOS_Date.timeSince(r.data.created_utc)+" ago");
-            
-            this.$.postWhoWhere.setContent("by "+r.data.author+" to "+r.data.subreddit);
+            this.$.postMeta.setContent("posted "+reddOS_Date.timeSince(r.data.created_utc)+" ago<br>by "+r.data.author+" to "+r.data.subreddit);
             this.$.commentCount.setCaption(r.data.num_comments);
             this.$.voteCount.setCaption(r.data.score);
             

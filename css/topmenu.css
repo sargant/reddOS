@@ -24,6 +24,16 @@
     margin-bottom: 0;
 }
 
+.reddos-topmenu-subreddit-button-header-down {
+    background-color: #0C5AA6;
+}
+
+.reddos-topmenu-subreddit-button-header-hasmenu {
+    background-repeat: no-repeat;
+    background-image: url("../images/solid-icon-downchevron.png");
+    background-position: right center;
+}
+
 .reddos-topmenu-subreddit-button-first {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
