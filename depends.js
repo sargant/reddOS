@@ -20,6 +20,7 @@ enyo.depends(
     
     "source/views/main/popup/About.js",
     "source/views/main/popup/Login.js",
+    "source/views/main/popup/Settings.js",
 
     "source/views/main/secondcolumn/Subreddit.js",
     
