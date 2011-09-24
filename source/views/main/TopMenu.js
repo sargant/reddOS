@@ -11,6 +11,8 @@ enyo.kind({
     /***************************************************************************
      * Published Items
      */
+     
+    subredditCache: [],
     
     events: {
         onObjectSend: "",
@@ -21,6 +23,30 @@ enyo.kind({
      */
     
     components: [
+    
+        // Sort menu for subreddit pane
+        
+        {name: "subredditMetaMenu",
+            kind: "enyo.Menu", 
+            width: "200px",
+            components: [
+                {caption: "Sort by...", components: [
+                    {kind:"enyo.MenuCheckItem", 
+                        name: "sortOptionDefault", 
+                        content: "Subscribers", 
+                        onclick: "sortSubredditList",
+                        sortkind: "default", 
+                        checked: true
+                    },
+                    {kind:"enyo.MenuCheckItem", 
+                        name: "sortOptionAlpha", 
+                        content: "A-Z", 
+                        onclick: "sortSubredditList", 
+                        sortkind: "alpha"
+                    },
+                ]},
+            ]
+        },
         
         {kind: "Scroller", flex: 1, components: [
         
@@ -107,6 +133,7 @@ enyo.kind({
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "subredditListTitle",
                         content: "Subreddits",
+                        onclick: "openSubredditMetaMenu",
                     },
                     {name: "subredditListContainer", components: [
                         {kind: "reddOS.component.SubredditButton",
@@ -122,7 +149,11 @@ enyo.kind({
     /***************************************************************************
      * Methods
      */
-        
+    
+    openSubredditMetaMenu: function() {
+        this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
+    },
+    
     refreshUserData: function(inUserData) {
         
         if(inUserData == null) {
@@ -138,39 +169,72 @@ enyo.kind({
         }
     },
     
-    refreshSubredditData: function(inSubredditData) {
+    refreshSubredditData: function (inSubredditData) {
+        
+        this.subredditCache.length = 0;
+        
+        for(var i in inSubredditData) {
+            
+            if (reddOS_Kind.isSubreddit(inSubredditData[i])) {
+                this.subredditCache.push(inSubredditData[i]);
+            }
+        }
+        
+        this.rebuildSubredditList(this.subredditCache);
+    },
+    
+    sortSubredditList: function(inSender) {
+        
+        // Bodge for javascript's inability to copy stuff
+        var k = enyo.json.parse(enyo.json.stringify(this.subredditCache));
+        
+        this.$.sortOptionDefault.setChecked(false);
+        this.$.sortOptionAlpha.setChecked(false);
+        
+        if(typeof inSender.sortkind == "undefined") {
+            
+            this.$.sortOptionDefault.setChecked(true);
+            
+        } else if(inSender.sortkind == "alpha") {
+            
+            k.sort(function(x,y){
+                a = x.data.display_name.toLowerCase();
+                b = y.data.display_name.toLowerCase();
+                if(a==b) { return 0; }
+                return (a<b) ? -1 : 1;
+            });
+            
+            this.$.sortOptionAlpha.setChecked(true);
+            
+        } else {
+            this.$.sortOptionDefault.setChecked(true);
+        }
+        
+        this.rebuildSubredditList(k);
+    },
+    
+    rebuildSubredditList: function (subredditList) {
         
         var c = this.$.subredditListContainer;
         c.destroyControls();
         
-        for(var i in inSubredditData) {
-            
-            if (typeof inSubredditData[i].kind == "undefined"
-                || typeof inSubredditData[i].data == "undefined"
-                || reddOS_Kind.isSubreddit(inSubredditData[i].kind) == false
-            )
-            {
-                continue;
-            }
+        for(var i in subredditList) {
             
             var temp =  {
                 owner: this,
                 onclick: "sendObject", 
                 kind: "reddOS.component.SubredditButton",
-                content: inSubredditData[i].data.display_name,
-                subreddit: inSubredditData[i],
+                content: subredditList[i].data.display_name,
+                subreddit: subredditList[i],
             };
             
-            if(i == (inSubredditData.length - 1)) {
+            if(i == (subredditList.length - 1)) {
                 temp.className = "reddos-topmenu-subreddit-button-last";
             }
             
             c.createComponent(temp);
-            
         }
-        
         c.render();
-        
     },
     
     sendObject: function(inSender) {
