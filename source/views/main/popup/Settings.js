@@ -17,7 +17,7 @@ enyo.kind({
     settings: [
         {
             name: "subredditSortOrder",
-            caption: "Subreddit sort order",
+            caption: "Default subreddit sort order",
             kind: "enyo.ListSelector",
             items: [
                 {caption: "Popularity", value: "default"},
