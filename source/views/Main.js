@@ -206,11 +206,11 @@ enyo.kind({
     
     authLogoutSuccess: function() {
         this.setUserInfo(null);
-        this.$.headerBar.refreshUserData(this.getUserInfo());
+        enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
     },
     
     authLogoutFailure: function() {
-        this.$.headerBar.refreshUserData(this.getUserInfo());
+        enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
     },
         
     // 
