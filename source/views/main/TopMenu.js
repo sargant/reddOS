@@ -127,7 +127,7 @@ enyo.kind({
             
             // Subreddit Lists
             
-            {name: "subredditList", showing: false,
+            {name: "subredditList",
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                     {kind: "reddOS.component.SubredditButton",
@@ -140,7 +140,9 @@ enyo.kind({
                     {name: "subredditListContainer", components: [
                         {kind: "reddOS.component.SubredditButton",
                             className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
-                            content: "Loading...",
+                            components: [
+                                {kind: "enyo.Spinner", showing: true, style: "margin: auto"},
+                            ]
                         },
                     ]},
                 ]
