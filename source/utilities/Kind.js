@@ -54,6 +54,12 @@ reddOS_Kind = {
     
     //////////
     
+    isFakeSubreddit: function(a) {
+        return this.isKind(a, this.SUBREDDIT) 
+            && typeof a.data.fake_subreddit != "undefined" 
+            && a.data.fake_subreddit == true;
+    },
+    
     isArray: function(a) {
         return a.constructor == Array;
     },

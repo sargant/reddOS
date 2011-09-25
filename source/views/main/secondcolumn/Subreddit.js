@@ -38,6 +38,13 @@ enyo.kind({
         // UI
         //
         
+        {kind: "enyo.Menu", name: "subredditViewMenu", components: [
+            {caption: "Hot", value: "", onclick: "changeSubredditView"},
+            {caption: "New", value: "new", onclick: "changeSubredditView"},
+            {caption: "Controversial", value: "controversial", onclick: "changeSubredditView"},
+            {caption: "Top", value: "top", onclick: "changeSubredditView"},
+        ]},
+        
         {kind: "enyo.Toolbar", 
             className: "reddos-toolbar",
             components: [
@@ -129,7 +136,7 @@ enyo.kind({
                     kind: "enyo.CustomButton", 
                     caption: "",
                     onclick: "loadSubredditMore",
-                    style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center"
+                    style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center",
                 },
             ]},
         
@@ -141,6 +148,7 @@ enyo.kind({
             
                 {kind: "enyo.GrabButton", slidingHandler: true},
                 {kind: "enyo.Spacer"},
+                {kind: "enyo.ToolButton", icon: "images/menu-icon-view.png", name: "subredditViewButton", onclick: "openSubredditViewMenu"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png", onclick: "refresh"},
             ]
@@ -150,7 +158,15 @@ enyo.kind({
     /***************************************************************************
      * Methods
      */
-        
+    
+    openSubredditViewMenu: function () {
+        this.$.subredditViewMenu.openAtControl(this.$.subredditViewButton, {left: 30, top: -30});
+    },
+    
+    changeSubredditView: function(inSender, inEvent) {
+        this.loadSubreddit(inSender.value);
+    },
+       
     subredditStoryCommentClick: function(inSender, inEvent) {
         this.cancelEvent(null, inEvent);
         
@@ -176,15 +192,37 @@ enyo.kind({
     },
     
     receiveObject: function(inObject) {
-        this.$.subredditPane.selectView(this.$.subredditLoading);
-        this.loadSubreddit(inObject);
+        
+        if(reddOS_Kind.isSubreddit(inObject)) {
+            this.subredditCache = new Object;
+            this.subredditCache = inObject;
+            this.loadSubreddit();
+        }
     },
     
-    loadSubreddit: function(inObject) {
+    loadSubreddit: function(inView) {
+        
+        this.$.subredditPane.selectView(this.$.subredditLoading);
+        
         this.$.subredditScroller.setScrollTop(0);
-        this.$.subredditCache = inObject;
-        this.$.secondMenuTitle.setContent(inObject.data.display_name);
-        this.$.subredditContentsService.setSubreddit(inObject.data.url);
+        
+        var display_name = this.subredditCache.data.display_name;
+        var url = this.subredditCache.data.url;
+        
+        if(typeof inView != "undefined" && inView != "") {
+            display_name += " ("+inView+")";
+            url += "/"+inView;
+        }
+        
+        this.$.secondMenuTitle.setContent(display_name);
+        
+        if(reddOS_Kind.isFakeSubreddit(this.subredditCache)) {
+            this.$.subredditViewButton.hide();
+        } else {
+            this.$.subredditViewButton.show();
+        }
+        
+        this.$.subredditContentsService.setSubreddit(url);
         this.$.subredditContentsService.loadStories();
     },
     
