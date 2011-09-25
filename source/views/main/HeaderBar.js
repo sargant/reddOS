@@ -10,6 +10,8 @@ enyo.kind({
     create: function() {
         this.inherited(arguments);
         this.addClass("reddos-header-bar");
+        
+        enyo.dispatcher.rootHandler.addListener(this);
     },
     
     /***************************************************************************
@@ -114,7 +116,10 @@ enyo.kind({
         this.$.userStatusPane.selectView(this.$.refreshingView);
     },
     
-    refreshUserData: function(inUserData) {
+    onUserInfoUpdateHandler: function(inSender, inEvent) {
+        
+        var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        
         if(reddOS_Kind.isAccount(inUserData) == false) {
             this.$.userStatusPane.selectView(this.$.loggedOutView);
         } else {

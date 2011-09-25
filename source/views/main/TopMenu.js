@@ -6,6 +6,8 @@ enyo.kind({
     create: function() {
         this.inherited(arguments);
         this.addClass("reddos-topmenu");
+        
+        enyo.dispatcher.rootHandler.addListener(this);
     },
     
     /***************************************************************************
@@ -154,9 +156,11 @@ enyo.kind({
         this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
     },
     
-    refreshUserData: function(inUserData) {
+    onUserInfoUpdateHandler: function(inSender, inEvent) {
         
-        if(inUserData == null) {
+        var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        
+        if(reddOS_Kind.isAccount(inUserData) == false) {
             this.$.myRedditList.hide();
         } else {
             this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
@@ -168,7 +172,9 @@ enyo.kind({
         }
     },
     
-    refreshSubredditData: function (inSubredditData) {
+    onSubscribedSubredditsUpdateHandler: function (inSender, inEvent) {
+        
+        var inSubredditData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
         
         this.subredditCache.length = 0;
         

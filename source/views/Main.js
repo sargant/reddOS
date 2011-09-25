@@ -229,9 +229,8 @@ enyo.kind({
             this.setUserInfo(inUserData);
         }
         
-        // UI Elements to update
-        this.$.paneTopMenu.refreshUserData(this.getUserInfo());
-        this.$.headerBar.refreshUserData(this.getUserInfo());
+        // Fire a custom event
+        enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
     },
     
     //
@@ -250,9 +249,8 @@ enyo.kind({
             this.setSubreddits(inSubredditData);
         }
         
-        // UI Elements to update
-        this.$.paneTopMenu.refreshSubredditData(this.getSubreddits());
-        
+        // Fire a custom event
+        enyo.dispatch({type: "onSubscribedSubredditsUpdate", data: this.getSubreddits()});
     },
     
     //
