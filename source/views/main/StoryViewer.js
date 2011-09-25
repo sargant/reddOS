@@ -82,7 +82,15 @@ enyo.kind({
     
     loadLink: function() {
         this.$.storyPane.selectView(this.$.storyView);
-        this.$.webBrowser.setUrl(this.linkCache.data.url);
+        
+        var url = this.linkCache.data.url;
+        
+        if(reddOS_Settings.getSetting("imgurDeepLink") && url.match(/^http:\/\/(www\.)?imgur.com\/[A-Za-z0-9]+/gi)) {
+            url = url.replace(/http:\/\/(www\.)?imgur/gi, "http://i.imgur");
+            url += ".jpg";
+        }
+        
+        this.$.webBrowser.setUrl(url);
     },
     
     loadComments: function() {
