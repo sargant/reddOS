@@ -127,7 +127,7 @@ enyo.kind({
             
             // Subreddit Lists
             
-            {name: "subredditList", 
+            {name: "subredditList", showing: false,
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                     {kind: "reddOS.component.SubredditButton",
@@ -220,26 +220,33 @@ enyo.kind({
     
     rebuildSubredditList: function (subredditList) {
         
-        var c = this.$.subredditListContainer;
-        c.destroyControls();
+        if(subredditList.length == 0) {
+            this.$.subredditList.hide();
+        } else {
+            
+            var c = this.$.subredditListContainer;
+            c.destroyControls();
         
-        for(var i in subredditList) {
+            for(var i in subredditList) {
             
-            var temp =  {
-                owner: this,
-                onclick: "sendObject", 
-                kind: "reddOS.component.SubredditButton",
-                content: subredditList[i].data.display_name,
-                subreddit: subredditList[i],
-            };
+                var temp =  {
+                    owner: this,
+                    onclick: "sendObject", 
+                    kind: "reddOS.component.SubredditButton",
+                    content: subredditList[i].data.display_name,
+                    subreddit: subredditList[i],
+                };
             
-            if(i == (subredditList.length - 1)) {
-                temp.className = "reddos-topmenu-subreddit-button-last";
+                if(i == (subredditList.length - 1)) {
+                    temp.className = "reddos-topmenu-subreddit-button-last";
+                }
+            
+                c.createComponent(temp);
             }
             
-            c.createComponent(temp);
+            c.render();
+            this.$.subredditList.show();
         }
-        c.render();
     },
     
     sendObject: function(inSender) {
