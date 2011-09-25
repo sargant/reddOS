@@ -165,10 +165,10 @@ enyo.kind({
         if(reddOS_Kind.isAccount(inUserData) == false) {
             this.$.myRedditList.hide();
         } else {
-            this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
-            this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
-            this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
-            this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
+            this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
+            this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
+            this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
+            this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
             
             this.$.myRedditList.show();
         }
