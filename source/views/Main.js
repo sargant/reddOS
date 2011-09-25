@@ -171,7 +171,7 @@ enyo.kind({
     },
     
     openSettingsPopup: function () {
-        this.$.settingsPopup.openAtCenter();
+        this.$.settingsPopup.openAndPopulate();
     },
     
     openAboutPopup: function () {

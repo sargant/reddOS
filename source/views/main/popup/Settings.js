@@ -2,6 +2,7 @@ enyo.kind({
     
     name: "reddOS.view.main.popup.Settings", 
     kind: "enyo.ModalDialog",
+    lazy: false,
     
     caption: "Settings",
     layoutKind: "VFlexLayout",
@@ -12,6 +13,23 @@ enyo.kind({
         this.inherited(arguments);
         this.addClass("reddos-settings-popup");
     },
+    
+    settings: [
+        {
+            name: "subredditSortOrder",
+            caption: "Subreddit sort order",
+            kind: "enyo.ListSelector",
+            items: [
+                {caption: "Default", value: "default"},
+                {caption: "A-Z", value: "alpha"},
+            ]
+        },
+        {
+            name: "imgurDeepLink",
+            caption: "Imgur deep linking",
+            kind: "enyo.CheckBox",
+        },
+    ],
     
     /***************************************************************************
      * Published Items
@@ -27,21 +45,11 @@ enyo.kind({
     components: [
     
         {kind: "enyo.Group", components: [
-            {kind: "enyo.Scroller", height: "400px", components: [
-                {kind: "enyo.Item", layoutKind: "HFlexLayout", align: "center", components: [
-                    {content: "Subreddit sort order"},
-                    {kind: "enyo.Spacer"},
-                    {kind: "enyo.ListSelector", items: [
-                        {caption: "Default", value: "default"},
-                        {caption: "A-Z", value: "alpha"},
-                    ]},
-                ]},
-                {kind: "enyo.Item", layoutKind: "HFlexLayout", components: [
-                    {content: "Deep linking to imgur"},
-                    {kind: "enyo.Spacer"},
-                    {kind: "enyo.CheckBox"},
-                ]},
-            ]},
+            {kind: "enyo.Scroller", 
+                name: "settingsScroller", 
+                height: "400px", 
+                components: []
+            },
         ]},
         
         {kind: "HFlexBox", components: [
@@ -55,7 +63,7 @@ enyo.kind({
                 content: "Save",
                 className: "enyo-button-affirmative", 
                 flex: 1, 
-                onclick: "dismiss"
+                onclick: "saveSettings"
             },
         ]},
     ],
@@ -63,6 +71,85 @@ enyo.kind({
     /***************************************************************************
      * Methods 
      */
+    
+    openAndPopulate: function () {
+        
+        // Load the stored values
+        
+        var settingsValues = enyo.json.parse(localStorage.getItem("reddOS_settings"));
+        
+        if(settingsValues == null) {
+            settingsValues = {};
+        }
+        
+        // Build the settings panel from the settings JSON
+        
+        this.$.settingsScroller.destroyControls();
+        
+        for(i in this.settings) {
+            
+            var control = {
+                name: this.settings[i].name,
+                kind: this.settings[i].kind,
+            };
+            
+            if(control.kind == "enyo.ListSelector") {
+                control.items = this.settings[i].items;
+                
+                if(typeof settingsValues[control.name] != "undefined") {
+                    control.value = settingsValues[control.name];
+                }
+            }
+            
+            if(control.kind == "enyo.CheckBox") {
+                if(typeof settingsValues[control.name] != "undefined") {
+                    control.checked = settingsValues[control.name];
+                }
+            }
+            
+            var temp = {
+                owner: this,
+                kind: "enyo.Item",
+                layoutKind: "HFlexLayout",
+                align: "center",
+                components: [
+                    {content: this.settings[i].caption},
+                    {kind: "enyo.Spacer"},
+                    control,
+                ],
+            }
+            
+            this.$.settingsScroller.createComponent(temp);
+        }
+        
+        this.$.settingsScroller.render();
+        this.openAtCenter();
+    },
+    
+    saveSettings: function () {
+        
+        var settingsValues = enyo.json.parse(localStorage.getItem("reddOS_settings"));
+        
+        if(settingsValues == null) settingsValues = {};
+        
+        for(i in this.settings) {
+            
+            var controlName = this.settings[i].name;
+            
+            if(this.settings[i].kind == "enyo.ListSelector") {
+                settingsValues[controlName] = this.$[controlName].getValue();
+            }
+            
+            if(this.settings[i].kind == "enyo.CheckBox") {
+                settingsValues[controlName] = this.$[controlName].getChecked();
+            }
+            
+        }
+        
+        localStorage.setItem("reddOS_settings", enyo.json.stringify(settingsValues));
+        
+        this.dismiss();
+    },
     
     dismiss: function () {
         this.close();
