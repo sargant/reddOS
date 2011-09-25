@@ -33,15 +33,13 @@ enyo.kind({
             width: "200px",
             components: [
                 {caption: "Sort by...", components: [
-                    {kind:"enyo.MenuCheckItem", 
-                        name: "sortOptionDefault", 
-                        content: "Subscribers", 
+                    {name: "sortOptionDefault", 
+                        content: "Popularity", 
                         onclick: "sortSubredditList",
                         sortkind: "default", 
                         checked: true
                     },
-                    {kind:"enyo.MenuCheckItem", 
-                        name: "sortOptionAlpha", 
+                    {name: "sortOptionAlpha", 
                         content: "A-Z", 
                         onclick: "sortSubredditList", 
                         sortkind: "alpha"
@@ -158,6 +156,12 @@ enyo.kind({
         this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
     },
     
+    onSettingsUpdateHandler: function (inSender, inEvent) {
+        var inEventData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        var subredditSortOrder = (typeof inEventData.subredditSortOrder == "undefined") ? "default" : inEventData.subredditSortOrder;
+        this.sortSubredditList({sortkind: subredditSortOrder});
+    },
+    
     onUserInfoUpdateHandler: function(inSender, inEvent) {
         
         var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
@@ -187,7 +191,7 @@ enyo.kind({
             }
         }
         
-        this.rebuildSubredditList(this.subredditCache);
+        this.sortSubredditList({sortkind: reddOS_Settings.getSetting("subredditSortOrder")});
     },
     
     sortSubredditList: function(inSender) {
@@ -195,13 +199,8 @@ enyo.kind({
         // Bodge for javascript's inability to copy stuff
         var k = enyo.json.parse(enyo.json.stringify(this.subredditCache));
         
-        this.$.sortOptionDefault.setChecked(false);
-        this.$.sortOptionAlpha.setChecked(false);
-        
         if(typeof inSender.sortkind == "undefined") {
-            
-            this.$.sortOptionDefault.setChecked(true);
-            
+            // do nothing
         } else if(inSender.sortkind == "alpha") {
             
             k.sort(function(x,y){
@@ -210,11 +209,6 @@ enyo.kind({
                 if(a==b) { return 0; }
                 return (a<b) ? -1 : 1;
             });
-            
-            this.$.sortOptionAlpha.setChecked(true);
-            
-        } else {
-            this.$.sortOptionDefault.setChecked(true);
         }
         
         this.rebuildSubredditList(k);

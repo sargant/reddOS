@@ -10,6 +10,7 @@ enyo.depends(
     
     "source/utilities/Date.js",
     "source/utilities/Kind.js",
+    "source/utilities/Settings.js",
     
     "source/components/SubredditButton.js",
     

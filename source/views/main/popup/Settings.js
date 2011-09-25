@@ -20,7 +20,7 @@ enyo.kind({
             caption: "Subreddit sort order",
             kind: "enyo.ListSelector",
             items: [
-                {caption: "Default", value: "default"},
+                {caption: "Popularity", value: "default"},
                 {caption: "A-Z", value: "alpha"},
             ]
         },
@@ -143,11 +143,10 @@ enyo.kind({
             if(this.settings[i].kind == "enyo.CheckBox") {
                 settingsValues[controlName] = this.$[controlName].getChecked();
             }
-            
         }
         
         localStorage.setItem("reddOS_settings", enyo.json.stringify(settingsValues));
-        
+        enyo.dispatch({type: "onSettingsUpdate", data: settingsValues});
         this.dismiss();
     },
     
