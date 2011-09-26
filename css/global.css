@@ -6,3 +6,7 @@ body {
     background-color: #0C5AA6;
     height: 32px;
 }
+
+.enyo-grabbutton {
+    position: static !important;
+}

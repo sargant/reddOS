@@ -147,8 +147,8 @@ enyo.kind({
             components: [
             
                 {kind: "enyo.GrabButton", slidingHandler: true},
-                {kind: "enyo.Spacer"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-view.png", name: "subredditViewButton", onclick: "openSubredditViewMenu"},
+                {kind: "enyo.Spacer"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png", onclick: "refresh"},
             ]
