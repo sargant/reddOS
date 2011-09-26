@@ -6,7 +6,10 @@ enyo.depends(
     "css/login.css",
     "css/secondcolumn.css",
     "css/storyviewer.css",
+    "css/subredditdescription.css",
     "css/topmenu.css",
+    
+    "source/3rdparty/showdown.js",
     
     "source/utilities/Date.js",
     "source/utilities/History.js",
@@ -23,6 +26,7 @@ enyo.depends(
     "source/views/main/popup/About.js",
     "source/views/main/popup/Login.js",
     "source/views/main/popup/Settings.js",
+    "source/views/main/popup/SubredditDescription.js",
 
     "source/views/main/secondcolumn/Subreddit.js",
     

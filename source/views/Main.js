@@ -12,6 +12,7 @@ enyo.kind({
     create: function() {
         this.inherited(arguments);
         enyo.setAllowedOrientation("landscape");
+        enyo.dispatcher.rootHandler.addListener(this);
     },
     
     /***************************************************************************
@@ -160,6 +161,12 @@ enyo.kind({
         //} else {
             this.refreshSubredditInfo();
         //}
+    },
+    
+    onLinkClickHandler: function(inSender, inEvent) {
+        var inUrl = inEvent.url;
+        if(inUrl.charAt(0) == "/") inUrl = "http://www.reddit.com" + inUrl;
+        window.open(inUrl);
     },
     
     //

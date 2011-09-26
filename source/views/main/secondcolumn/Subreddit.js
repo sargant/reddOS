@@ -34,6 +34,10 @@ enyo.kind({
             onFailure: "incomingSubredditContents",
         },
         
+        {name: "descriptionPopup",
+            kind: "reddOS.main.view.popup.SubredditDescription"
+        },
+        
         //
         // UI
         //
@@ -149,7 +153,7 @@ enyo.kind({
                 {kind: "enyo.GrabButton", slidingHandler: true},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-view.png", name: "subredditViewButton", onclick: "openSubredditViewMenu"},
                 {kind: "enyo.Spacer"},
-                {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png"},
+                {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png", onclick: "showDescription"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png", onclick: "refresh"},
             ]
         },
@@ -158,6 +162,10 @@ enyo.kind({
     /***************************************************************************
      * Methods
      */
+    
+    showDescription: function () {
+        this.$.descriptionPopup.openDescription(this.subredditCache);
+    },
     
     openSubredditViewMenu: function () {
         this.$.subredditViewMenu.openAtControl(this.$.subredditViewButton, {left: 30, top: -30});

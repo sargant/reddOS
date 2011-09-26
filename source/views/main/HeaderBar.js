@@ -93,8 +93,8 @@ enyo.kind({
                     
                         {kind: "CustomButton", 
                             name: "loggedInUsername",
-                            className: "reddos-header-user-button", 
-                            cssNamespace: "reddos-header-user-button",
+                            className: "reddos-header-button reddos-header-light-button", 
+                            cssNamespace: "reddos-header-light-button",
                             content: "", 
                         },
                         
