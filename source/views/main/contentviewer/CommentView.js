@@ -77,7 +77,7 @@
         this.$.commentTitle.setContent(data.title);
         this.$.commentMeta.setContent("posted "+reddOS_Date.timeSince(data.created_utc)+" ago by "+data.author+" to "+data.subreddit);
         
-        if(data.selftext != false) {
+        if(data.is_self) {
             
             var text = data.selftext;
             var markdown = new Markdown.Converter();
@@ -87,9 +87,10 @@
             
             this.$.commentSelftext.setContent(text);
             this.$.commentSelftext.show();
-            
+            this.$.toolbarLinkButton.hide();
         } else {
             this.$.commentSelftext.hide();
+            this.$.toolbarLinkButton.show();
         }
     },
     
