@@ -49,6 +49,10 @@ enyo.kind({
             {caption: "Top", value: "top", onclick: "changeSubredditView"},
         ]},
         
+        {kind: "enyo.Menu", name: "subredditShareMenu", components: [
+            {caption: "Show subreddit description", onclick: "showSubredditDescription"}, 
+        ]},
+        
         {kind: "enyo.Toolbar", 
             className: "reddos-toolbar",
             components: [
@@ -153,7 +157,7 @@ enyo.kind({
                 {kind: "enyo.GrabButton", slidingHandler: true},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-view.png", name: "subredditViewButton", onclick: "openSubredditViewMenu"},
                 {kind: "enyo.Spacer"},
-                {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png", onclick: "showDescription"},
+                {kind: "enyo.ToolButton", icon: "images/menu-icon-share.png", name: "subredditShareButton", onclick: "openSubredditShareMenu"},
                 {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png", onclick: "refresh"},
             ]
         },
@@ -163,12 +167,16 @@ enyo.kind({
      * Methods
      */
     
-    showDescription: function () {
+    showSubredditDescription: function () {
         this.$.descriptionPopup.openDescription(this.subredditCache);
     },
     
     openSubredditViewMenu: function () {
         this.$.subredditViewMenu.openAtControl(this.$.subredditViewButton, {left: 30, top: -30});
+    },
+    
+    openSubredditShareMenu: function () {
+        this.$.subredditShareMenu.openAtControl(this.$.subredditShareButton, {left: 30, top: -50});
     },
     
     changeSubredditView: function(inSender, inEvent) {
