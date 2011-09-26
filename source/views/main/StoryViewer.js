@@ -55,8 +55,27 @@ enyo.kind({
             className: "reddos-toolbar",
             components: [
                 {kind: enyo.GrabButton},
+                
+                {kind: "enyo.ToolButton", 
+                    name: "toolbarLinkButton", 
+                    icon: "images/menu-icon-link.png", 
+                    onclick: "loadLink",
+                    showing: false
+                },
+                {kind: "enyo.ToolButton", 
+                    name: "toolbarCommentsButton", 
+                    icon: "images/menu-icon-comments.png", 
+                    onclick: "loadComments",
+                    showing: false
+                },
+                
                 {kind: "enyo.Spacer"},
-                {kind: "enyo.ToolButton", icon: "images/menu-icon-refresh.png", onclick: "webBrowserRefresh"},
+                {kind: "enyo.ToolButton", 
+                    name: "toolbarRefreshButton",
+                    icon: "images/menu-icon-refresh.png", 
+                    onclick: "webBrowserRefresh",
+                    showing: false
+                },
             ]
         },
     ],
@@ -71,11 +90,24 @@ enyo.kind({
         
         this.linkCache = inObject;
         
+        this.$.toolbarRefreshButton.show();
+        
         if(this.linkCache.data.is_self == true) {
+            
+            this.$.toolbarLinkButton.hide();
+            this.$.toolbarCommentsButton.hide();
             this.loadComments();
+            
         } else if(typeof this.linkCache.target == "undefined" || this.linkCache.target == "link") {
+            
+            this.$.toolbarLinkButton.show();
+            this.$.toolbarCommentsButton.show();
             this.loadLink();
+            
         } else {
+            
+            this.$.toolbarLinkButton.show();
+            this.$.toolbarCommentsButton.show();
             this.loadComments();
         }
     },
