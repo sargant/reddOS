@@ -28,6 +28,16 @@ enyo.kind({
      */
     
     components: [
+    
+        {name: "logoutConfirmationPopup",
+            kind: "enyo.ModalDialog",
+            layoutKind: "HFlexLayout",
+            caption: "Are you sure?",
+            components: [
+                {kind: "enyo.Button", flex: 1, caption: "Cancel", onclick: "cancelLogout"},
+                {kind: "enyo.Button", flex: 1, className: "enyo-button-negative", caption: "Logout", onclick: "confirmLogout"},
+            ],
+        },
         
         {name: "viewTitle", 
             content: "reddOS", 
@@ -89,6 +99,7 @@ enyo.kind({
                         },
                         
                         {kind: "CustomButton", 
+                            name: "logoutButton",
                             className: "reddos-header-button", 
                             cssNamespace: "reddos-header-button",
                             content:"Logout", 
@@ -108,7 +119,16 @@ enyo.kind({
         this.doRequestLogin();
     },
     
-    logout: function() {
+    logout: function () {
+        this.$.logoutConfirmationPopup.openAtControl(this.$.logoutButton, {left: 150});
+    },
+    
+    cancelLogout: function () {
+        this.$.logoutConfirmationPopup.close();
+    },
+    
+    confirmLogout: function() {
+        this.$.logoutConfirmationPopup.close();
         this.doRequestLogout();
     },
         
