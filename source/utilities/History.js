@@ -34,7 +34,7 @@ reddOS_History = {
             historyArray.push(name);
             
             while(historyArray.length > 500) {
-                historyArray.pop();
+                historyArray.shift();
             }
             
             localStorage.setItem("reddOS_link_history", enyo.json.stringify(historyArray));
