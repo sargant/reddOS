@@ -16,65 +16,40 @@ enyo.kind({
     
     components: [
     
-        {kind: "enyo.Toolbar", 
-            className: "reddos-toolbar",
-            components: [
-                {kind: "enyo.ToolButton", icon: "images/menu-icon-back.png", onclick: "webBrowserBack"},
-            
-                {kind: "HtmlContent", name: "webBrowserTitle", flex: 1,
-                    style: "margin-left: 8px; font-size: 16px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"},
-                {kind: enyo.Spinner, name: "webBrowserLoading"},
-            
-            ]
-        },
-    
-        {kind: "Pane", name: "storyPane", transitionKind: "enyo.transitions.Simple",
+        {kind: "Pane", name: "contentPane", transitionKind: "enyo.transitions.Simple",
             flex: 1, className: "reddos-story-view", components: [
             
                 // Empty (default) view
                 {name: "plainView", layoutKind: "VFlexLayout", 
-                    flex: 1, pack: "center", align: "center", components: [
-                        {kind: "Image", src: "images/reddOS_filler.png"},
+                    components: [
+                        {kind: "enyo.Toolbar", className: "reddos-toolbar"},
+                        {kind: "enyo.VFlexBox", flex: 1, 
+                            pack: "center", align: "center", 
+                            components: [
+                                {kind: "enyo.Image", src: "images/reddOS_filler.png"},
+                            ]
+                        },
+                        {kind: "enyo.Toolbar", className: "reddos-toolbar",
+                            components: [
+                                {kind: "enyo.GrabButton"},
+                                {kind: "enyo.Spacer"},
+                            ]
+                        },
                     ]
                 },
                 
                 // Web View
-                {name: "storyView", layoutKind: "VFlexLayout", 
-                    flex: 1, components: [
-                            {name: "webBrowser", kind: "WebView", minFontSize: 0, flex: 1, width: "100%", height: "100%",
-                                onLoadStarted: "webBrowserLoadStarted",
-                                onLoadStopped: "webBrowserLoadStopped",
-                                onPageTitleChanged: "webBrowserTitleChanged",
-                            },
-                    ]
-                },
-            ]
-        },
-        
-        {kind: "enyo.Toolbar", 
-            className: "reddos-toolbar",
-            components: [
-                {kind: enyo.GrabButton},
-                
-                {kind: "enyo.ToolButton", 
-                    name: "toolbarLinkButton", 
-                    icon: "images/menu-icon-link.png", 
-                    onclick: "loadLink",
-                    showing: false
-                },
-                {kind: "enyo.ToolButton", 
-                    name: "toolbarCommentsButton", 
-                    icon: "images/menu-icon-comments.png", 
-                    onclick: "loadComments",
-                    showing: false
+                {name: "webView", 
+                    kind: "reddOS.view.main.contentviewer.WebView",
+                    onToggleView: "toggleLinkCommentView",
+                    flex: 1
                 },
                 
-                {kind: "enyo.Spacer"},
-                {kind: "enyo.ToolButton", 
-                    name: "toolbarRefreshButton",
-                    icon: "images/menu-icon-refresh.png", 
-                    onclick: "webBrowserRefresh",
-                    showing: false
+                // Comment View
+                {name: "commentView", 
+                    kind: "reddOS.view.main.contentviewer.CommentView",
+                    onToggleView: "toggleLinkCommentView",
+                    flex: 1
                 },
             ]
         },
@@ -90,27 +65,30 @@ enyo.kind({
         
         this.linkCache = inObject;
         
-        this.$.toolbarRefreshButton.show();
-        
         if(this.linkCache.data.is_self == true) {
-            
-            this.$.toolbarLinkButton.hide();
-            this.$.toolbarCommentsButton.hide();
-            this.loadComments();
-            
+            this.$.commentView.receiveObject(this.linkCache);
+            this.$.contentPane.selectView(this.$.commentView);
         } else if(typeof this.linkCache.target == "undefined" || this.linkCache.target == "link") {
-            
-            this.$.toolbarLinkButton.show();
-            this.$.toolbarCommentsButton.show();
-            this.loadLink();
-            
+            this.$.webView.receiveUrl(this.linkCache.data.url);
+            this.$.contentPane.selectView(this.$.webView);
         } else {
-            
-            this.$.toolbarLinkButton.show();
-            this.$.toolbarCommentsButton.show();
-            this.loadComments();
+            this.$.commentView.receiveObject(this.linkCache);
+            this.$.contentPane.selectView(this.$.commentView);
         }
     },
+    
+    toggleLinkCommentView: function () {
+    
+        if(this.$.contentPane.getViewName() == "commentView") {
+            this.$.webView.receiveUrl(this.linkCache.data.url);
+            this.$.contentPane.selectView(this.$.webView);
+        } else {
+            this.$.commentView.receiveObject(this.linkCache);
+            this.$.contentPane.selectView(this.$.commentView);
+        }
+    },
+    
+    /*
     
     loadLink: function() {
         this.$.storyPane.selectView(this.$.storyView);
@@ -130,33 +108,5 @@ enyo.kind({
         this.$.webBrowser.setUrl("http://i.reddit.com"+this.linkCache.data.permalink);
     },
     
-    webBrowserRefresh: function() {
-        if(typeof this.$.webBrowser.reloadPage == "function") {
-            this.$.webBrowser.reloadPage();
-        } else {
-            this.$.webBrowser.refresh();
-        }
-    },
-    
-    webBrowserBack: function() {
-        this.$.webBrowser.goBack();
-    },
-    
-    webBrowserTitleChanged: function(inSender, inTitle) {
-        
-        if(inTitle == "image_title") {
-            inTitle = this.$.webBrowser.getUrl();
-        }
-        
-        this.$.webBrowserTitle.setContent(inTitle);
-    },
-    
-    webBrowserLoadStarted: function() {
-        this.$.webBrowserTitle.setContent(this.$.webBrowser.getUrl());
-        this.$.webBrowserLoading.show();
-    },
-    
-    webBrowserLoadStopped: function() {
-        this.$.webBrowserLoading.hide();
-    },
+    */
 });

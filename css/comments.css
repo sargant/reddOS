@@ -1,0 +1,24 @@
+.reddos-comments {
+    font-size: 14px;
+}
+
+.reddos-comments-header {
+    padding: 15px;
+    background-color: #CEE3F8;
+    margin: 0;
+}
+
+.reddos-comments-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reddos-comments-meta {
+    margin-top: 5px;
+    color: #444444;
+}
+
+.reddos-comments-selftext {
+    margin: 0;
+    padding: 15px;
+}

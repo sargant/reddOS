@@ -73,7 +73,7 @@ enyo.kind({
         // Set description, if possible
         
         if(typeof inObject.data.description != "undefined" && inObject.data.description != false) {
-            var converter = new Showdown.converter();
+            var converter = new Markdown.Converter();
             this.$.descriptionContent.setContent(converter.makeHtml(inObject.data.description));
         } else {
             this.$.descriptionContent.setContent("This subreddit does not appear to have a description!");
