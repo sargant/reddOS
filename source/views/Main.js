@@ -165,7 +165,17 @@ enyo.kind({
     
     onLinkClickHandler: function(inSender, inEvent) {
         var inUrl = inEvent.url;
-        if(inUrl.charAt(0) == "/") inUrl = "http://www.reddit.com" + inUrl;
+        
+        // Handle basic relative links
+        if(inUrl.charAt(0) == "/") {
+            inUrl = "http://www.reddit.com" + inUrl;
+        }
+        
+        // Handle links now pointing at filesystem for unknown reasons
+        if(inUrl.substr(0,7) == "file://") {
+            inUrl = "http://www.reddit.com" + inUrl.substr(7);
+        }
+        
         window.open(inUrl);
     },
     
