@@ -16,6 +16,10 @@
     font-size: 14px;
 }
 
+.reddos-subreddit-item-title-visited {
+    color: #888888;
+}
+
 .reddos-subreddit-item-nsfw {
     color: white;
     font-weight: bold;

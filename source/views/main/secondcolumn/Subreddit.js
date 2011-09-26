@@ -179,6 +179,8 @@ enyo.kind({
         this.cancelEvent(null, inEvent);
         
         var obj = this.subredditContentsCache[inEvent.rowIndex];
+        reddOS_History.addVisited(obj.data.name);
+        this.$.subredditContents.renderRow(inEvent.rowIndex);
         obj.target = "link";
         this.doObjectSend(obj);
     },
@@ -257,6 +259,10 @@ enyo.kind({
             
             if(r.data.over_18) {
                 titleLine = "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span> " + titleLine;
+            }
+            
+            if(reddOS_History.isVisited(r.data.name)) {
+                this.$.postTitle.addClass("reddos-subreddit-item-title-visited");
             }
             
             this.$.postTitle.setContent(titleLine);

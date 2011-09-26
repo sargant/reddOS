@@ -9,6 +9,7 @@ enyo.depends(
     "css/topmenu.css",
     
     "source/utilities/Date.js",
+    "source/utilities/History.js",
     "source/utilities/Kind.js",
     "source/utilities/Settings.js",
     
