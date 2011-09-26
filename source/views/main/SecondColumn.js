@@ -50,9 +50,8 @@ enyo.kind({
                         {kind: "enyo.Toolbar",
                             className: "reddos-toolbar",
                             components: [
-                                {kind: "enyo.GrabButton",
-                                    slidingHandler: true
-                                },
+                                {kind: "enyo.GrabButton"},
+                                {kind: "enyo.Spacer"},
                             ]
                         },
                     ],
