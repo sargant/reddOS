@@ -30,17 +30,24 @@
     margin-left: 8px;
 }
 
-.reddos-header-user-button {
+.reddos-header-light-button {
     color: #04396C;
     background-color: white;
-    border-radius: 5px;
-    padding: 8px 12px 8px 12px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 8px;
 }
 
-.reddos-header-user-button-down {
+.reddos-header-light-button-down {
+    color: #FF4500;
+    background-color: #EEE;
+}
+
+.reddos-header-mail {
+    background-repeat: no-repeat;
+    background-image: url("../images/mail-notification.png");
+    background-position: center;
+}
+
+.reddos-header-mail-down {
+    background-image: url("../images/mail-notification-new.png");
     color: #FF4500;
     background-color: #EEE;
 }
