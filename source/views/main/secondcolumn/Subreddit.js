@@ -171,6 +171,8 @@ enyo.kind({
         this.cancelEvent(null, inEvent);
         
         var obj = this.subredditContentsCache[inEvent.rowIndex];
+        reddOS_History.addVisited(obj.data.name);
+        this.$.subredditContents.renderRow(inEvent.rowIndex);
         obj.target = "comments";
         this.doObjectSend(obj);
     },
