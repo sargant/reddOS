@@ -58,7 +58,7 @@
     
         if(this.$.webBrowser.getUrl() == inUrl) return;
         
-        if(reddOS_Settings.getSetting("imgurDeepLink") && inUrl.match(/^http:\/\/(www\.)?imgur.com\/[A-Za-z0-9]+/gi)) {
+        if(reddOS_Settings.getSetting("imgurDeepLink") && inUrl.match(/^http:\/\/(www\.)?imgur.com\/[A-Za-z0-9]+$/gi)) {
             inUrl = inUrl.replace(/http:\/\/(www\.)?imgur/gi, "http://i.imgur");
             inUrl += ".jpg";
         }
