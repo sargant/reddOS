@@ -57,7 +57,7 @@
                         {name: "headerBlock", 
                             className: "reddos-comments-header", 
                             components: [
-                                {name: "commentTitle", className: "reddos-comments-title"},
+                                {name: "commentTitle", className: "reddos-comments-title", allowHtml: true},
                                 {name: "commentMeta", className: "reddos-comments-meta"},
                             ]
                         },
