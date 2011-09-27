@@ -4,7 +4,7 @@
 
 .reddos-subreddit-item {
     border: 0;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .reddos-subreddit-item-odd {
@@ -13,7 +13,6 @@
 
 .reddos-subreddit-item-title {
     font-weight: bold;
-    font-size: 14px;
 }
 
 .reddos-subreddit-item-title-visited {
@@ -23,21 +22,21 @@
 .reddos-subreddit-item-nsfw {
     color: white;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     background-color: #b00;
     padding: 2px 4px 2px 4px;
     border-radius: 4px;
 }
 
 .reddos-subreddit-item-domain {
-    font-size: 12px;
+    font-size: 14px;
     color: #04396C;
     margin-top: 4px;
     margin-bottom: 2px;
 }
 
 .reddos-subreddit-item-meta {
-    font-size: 12px;
+    font-size: 14px;
     color: #444444;
 }
 
@@ -52,7 +51,7 @@
 .reddos-subreddit-item-commentbutton,
 .reddos-subreddit-item-votebutton {
     color: white;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     background-repeat: no-repeat;
     background-position: right center;

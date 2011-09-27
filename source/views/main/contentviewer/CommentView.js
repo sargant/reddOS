@@ -43,6 +43,7 @@
                 {kind: "enyo.VFlexBox", name: "commentLoading", flex: 1,
                     align: "center", pack: "center", components: [
                         {kind: "enyo.SpinnerLarge", showing: true},
+                        {name: "commentLoadingMessage", showing: false, style: "font-size: 18px; font-weight: bold; margin-top: 2em; color: #888888"},
                     ]
                 },
             
@@ -117,6 +118,26 @@
         }
     },
     
+    goNotReady: function (message) {
+    
+        if(message) {
+            this.$.commentLoadingMessage.show();
+            this.$.commentLoadingMessage.setContent(message);
+        } else {
+            this.$.commentLoadingMessage.hide();
+        }
+        
+        this.$.commentViewPane.selectView(this.$.commentLoading);
+    },
+    
+    goReady: function () {
+        this.$.commentViewPane.selectView(this.$.commentScroller);
+    },
+    
+    goError: function () {
+        this.$.commentViewPane.selectView(this.$.commentError);
+    },
+    
     shareComments: function () {
         this.$.commentShareMenu.openAtControl(this.$.commentShareButton, {left: 90, top: -50});
     },
@@ -126,14 +147,16 @@
     },
     
     refreshComments: function () {
-        this.$.commentViewPane.selectView(this.$.commentLoading);
+        this.goNotReady("Downloading...");
         this.$.commentsService.loadComments(this.linkCache.data.permalink);
     },
     
     incomingComments: function(inSender, inResults) {
+    
+        this.goNotReady("Reticulating splines...");
         
         if(!inResults || !reddOS_Kind.isArray(inResults) || inResults.length != 2) {
-            this.$.commentViewPane.selectView(this.$.commentError);
+            this.goError();
             return false;
         }
         
@@ -146,7 +169,7 @@
             this.commentsCache = inResults[1].data.children;
             
         } catch (e) {
-            this.$.commentViewPane.selectView(this.$.commentError);
+            this.goError();
             return false;
         }
         
@@ -154,9 +177,9 @@
         this.$.commentScroller.setScrollLeft(0);
         
         if(this.renderHeaderFromCache() && this.renderCommentsFromCache()) {
-            this.$.commentViewPane.selectView(this.$.commentScroller);
+            this.goReady();
         } else {
-            this.$.commentViewPane.selectView(this.$.commentError);
+            this.goError();
         }
     },
     

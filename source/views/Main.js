@@ -105,7 +105,7 @@ enyo.kind({
         
         {kind: "SlidingPane", flex: 1, components: [
             
-            {dragAnywhere: false, width: "220px", components: [
+            {dragAnywhere: false, width: "242px", components: [
                 
                 {name: "paneTopMenu", 
                     kind: "reddOS.view.main.TopMenu",
@@ -115,7 +115,7 @@ enyo.kind({
                 
             ]},
             
-            {dragAnywhere: false, width: "350px", components: [
+            {dragAnywhere: false, width: "391px", components: [
                 
                 {name: "paneSecondMenu",
                     kind: "reddOS.view.main.SecondColumn", 
