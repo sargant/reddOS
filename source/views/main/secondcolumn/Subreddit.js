@@ -269,6 +269,8 @@ enyo.kind({
         
         var r = this.subredditContentsCache[inIndex];
         
+        var dontTrackVisited = reddOS_Settings.getSetting("dontTrackVisited");
+        
         if (reddOS_Kind.isLink(r)) {
             this.$.subredditContents.setStyle("border: 0");
             if(inIndex % 2 == 1) { this.$.subredditSingleItem.addClass("reddos-subreddit-item-odd"); }
@@ -279,7 +281,7 @@ enyo.kind({
                 titleLine = "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span> " + titleLine;
             }
             
-            if(reddOS_History.isVisited(r.data.name)) {
+            if(reddOS_History.isVisited(r.data.name) && !dontTrackVisited) {
                 this.$.postTitle.addClass("reddos-subreddit-item-title-visited");
             }
             

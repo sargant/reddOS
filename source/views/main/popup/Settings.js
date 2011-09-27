@@ -29,6 +29,11 @@ enyo.kind({
             caption: "Imgur deep linking",
             kind: "enyo.CheckBox",
         },
+        {
+            name: "dontTrackVisited",
+            caption: "Don't record my visited links",
+            kind: "enyo.CheckBox",
+        },
     ],
     
     /***************************************************************************
@@ -43,7 +48,7 @@ enyo.kind({
      */
     
     components: [
-    
+        
         {kind: "enyo.Group", components: [
             {kind: "enyo.Scroller", 
                 name: "settingsScroller", 

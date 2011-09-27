@@ -15,6 +15,8 @@ reddOS_History = {
     
     addVisited: function (name) {
         
+        if(reddOS_Settings.getSetting("dontTrackVisited")) return;
+        
         var historyArray;
         var temp = localStorage.getItem("reddOS_link_history");
         
