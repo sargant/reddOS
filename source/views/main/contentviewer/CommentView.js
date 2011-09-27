@@ -59,7 +59,7 @@
                             components: [
                                 {name: "commentTitle", className: "reddos-comments-title", allowHtml: true},
                                 {name: "commentMeta", className: "reddos-comments-meta"},
-                            ]
+                            ],
                         },
                         {name: "commentSelftext", allowHtml: true, className: "reddos-comments-selftext"},
                         {name: "commentsBlock", className: "reddos-comments-block",
@@ -221,7 +221,7 @@
         
         var metastring = "<span class=\""+op+"reddos-comment-author\">"+cd.author+"</span>";
         metastring += " " + (cd.ups-cd.downs) + " points";
-        metastring += " " + reddOS_Date.timeSince(cd.created_utc);
+        metastring += " " + reddOS_Date.timeSince(cd.created_utc) + " ago";
         
         returnObject.components.push({content: metastring, className: "reddos-comment-meta"});
         
