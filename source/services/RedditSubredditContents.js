@@ -50,11 +50,8 @@ enyo.kind({
      */
         
     setSubreddit: function(url) {
-        if(this.currentSubreddit != url) {
-            this.reset();
-            this.currentSubreddit = url;
-        }
-        
+        this.reset();
+        this.currentSubreddit = url;
         this.$.subredditContentsWebService.setUrl("http://www.reddit.com"+this.currentSubreddit+".json");
     },
     
