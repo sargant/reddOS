@@ -20,6 +20,10 @@
             onSuccess: "incomingComments",
             onFailure: "incomingComments",
         },
+        
+        {kind: "enyo.Menu", name: "commentShareMenu", components: [
+            {caption: "Open in browser", onclick: "openInBrowser"},
+        ]},
     
         {kind: "enyo.Toolbar", 
             className: "reddos-toolbar",
@@ -83,6 +87,11 @@
                 
                 {kind: "enyo.Spacer"},
                 {kind: "enyo.ToolButton", 
+                    name: "commentShareButton",
+                    icon: "images/menu-icon-share.png", 
+                    onclick: "shareComments",
+                },
+                {kind: "enyo.ToolButton", 
                     name: "toolbarRefreshButton",
                     icon: "images/menu-icon-refresh.png", 
                     onclick: "refreshComments",
@@ -106,6 +115,14 @@
         
             this.refreshComments();
         }
+    },
+    
+    shareComments: function () {
+        this.$.commentShareMenu.openAtControl(this.$.commentShareButton, {left: 90, top: -50});
+    },
+    
+    openInBrowser: function () {
+        enyo.dispatch({type: "onLinkClick", url: this.linkCache.data.permalink});
     },
     
     refreshComments: function () {

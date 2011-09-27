@@ -11,6 +11,10 @@
     
     components: [
     
+        {kind: "enyo.Menu", name: "linkShareMenu", components: [
+            {caption: "Open in browser", onclick: "openInBrowser"},
+        ]},
+    
         {kind: "enyo.Toolbar", 
             className: "reddos-toolbar",
             components: [
@@ -42,6 +46,11 @@
                 
                 {kind: "enyo.Spacer"},
                 {kind: "enyo.ToolButton", 
+                    name: "linkShareButton",
+                    icon: "images/menu-icon-share.png", 
+                    onclick: "shareLink",
+                },
+                {kind: "enyo.ToolButton", 
                     name: "toolbarRefreshButton",
                     icon: "images/menu-icon-refresh.png", 
                     onclick: "webBrowserRefresh",
@@ -64,6 +73,14 @@
         }
         
         this.$.webBrowser.setUrl(inUrl);
+    },
+    
+    shareLink: function () {
+        this.$.linkShareMenu.openAtControl(this.$.linkShareButton, {left: 90, top: -50});
+    },
+    
+    openInBrowser: function () {
+        enyo.dispatch({type: "onLinkClick", url: this.$.webBrowser.getUrl()});
     },
     
     loadComments: function () {
