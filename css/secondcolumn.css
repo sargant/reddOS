@@ -61,7 +61,7 @@
 
 .reddos-subreddit-item-commentbutton {
     background-color: #679ED2;
-    background-image: url("../images/solid-icon-conversation.png");
+    background-image: url("../images/bg-subreddit-conversation.png");
 }
 
 .reddos-subreddit-item-commentbutton-down {
@@ -70,7 +70,7 @@
 
 .reddos-subreddit-item-votebutton {
     background-color: #C6C6C6;
-    background-image: url("../images/solid-icon-vote.png");
+    background-image: url("../images/bg-subreddit-voteup.png");
 }
 
 .reddos-subreddit-item-votebutton-down {
@@ -83,5 +83,5 @@
 
 .reddos-subreddit-item-votebutton-dislike {
     background-color: #9494FF;
-    background-image: url("../images/solid-icon-votedown.png");
+    background-image: url("../images/bg-subreddit-votedown.png");
 }
