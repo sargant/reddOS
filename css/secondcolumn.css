@@ -4,7 +4,7 @@
 
 .reddos-subreddit-item {
     border: 0;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .reddos-subreddit-item-odd {
@@ -30,12 +30,14 @@
 }
 
 .reddos-subreddit-item-domain {
+    font-size: 12px;
     color: #04396C;
     margin-top: 4px;
     margin-bottom: 2px;
 }
 
 .reddos-subreddit-item-meta {
+    font-size: 12px;
     color: #444444;
 }
 

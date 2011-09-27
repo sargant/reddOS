@@ -20,6 +20,7 @@ enyo.depends(
     "source/components/SubredditButton.js",
     
     "source/services/RedditAuthentication.js",
+    "source/services/RedditComments.js",
     "source/services/RedditSubredditContents.js",
     "source/services/RedditSubscribedSubreddits.js",
     "source/services/RedditUserInformation.js",
