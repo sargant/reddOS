@@ -99,10 +99,13 @@
     
         if(reddOS_Kind.isLink(inObject) == false) return;
         
-        this.linkCache = inObject;
-        this.$.commentToolbarTitle.setContent("[" + inObject.data.subreddit + "] " + inObject.data.title);
+        if(!reddOS_Kind.isLink(this.linkCache) || (this.linkCache.data.permalink != inObject.data.permalink)) {
         
-        this.refreshComments();
+            this.linkCache = inObject;
+            this.$.commentToolbarTitle.setContent("[" + inObject.data.subreddit + "] " + inObject.data.title);
+        
+            this.refreshComments();
+        }
     },
     
     refreshComments: function () {
