@@ -195,7 +195,7 @@
         if(linkData.is_self) {
             
             var markdown = new Markdown.Converter();
-            this.$.commentSelftext.setContent(markdown.makeHtml(linkData.selftext));
+            this.$.commentSelftext.setContent(markdown.makeHtml(linkData.selftext.unescapeHtml()));
             
             this.$.commentSelftext.show();
             this.$.toolbarLinkButton.hide();
