@@ -15,6 +15,8 @@ enyo.kind({
         replies: [],
     },
     
+    collapsed: false,
+    
     create: function() {
         this.inherited(arguments);
         this.updateMeta();
@@ -46,6 +48,13 @@ enyo.kind({
                     name: "commentMeta",
                     className: "reddos-comment-meta",
                     content: "",
+                },
+                {   kind: "enyo.CustomButton",
+                    name: "treeCollapse",
+                    className: "reddos-comment-collapsebutton",
+                    cssNamespace: "reddos-comment-collapsebutton",
+                    onclick: "toggleCollapse",
+                    content: "-",
                 },
             ]
         },
@@ -130,5 +139,23 @@ enyo.kind({
             this.$.commentReplies.show();
         }
     },
+    
+    toggleCollapse: function () {
+        if(false == this.collapsed) {
+            this.$.commentAuthor.addClass("reddos-comment-item-collapsed");
+            this.$.commentMeta.addClass("reddos-comment-item-collapsed");
+            this.$.treeCollapse.setContent("+");
+            this.$.commentContent.hide();
+            this.$.commentReplies.hide();
+            this.collapsed = true;
+        } else {
+            this.$.commentAuthor.removeClass("reddos-comment-item-collapsed");
+            this.$.commentMeta.removeClass("reddos-comment-item-collapsed");
+            this.$.treeCollapse.setContent("-");
+            this.$.commentContent.show();
+            this.$.commentReplies.show();
+            this.collapsed = false;
+        }
+    }
     
 });

@@ -34,6 +34,11 @@
     margin: 0 0 0.5em 0;
 }
 
+.reddos-comments-selftext p:last-of-type,
+.reddos-comment-content p:last-of-type {
+    margin: 0;
+}
+
 .reddos-comment-item {
    margin: 1em 0 0 0;
 }
@@ -56,6 +61,24 @@
 
 .reddos-comment-author-op {
     color: #FF4500;
+}
+
+.reddos-comment-item-collapsed {
+    color: #999 !important;
+    font-style: italic !important;
+}
+
+.reddos-comment-collapsebutton {
+    margin-left: 0.5em; 
+    font-weight: bold;
+    background-color: #DDD;
+    color: #666;
+    border-radius: 5px;
+    padding: 2px 8px 2px 8px;
+}
+
+.reddos-comment-collapsebutton-down {
+    background-color: #999;
 }
 
 .reddos-comment-replies {
