@@ -6,6 +6,8 @@ enyo.kind({
     name: "reddOS.view.Main",
     kind: "VFlexBox",
     
+    userInfoInterval: null,
+    
     //
     // Constructor
     //  
@@ -13,7 +15,7 @@ enyo.kind({
         this.inherited(arguments);
         enyo.setAllowedOrientation("landscape");
         enyo.dispatcher.rootHandler.addListener(this);
-        this.appEventLoad();
+        this.onBoot();
     },
     
     /***************************************************************************
@@ -38,6 +40,11 @@ enyo.kind({
      */
     
     components: [
+    
+        {   kind: "enyo.ApplicationEvents", 
+            onLoad: "appEventLoad",
+            onUnload: "appEventUnload",
+        },
     
         //
         // Services
@@ -160,7 +167,7 @@ enyo.kind({
     // Global Events
     //
         
-    appEventLoad: function() {
+    onBoot: function() {
         
         // Load cached user info & subreddit details
         var userInfo = localStorage.getItem("reddOS_userInfo");
@@ -177,6 +184,15 @@ enyo.kind({
         // Attempt to refresh data too
         this.refreshUserInfo();
         this.refreshSubredditInfo();
+    },
+    
+    appEventLoad: function () {
+        // Refresh user info every two minutes
+        this.userInfoInterval = setInterval(enyo.hitch(this, "refreshUserInfoBackground"), 1000 * 120);
+    },
+    
+    appEventUnload: function () {
+        cancelInterval(this.userInfoInterval);
     },
     
     onLinkClickHandler: function(inSender, inEvent) {
@@ -260,6 +276,11 @@ enyo.kind({
     refreshUserInfo: function() {
         enyo.dispatch({type: "onUserInfoBeforeUpdate"});
         this.$.userInfoService.refreshData();
+    },
+    
+      
+    refreshUserInfoBackground: function () {
+        if(reddOS_Kind.isAccount(this.userInfo)) this.refreshUserInfo();
     },
     
     incomingUserInfo: function(inSender, inUserData) {
