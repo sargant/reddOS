@@ -226,7 +226,7 @@
         
         if(forRendering.length == 0) {
             forRendering.push(
-                {   kind: "reddOS.component.Comment",
+                {   kind: "reddOS.component.RecursiveComment",
                     comment: "This post doesn't have any comments yet!",
                 }
             );
