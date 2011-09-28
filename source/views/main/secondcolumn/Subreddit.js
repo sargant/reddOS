@@ -267,7 +267,11 @@ enyo.kind({
     
     subredditContentsRender: function(inSender, inIndex) {
         
-        var r = this.subredditContentsCache[inIndex];
+        try {
+            var r = this.subredditContentsCache[inIndex];
+        } catch (e) {
+            return false;
+        }
         
         var dontTrackVisited = reddOS_Settings.getSetting("dontTrackVisited");
         

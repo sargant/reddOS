@@ -13,9 +13,7 @@ enyo.kind({
     //  
     create: function() {
         this.inherited(arguments);
-        enyo.setAllowedOrientation("landscape");
         enyo.dispatcher.rootHandler.addListener(this);
-        this.onBoot();
     },
     
     /***************************************************************************
@@ -136,7 +134,7 @@ enyo.kind({
                 
             ]},
             
-            {dragAnywhere: false, width: "391px", components: [
+            {dragAnywhere: false, width: "390px", components: [
                 
                 {name: "paneSecondMenu",
                     kind: "reddOS.view.main.SecondColumn", 
@@ -146,7 +144,7 @@ enyo.kind({
                 
             ]},
             
-            {dragAnywhere: false, components: [
+            {dragAnywhere: false, minWidth: "378px", components: [
             
                 {name: "paneStoryViewer",
                     flex: 1,
@@ -167,7 +165,7 @@ enyo.kind({
     // Global Events
     //
         
-    onBoot: function() {
+    appEventLoad: function() {
         
         // Load cached user info & subreddit details
         var userInfo = localStorage.getItem("reddOS_userInfo");
@@ -184,9 +182,7 @@ enyo.kind({
         // Attempt to refresh data too
         this.refreshUserInfo();
         this.refreshSubredditInfo();
-    },
-    
-    appEventLoad: function () {
+
         // Refresh user info every two minutes
         this.userInfoInterval = setInterval(enyo.hitch(this, "refreshUserInfoBackground"), 1000 * 120);
     },
