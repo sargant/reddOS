@@ -34,8 +34,8 @@
     margin: 0 0 0.5em 0;
 }
 
-.reddos-comments-selftext p:last-of-type,
-.reddos-comment-content p:last-of-type {
+.reddos-comments-selftext p:last-child,
+.reddos-comment-content p:last-child {
     margin: 0;
 }
 

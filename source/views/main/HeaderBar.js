@@ -105,6 +105,14 @@ enyo.kind({
                         },
                         
                         {kind: "CustomButton", 
+                            name: "mailNotification",
+                            className: "reddos-header-button reddos-header-light-button", 
+                            cssNamespace: "reddos-header-light-button",
+                            content: "&nbsp;", 
+                            allowHtml: true,
+                        },
+                        
+                        {kind: "CustomButton", 
                             name: "logoutButton",
                             className: "reddos-header-button", 
                             cssNamespace: "reddos-header-button",
@@ -164,6 +172,10 @@ enyo.kind({
             this.loggedIn = false;
         } else {
             this.$.loggedInUsername.setContent(inUserData.data.name + " (" + inUserData.data.link_karma + ")");
+            
+            this.$.mailNotification.addRemoveClass("reddos-header-mail", !inUserData.data.has_mail);
+            this.$.mailNotification.addRemoveClass("reddos-header-mail-new", inUserData.data.has_mail);
+            
             this.loggedIn = true;
         }
         

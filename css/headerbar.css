@@ -41,15 +41,17 @@
 }
 
 .reddos-header-mail {
+    width: 24px;
     background-repeat: no-repeat;
     background-image: url("../images/mail-notification.png");
     background-position: center;
 }
 
-.reddos-header-mail-down {
+.reddos-header-mail-new {
+    width: 24px;
     background-image: url("../images/mail-notification-new.png");
-    color: #FF4500;
-    background-color: #EEE;
+    background-position: center;
+    background-repeaT: no-repeat;
 }
 
 .reddos-header-button-down {
