@@ -224,7 +224,6 @@ enyo.kind({
     
     authLoginSuccess: function() {
         this.$.loginPopup.dismiss();
-        this.$.headerBar.setNotReady();
         this.refreshUserInfo();
         this.refreshSubredditInfo();
     },
@@ -256,6 +255,7 @@ enyo.kind({
     //
     
     refreshUserInfo: function() {
+        enyo.dispatch({type: "onUserInfoBeforeUpdate"});
         this.$.userInfoService.refreshData();
     },
     

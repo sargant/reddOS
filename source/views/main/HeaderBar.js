@@ -95,6 +95,8 @@ enyo.kind({
                 {name: "loggedInView", layoutKind: "HFlexLayout", pack: "end",
                     align: "center", components: [
                     
+                        {kind: "enyo.Spinner", name: "loggedInSpinner", showing: false},
+                    
                         {kind: "CustomButton", 
                             name: "loggedInUsername",
                             className: "reddos-header-button reddos-header-light-button", 
@@ -137,12 +139,21 @@ enyo.kind({
     },
         
     setNotReady: function() {
-        this.$.userStatusPane.selectView(this.$.refreshingView);
+        this.setLoading(true);
     },
     
     setReady: function(isLoggedIn) {
         if(typeof isLoggedIn != "undefined") this.loggedIn = isLoggedIn;
         this.$.userStatusPane.selectView((this.loggedIn) ? this.$.loggedInView : this.$.loggedOutView);
+        this.$.loggedInSpinner.hide();
+    },
+    
+    setLoading: function (force) {
+        if(this.loggedIn && !force) {
+            this.$.loggedInSpinner.show();
+        } else {
+            this.$.userStatusPane.selectView(this.$.refreshingView);
+        }
     },
     
     onUserInfoUpdateHandler: function(inSender, inEvent) {
@@ -157,5 +168,9 @@ enyo.kind({
         }
         
         this.setReady();
-    },    
+    },
+    
+    onUserInfoBeforeUpdateHandler: function () {
+        this.setLoading();
+    },
 });
