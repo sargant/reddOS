@@ -57,7 +57,7 @@ enyo.kind({
         {name: "userInfoService",
             kind: "reddOS.service.RedditUserInformation",
             onSuccess: "incomingUserInfo",
-            onFailure: "incomingUserInfo",
+            onFailure: "authLogoutFailure",
         },
         
         {name: "subscribedSubredditsService",
@@ -70,17 +70,33 @@ enyo.kind({
         // Popups
         //
         
-        {name: "loginPopup",
+        {   name: "loginPopup",
             kind: "reddOS.view.main.popup.Login", 
             onLoginRequest: "authLoginRequest",
         },
         
-        {name: "settingsPopup",
+        {   name: "settingsPopup",
             kind: "reddOS.view.main.popup.Settings",
         },
         
-        {name: "aboutPopup",
+        {   name: "aboutPopup",
             kind: "reddOS.view.main.popup.About",
+        },
+        
+        {   name: "redditIsDownPopup",
+            kind: "enyo.ModalDialog",
+            caption: "Error",
+            components: [
+                {   content: "Reddit appears to be down.<br />Please try again later.",
+                    className: "reddos-login-message",
+                    allowHtml: true,
+                },
+                {   kind: "enyo.Button",
+                    caption: "OK",
+                    onclick: "closeRedditIsDownPopup",
+                    style: "margin-top: 10px"
+                }
+            ]
         },
         
         //
@@ -148,19 +164,21 @@ enyo.kind({
         
     appEventLoad: function() {
         
-        // Load cached user info, if none exists attempt a login
-        //if(localStorage.getItem("reddOS_userInfo") != null) {
-        //    this.incomingUserInfo(null, enyo.json.parse(localStorage.getItem("reddOS_userInfo")));
-        //} else {
-            this.refreshUserInfo();
-        //}
+        // Load cached user info & subreddit details
+        var userInfo = localStorage.getItem("reddOS_userInfo");
+        var subreddits = localStorage.getItem("reddOS_subreddits");
         
-        // Load cached subreddit info, if none exists attempt to download a new list
-        //if(localStorage.getItem("reddOS_subreddits") != null) {
-        //    this.incomingSubscribedSubreddits(null, enyo.json.parse(localStorage.getItem("reddOS_subreddits")));
-        //} else {
-            this.refreshSubredditInfo();
-        //}
+        if(userInfo != null && userInfo != "null") {
+            this.incomingUserInfo(null, enyo.json.parse(userInfo));
+        }
+        
+        if(subreddits != null && subreddits != "null") {
+            this.incomingSubscribedSubreddits(null, enyo.json.parse(subreddits));
+        }
+        
+        // Attempt to refresh data too
+        this.refreshUserInfo();
+        this.refreshSubredditInfo();
     },
     
     onLinkClickHandler: function(inSender, inEvent) {
@@ -182,6 +200,10 @@ enyo.kind({
     //
     // Popup Handling
     //
+    
+    closeRedditIsDownPopup: function () {
+        this.$.redditIsDownPopup.close();
+    },
     
     openLoginPopup: function () {
         this.$.loginPopup.openAtCenter();
@@ -223,11 +245,13 @@ enyo.kind({
     
     authLogoutSuccess: function() {
         this.setUserInfo(null);
+        this.$.headerBar.setReady(false);
         enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
     },
     
     authLogoutFailure: function() {
-        enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
+        this.$.redditIsDownPopup.openAtCenter();
+        this.$.headerBar.setReady();
     },
         
     // 

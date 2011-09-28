@@ -49,7 +49,9 @@
     background-color: #EEE;
 }
 
-.reddos-topmenu-subreddit-button-loading {
+.reddos-topmenu-subreddit-button-loading,
+.reddos-topmenu-subreddit-button-loading-down {
     text-align: center;
     color: #666666;
+    background-color: white;
 }

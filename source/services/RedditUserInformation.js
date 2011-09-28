@@ -10,6 +10,7 @@ enyo.kind({
     
     create: function() {
         this.inherited(arguments);
+        this.$.userInformationWebService.setTimeout(this.timeout);
     },
     
     /***************************************************************************
@@ -22,7 +23,7 @@ enyo.kind({
     },
     
     published: {
-        timeout: "10000",
+        timeout: 10000,
     },
     
     /***************************************************************************
@@ -52,7 +53,7 @@ enyo.kind({
     
     userInformationWebServiceSuccess: function(inSender, inResponse, inRequest) {
         if(reddOS_Kind.isAccount(inResponse) == false) {
-            this.doFailure();
+            this.doSuccess(null);
         } else {
             this.doSuccess(inResponse);
         }

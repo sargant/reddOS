@@ -85,40 +85,53 @@ enyo.kind({
             
             // User-orientated lists
             
-            {name: "myRedditList", showing: false,
+            {   name: "myRedditList",
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                 
-                    {kind: "reddOS.component.SubredditButton",
+                    {   kind: "reddOS.component.SubredditButton",
                         className: "reddos-topmenu-subreddit-button-header",
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "myRedditTitle",
                         content: "My Reddit",
                     },
-                
-                    {kind: "reddOS.component.SubredditButton",
-                        name: "myRedditSubmitted",
-                        onclick: "sendObject",
-                        content: "Submitted",
+                    {   name: "myRedditLoggedIn", 
+                        showing: false,
+                        components: [
+                        
+                            {   kind: "reddOS.component.SubredditButton",
+                                name: "myRedditSubmitted",
+                                onclick: "sendObject",
+                                content: "Submitted",
+                            },
+                            {   kind: "reddOS.component.SubredditButton",
+                                name: "myRedditLiked",
+                                onclick: "sendObject",
+                                content: "Liked",
+                            },
+                            {   kind: "reddOS.component.SubredditButton",
+                                name: "myRedditDisliked",
+                                onclick: "sendObject",
+                                content: "Disliked",
+                            },
+                            {   kind: "reddOS.component.SubredditButton",
+                                className: "reddos-topmenu-subreddit-button-last",
+                                name: "myRedditHidden",
+                                onclick: "sendObject",
+                                content: "Hidden",
+                            },
+                        ]
                     },
-                    
-                    {kind: "reddOS.component.SubredditButton",
-                        name: "myRedditLiked",
-                        onclick: "sendObject",
-                        content: "Liked",
-                    },
-                    
-                    {kind: "reddOS.component.SubredditButton",
-                        name: "myRedditDisliked",
-                        onclick: "sendObject",
-                        content: "Disliked",
-                    },
-                    
-                    {kind: "reddOS.component.SubredditButton",
-                        className: "reddos-topmenu-subreddit-button-last",
-                        name: "myRedditHidden",
-                        onclick: "sendObject",
-                        content: "Hidden",
+                    {   name: "myRedditLoggedOut",
+                        showing: true,
+                        components: [
+                        
+                            {   kind: "reddOS.component.SubredditButton",
+                                className: "reddos-topmenu-subreddit-button-last reddos-topmenu-subreddit-button-loading",
+                                cssNamespace: "reddos-topmenu-subreddit-button-loading",
+                                content: "These options will become available when logged in.",
+                            },
+                        ]
                     },
                 ]
             },
@@ -167,14 +180,16 @@ enyo.kind({
         var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
         
         if(reddOS_Kind.isAccount(inUserData) == false) {
-            this.$.myRedditList.hide();
+            this.$.myRedditLoggedIn.hide();
+            this.$.myRedditLoggedOut.show();
         } else {
             this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
             this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
             this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
             this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
             
-            this.$.myRedditList.show();
+            this.$.myRedditLoggedIn.show();
+            this.$.myRedditLoggedOut.hide();
         }
     },
     

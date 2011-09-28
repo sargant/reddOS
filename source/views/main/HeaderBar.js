@@ -23,6 +23,10 @@ enyo.kind({
         onRequestLogout: "",
     },
     
+    published: {
+        loggedIn: false,
+    },
+    
     /***************************************************************************
      * Components
      */
@@ -136,15 +140,22 @@ enyo.kind({
         this.$.userStatusPane.selectView(this.$.refreshingView);
     },
     
+    setReady: function(isLoggedIn) {
+        if(typeof isLoggedIn != "undefined") this.loggedIn = isLoggedIn;
+        this.$.userStatusPane.selectView((this.loggedIn) ? this.$.loggedInView : this.$.loggedOutView);
+    },
+    
     onUserInfoUpdateHandler: function(inSender, inEvent) {
         
         var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
         
         if(reddOS_Kind.isAccount(inUserData) == false) {
-            this.$.userStatusPane.selectView(this.$.loggedOutView);
+            this.loggedIn = false;
         } else {
             this.$.loggedInUsername.setContent(inUserData.data.name + " (" + inUserData.data.link_karma + ")");
-            this.$.userStatusPane.selectView(this.$.loggedInView);
+            this.loggedIn = true;
         }
+        
+        this.setReady();
     },    
 });

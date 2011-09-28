@@ -10,6 +10,8 @@ enyo.kind({
     
     create: function() {
         this.inherited(arguments);
+        this.$.loginWebService.setTimeout(this.timeout);
+        this.$.logoutWebService.setTimeout(this.timeout);
     },
     
     /***************************************************************************
@@ -24,7 +26,7 @@ enyo.kind({
     },
     
     published: {
-        timeout: "10000",
+        timeout: 10000,
     },
     
     /***************************************************************************
