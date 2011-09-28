@@ -270,7 +270,7 @@
         
         // Format and push back the comment
         var markdown = new Markdown.Converter;
-        returnObject.components.push({content: markdown.makeHtml(cd.body), className: "reddos-comment-content", allowHtml: true});
+        returnObject.components.push({content: markdown.makeHtml(cd.body.unescapeHtml()), className: "reddos-comment-content", allowHtml: true});
         
         // If we have replies, make a reply item and loop over the replies
         try {

@@ -13,6 +13,7 @@ enyo.depends(
     "source/3rdparty/pagedown.js",
     
     "source/utilities/Date.js",
+    "source/utilities/ExtendedObjects.js",
     "source/utilities/History.js",
     "source/utilities/Kind.js",
     "source/utilities/Settings.js",
