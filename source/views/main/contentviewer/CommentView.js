@@ -213,7 +213,6 @@
         var commentsArray = this.commentsCache;
         
         if(reddOS_Kind.isArray(commentsArray) == false) {
-            alert("falling out");
             return false;
         }
         
@@ -222,71 +221,43 @@
         var markdown = new Markdown.Converter;
         
         for(var i in commentsArray) {
-            forRendering.push(this.recursiveCommentBuilder(commentsArray[i]));
+            forRendering.push(this.commentBuilder(commentsArray[i]));
         }
         
         if(forRendering.length == 0) {
             forRendering.push(
-                {
-                    components: [
-                        {className: "reddos-comment-content", content: "This post doesn't have any comments yet!"},
-                    ]
+                {   kind: "reddOS.component.Comment",
+                    comment: "This post doesn't have any comments yet!",
                 }
             );
         }
         
         this.$.commentsBlock.destroyControls();
-        this.$.commentsBlock.createComponents(forRendering, {owner: this, className: "reddos-comment-item", allowHtml: true});
+        this.$.commentsBlock.createComponents(forRendering, {owner: this});
         this.$.commentsBlock.render();
         
         return true;
     },
     
-    recursiveCommentBuilder: function (inComment) {
-        
-        var returnObject = new Object;
-        returnObject = {};
+    commentBuilder: function (inComment) {
         
         if(!reddOS_Kind.isComment(inComment)) {
-            return returnObject;
+            return {};
         }
         
         var cd = inComment.data;
         
-        returnObject.components = [];
+        var returnObject = {
+            kind: "reddOS.component.RecursiveComment",
+            author: cd.author,
+            score: (cd.ups-cd.downs),
+            created: cd.created_utc,
+            op: this.linkCache.data.author,
+            replies: cd.replies,
+        };
         
-        returnObject.owner = this;
-        returnObject.className = "reddos-comment-item";
-        
-        // Assemble the meta string
-        
-        var op = (cd.author == this.linkCache.data.author) ? "reddos-comment-author-op " : "";
-        
-        var metastring = "<span class=\""+op+"reddos-comment-author\">"+cd.author+"</span>";
-        metastring += " " + (cd.ups-cd.downs) + " points";
-        metastring += " " + reddOS_Date.timeSince(cd.created_utc) + " ago";
-        
-        returnObject.components.push({content: metastring, className: "reddos-comment-meta"});
-        
-        // Format and push back the comment
         var markdown = new Markdown.Converter;
-        returnObject.components.push({content: markdown.makeHtml(cd.body.unescapeHtml()), className: "reddos-comment-content", allowHtml: true});
-        
-        // If we have replies, make a reply item and loop over the replies
-        try {
-            
-            if(cd.replies.data.children.length > 1 || reddOS_Kind.isComment(cd.replies.data.children[0])) {
-            
-                var repliesObject = {className: "reddos-comment-item-indent", components: [] };
-            
-                for(var i in cd.replies.data.children) {
-                    repliesObject.components.push(this.recursiveCommentBuilder(cd.replies.data.children[i]));
-                }
-            
-                returnObject.components.push(repliesObject);
-            }
-            
-        } catch (e) {}
+        returnObject.comment = markdown.makeHtml(cd.body.unescapeHtml());
         
         return returnObject;
     },

@@ -26,7 +26,7 @@
 /******************************************************************************/
 
 .reddos-comments-block {
-    padding: 0 15px 0 15px;
+    padding: 15px;
 }
 
 .reddos-comments-selftext p,
@@ -38,12 +38,15 @@
    margin: 1em 0 0 0;
 }
 
-.reddos-comment-meta {
+.reddos-comment-item:first-of-type {
+   margin: 0;
+}
+
+.reddos-comment-header {
     font-size: 0.9em;
     margin-bottom: 0.5em;
     color: #666666;
 }
-
 
 .reddos-comment-author {
     font-weight: bold;
@@ -55,11 +58,12 @@
     color: #FF4500;
 }
 
-.reddos-comment-item-indent {
+.reddos-comment-replies {
     border-width: 0 0 0 1px;
     border-color: #CCC;
     border-style: solid;
     padding-left: 1em;
+    margin-top: 1em;
 }
 
 .reddos-comment-content blockquote {
