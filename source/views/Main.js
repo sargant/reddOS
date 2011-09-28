@@ -13,6 +13,7 @@ enyo.kind({
         this.inherited(arguments);
         enyo.setAllowedOrientation("landscape");
         enyo.dispatcher.rootHandler.addListener(this);
+        this.appEventLoad();
     },
     
     /***************************************************************************
@@ -37,10 +38,6 @@ enyo.kind({
      */
     
     components: [
-    
-        {kind: "enyo.ApplicationEvents", 
-            onLoad: "appEventLoad"
-        },
     
         //
         // Services
