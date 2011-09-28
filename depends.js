@@ -11,6 +11,7 @@ enyo.depends(
     "css/topmenu.css",
     
     "source/3rdparty/pagedown.js",
+    "source/3rdparty/ScrollBarsScroller.js",
     
     "source/utilities/Date.js",
     "source/utilities/ExtendedObjects.js",

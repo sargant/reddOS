@@ -53,7 +53,7 @@
                     ]
                 },
         
-                {kind: "enyo.Scroller", 
+                {kind: "ekl.Scroller.ScrollBarsScroller", 
                     name: "commentScroller", 
                     flex: 1, 
                     autoHorizontal: false, 
