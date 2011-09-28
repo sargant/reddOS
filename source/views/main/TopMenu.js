@@ -18,6 +18,7 @@ enyo.kind({
     
     events: {
         onObjectSend: "",
+        onRequestSubredditRefresh: "",
     },
     
     /***************************************************************************
@@ -32,6 +33,7 @@ enyo.kind({
             kind: "enyo.Menu", 
             width: "200px",
             components: [
+                {caption: "Refresh", onclick: "refreshSubredditList"},
                 {caption: "Sort by...", components: [
                     {name: "sortOptionDefault", 
                         content: "Popularity", 
@@ -148,14 +150,13 @@ enyo.kind({
                         content: "Subreddits",
                         onclick: "openSubredditMetaMenu",
                     },
-                    {name: "subredditListContainer", components: [
-                        {kind: "reddOS.component.SubredditButton",
-                            className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
-                            components: [
-                                {kind: "enyo.Spinner", showing: true, style: "margin: auto"},
-                            ]
-                        },
-                    ]},
+                    {   name: "subredditListLoading", 
+                        kind: "reddOS.component.SubredditButton",
+                        className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
+                        cssNamespace: "reddos-topmenu-subreddit-button-loading",
+                        content: "Loading...",
+                    },
+                    {name: "subredditListContainer", components: []},
                 ]
             },
         ]},
@@ -165,6 +166,11 @@ enyo.kind({
      * Methods
      */
     
+    refreshSubredditList: function () {
+        this.setLoading();
+        this.doRequestSubredditRefresh();
+    },
+    
     openSubredditMetaMenu: function() {
         this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
     },
@@ -173,6 +179,16 @@ enyo.kind({
         var inEventData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
         var subredditSortOrder = (typeof inEventData.subredditSortOrder == "undefined") ? "default" : inEventData.subredditSortOrder;
         this.sortSubredditList({sortkind: subredditSortOrder});
+    },
+    
+    setLoading: function () {
+        this.$.subredditListContainer.hide();
+        this.$.subredditListLoading.show();
+    },
+    
+    setReady: function () {
+        this.$.subredditListContainer.show();
+        this.$.subredditListLoading.hide();
     },
     
     onUserInfoUpdateHandler: function(inSender, inEvent) {
@@ -190,6 +206,12 @@ enyo.kind({
             
             this.$.myRedditLoggedIn.show();
             this.$.myRedditLoggedOut.hide();
+        }
+    },
+    
+    onSubscribedSubredditsBeforeUpdateHandler: function () {
+        if(this.subredditCache.length == 0) {
+            this.setLoading();
         }
     },
     
@@ -230,14 +252,23 @@ enyo.kind({
     },
     
     rebuildSubredditList: function (subredditList) {
+    
+        var c = this.$.subredditListContainer;
+        c.destroyControls();
         
         if(subredditList.length == 0) {
-            this.$.subredditList.hide();
-        } else {
-            
-            var c = this.$.subredditListContainer;
-            c.destroyControls();
         
+            var temp =  {
+                owner: this,
+                kind: "reddOS.component.SubredditButton",
+                className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
+                cssNamespace: "reddos-topmenu-subreddit-button-loading",
+                content: "Log in to see a list of your subscribed subreddits.",
+            };
+            
+            c.createComponent(temp);
+            
+        } else {
             for(var i in subredditList) {
             
                 var temp =  {
@@ -254,10 +285,10 @@ enyo.kind({
             
                 c.createComponent(temp);
             }
-            
-            c.render();
-            this.$.subredditList.show();
         }
+        
+        c.render();
+        this.setReady();
     },
     
     sendObject: function(inSender) {

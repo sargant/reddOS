@@ -123,7 +123,8 @@ enyo.kind({
                 {name: "paneTopMenu", 
                     kind: "reddOS.view.main.TopMenu",
                     flex: 1, 
-                    onObjectSend: "dispatchObject"
+                    onObjectSend: "dispatchObject",
+                    onRequestSubredditRefresh: "refreshSubredditInfo",
                 },
                 
             ]},
@@ -241,8 +242,10 @@ enyo.kind({
     
     authLogoutSuccess: function() {
         this.setUserInfo(null);
+        this.setSubreddits(null);
         this.$.headerBar.setReady(false);
         enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
+        enyo.dispatch({type: "onSubscribedSubredditsUpdate", data: this.getSubreddits()});
     },
     
     authLogoutFailure: function() {
@@ -276,6 +279,7 @@ enyo.kind({
     //
     
     refreshSubredditInfo: function() {
+        enyo.dispatch({type: "onSubscribedSubredditsBeforeUpdate"});
         this.$.subscribedSubredditsService.refreshData();
     },
     
