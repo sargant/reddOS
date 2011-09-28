@@ -61,3 +61,14 @@
     border-style: solid;
     padding-left: 1em;
 }
+
+.reddos-comment-content blockquote {
+    margin: 0 0 0.5em 0.5em;
+    padding: 0.5em 0.5em 0.1em 0.8em;
+    color: #444;
+    background-color: #EEE;
+    background: -webkit-gradient(linear, left top, right top, color-stop(50%,#EEE), color-stop(90%,#FFF));
+    
+    border-radius: 5px;
+ }
+
