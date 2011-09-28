@@ -141,21 +141,14 @@ enyo.kind({
     },
     
     toggleCollapse: function () {
-        if(false == this.collapsed) {
-            this.$.commentAuthor.addClass("reddos-comment-item-collapsed");
-            this.$.commentMeta.addClass("reddos-comment-item-collapsed");
-            this.$.treeCollapse.setContent("+");
-            this.$.commentContent.hide();
-            this.$.commentReplies.hide();
-            this.collapsed = true;
-        } else {
-            this.$.commentAuthor.removeClass("reddos-comment-item-collapsed");
-            this.$.commentMeta.removeClass("reddos-comment-item-collapsed");
-            this.$.treeCollapse.setContent("-");
-            this.$.commentContent.show();
-            this.$.commentReplies.show();
-            this.collapsed = false;
-        }
+    
+        this.collapsed = !this.collapsed;
+        
+        this.$.commentAuthor.addRemoveClass("reddos-comment-item-collapsed", this.collapsed);
+        this.$.commentMeta.addRemoveClass("reddos-comment-item-collapsed", this.collapsed);
+        this.$.treeCollapse.setContent(this.collapsed ? "+" : "-");
+        this.$.commentContent.setShowing(!this.collapsed);
+        this.$.commentReplies.setShowing(!this.collapsed);
     }
     
 });
