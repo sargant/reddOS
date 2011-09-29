@@ -62,6 +62,7 @@ enyo.kind({
         {   kind: "enyo.HtmlContent",
             name: "commentContent",
             className: "reddos-comment-content",
+            onLinkClick: "commentLinkClick",
             allowHtml: true,
         },
         
@@ -149,6 +150,10 @@ enyo.kind({
         this.$.treeCollapse.setContent(this.collapsed ? "+" : "-");
         this.$.commentContent.setShowing(!this.collapsed);
         this.$.commentReplies.setShowing(!this.collapsed);
-    }
+    },
+    
+    commentLinkClick: function (inSender, inUrl) {
+        enyo.dispatch({type: "onLinkClick", url: inUrl});
+    },
     
 });
