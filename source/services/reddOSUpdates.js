@@ -50,14 +50,8 @@ enyo.kind({
     reddOSUpdatesWebServiceSuccess: function(inSender, inResponse, inRequest) {
     
         try {
-        
-            var updateAvailable = false;
-        
             var l = enyo.fetchAppInfo().version.split(".",3);
             var r = inResponse.version.split(".",3);
-            
-            this.log(l);
-            this.log(r);
             
             if(
                 (r[0] > l[0]) 
