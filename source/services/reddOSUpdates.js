@@ -37,6 +37,11 @@ enyo.kind({
             onFailure: "reddOSUpdatesWebServiceFailure",
         },
         
+        {   name: "dashboard", 
+            kind: "enyo.Dashboard", 
+            onTap: "dashboardTap", 
+            appId: null
+        },
     ],
         
     /***************************************************************************
@@ -58,11 +63,16 @@ enyo.kind({
                 || ((r[0]==l[0]) && (r[1] > l[1]))
                 || ((r[0]==l[0]) && (r[1]==l[1]) && (r[2]>l[2]))
             ) {
-                enyo.windows.addBannerMessage("New version "+(inResponse.version)+" available!", "{}");
-                this.doUpdateAvailable(inResponse.version, this.downloadUrl);
+                enyo.windows.addBannerMessage("New version "+(inResponse.version)+" available!", "{}", "images/dashboard-small.png");
+                this.$.dashboard.push({icon: "images/dashboard-large.png", title: "reddOS " + inResponse.version + " available", text: "Tap to download via Preware"});
+                //this.doUpdateAvailable(inResponse.version, this.downloadUrl);
             }
         } catch(e) {}
     },
     
     reddOSUpdatesWebServiceFailure: function() {},
+    
+    dashboardTap: function (inSender) {
+        window.open(this.downloadUrl);
+    }
 });

@@ -5,6 +5,7 @@
     "type": "web",
     "main": "index.html",
     "icon": "icon.png",
+    "miniicon": "miniicon.png",
     "title": "reddOS",
     "uiRevision": "2"
 }
