@@ -47,6 +47,16 @@ enyo.kind({
             content: "reddOS", 
             className: "reddos-header-title",
         },
+        
+        {   kind: "enyo.CustomButton", 
+            name: "updateAvailableButton",
+            className: "reddos-header-button reddos-header-light-button", 
+            cssNamespace: "reddos-header-light-button",
+            content: "Update Available",
+            url: "",
+            onclick: "getUpdate",
+            showing: false,
+        },
     
         {name: "userStatusPane", 
             kind: "enyo.Pane", 
@@ -184,5 +194,14 @@ enyo.kind({
     
     onUserInfoBeforeUpdateHandler: function () {
         this.setLoading();
+    },
+    
+    updateAvailable: function (inVersion, inUrl) {
+        this.$.updateAvailableButton.show();
+        this.$.updateAvailableButton.url = inUrl;
+    },
+    
+    getUpdate: function (inSender) {
+        enyo.dispatch({type: "onLinkClick", url: inSender.url});
     },
 });

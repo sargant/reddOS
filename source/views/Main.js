@@ -68,6 +68,11 @@ enyo.kind({
             onFailure: "incomingSubscribedSubreddits",
         },
         
+        {   name: "reddOSUpdatesService",
+            kind: "reddOS.service.reddOSUpdates",
+            onUpdateAvailable: "handleUpdateAvailable",
+        },
+        
         //
         // Popups
         //
@@ -166,6 +171,9 @@ enyo.kind({
     //
         
     appEventLoad: function() {
+    
+        // Start an update check, once per launch
+        this.$.reddOSUpdatesService.check();
         
         // Load cached user info & subreddit details
         var userInfo = localStorage.getItem("reddOS_userInfo");
@@ -188,7 +196,11 @@ enyo.kind({
     },
     
     appEventUnload: function () {
-        cancelInterval(this.userInfoInterval);
+        clearInterval(this.userInfoInterval);
+    },
+    
+    handleUpdateAvailable: function (inSender, inVersion, inUrl) {
+        this.$.headerBar.updateAvailable(inVersion, inUrl);
     },
     
     onLinkClickHandler: function(inSender, inEvent) {
