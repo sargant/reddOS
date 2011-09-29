@@ -3,7 +3,9 @@ body {
 }
 
 .reddos-toolbar {
-    background-color: #0C5AA6;
+    /*background-color: #0C5AA6;*/
+    background-color: #408AD2;
+    /*background-color: #679ED2;*/
     height: 32px;
 }
 

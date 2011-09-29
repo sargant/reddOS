@@ -1,5 +1,8 @@
 .reddos-topmenu {
     background-color: #CEE3F8;
+    border-color: #408AD2;
+    border-style: solid;
+    border-width: 1px 0 0 0;
 }
 
 .reddos-topmenu-buttongroup {
