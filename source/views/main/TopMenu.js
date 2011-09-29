@@ -116,6 +116,11 @@ enyo.kind({
                                 onclick: "sendObject",
                                 content: "Disliked",
                             },
+							{   kind: "reddOS.component.SubredditButton",
+                                name: "myRedditSaved",
+                                onclick: "sendObject",
+                                content: "Saved",
+                            },
                             {   kind: "reddOS.component.SubredditButton",
                                 className: "reddos-topmenu-subreddit-button-last",
                                 name: "myRedditHidden",
@@ -202,6 +207,7 @@ enyo.kind({
             this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
             this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
             this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
+			this.$.myRedditSaved.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Saved", url: "/saved"}}
             this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
             
             this.$.myRedditLoggedIn.show();
