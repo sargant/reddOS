@@ -152,8 +152,11 @@
     },
     
     incomingComments: function(inSender, inResults) {
-    
         this.goNotReady("Reticulating splines...");
+        enyo.nextTick(this, this.incomingCommentsTick, inSender, inResults);
+    },
+    
+    incomingCommentsTick: function(inSender, inResults) {
         
         if(!inResults || !reddOS_Kind.isArray(inResults) || inResults.length != 2) {
             this.goError();

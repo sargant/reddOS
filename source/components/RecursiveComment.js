@@ -131,9 +131,9 @@ enyo.kind({
                 op: this.op,
                 replies: cd.replies,
             });
+            
+            this.$.commentReplies.render();
         }
-        
-        this.$.commentReplies.render();
         
         if(this.$.commentReplies.getComponents().length > 0) {
             this.$.commentReplies.show();
