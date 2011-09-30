@@ -115,7 +115,6 @@ enyo.kind({
         
         // If we have replies, loop over and do stuff.
         this.$.commentReplies.destroyControls();
-        var markdown = new Markdown.Converter;
         
         for(var i in this.replies.data.children) {
             
@@ -128,7 +127,7 @@ enyo.kind({
                 author: cd.author,
                 score: (cd.ups-cd.downs),
                 created: cd.created_utc,
-                comment: markdown.makeHtml(cd.body.unescapeHtml()),
+                comment: reddOS_Markdown.makeHtml(cd.body.unescapeHtml()),
                 op: this.op,
                 replies: cd.replies,
             });

@@ -218,8 +218,6 @@
         
         var forRendering = [];
         
-        var markdown = new Markdown.Converter;
-        
         for(var i in commentsArray) {
             forRendering.push(this.commentBuilder(commentsArray[i]));
         }
@@ -256,8 +254,7 @@
             replies: cd.replies,
         };
         
-        var markdown = new Markdown.Converter;
-        returnObject.comment = markdown.makeHtml(cd.body.unescapeHtml());
+        returnObject.comment = reddOS_Markdown.makeHtml(cd.body.unescapeHtml());
         
         return returnObject;
     },

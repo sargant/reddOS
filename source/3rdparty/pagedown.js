@@ -1323,3 +1323,5 @@ else
     }; // end of the Markdown.Converter constructor
 
 })();
+
+reddOS_Markdown = new Markdown.Converter;
