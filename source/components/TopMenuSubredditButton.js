@@ -1,6 +1,6 @@
 enyo.kind({
     
-    name: "reddOS.component.SubredditButton",
+    name: "reddOS.component.TopMenuSubredditButton",
     kind: "enyo.CustomButton",
     
     className: "reddos-topmenu-subreddit-button",

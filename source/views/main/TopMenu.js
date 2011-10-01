@@ -57,7 +57,7 @@ enyo.kind({
             {className: "reddos-topmenu-buttongroup", name: "defaultGroup",
                 components: [
                 
-                    {kind: "reddOS.component.SubredditButton",
+                    {kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-first",
                         onclick: "sendObject",
                         content: "Front Page",
@@ -70,7 +70,7 @@ enyo.kind({
                         },
                     },
                     
-                    {kind: "reddOS.component.SubredditButton",
+                    {kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-last",
                         onclick: "sendObject",
                         content: "All Subreddits",
@@ -91,7 +91,7 @@ enyo.kind({
                 className: "reddos-topmenu-buttongroup", 
                 components: [
                 
-                    {   kind: "reddOS.component.SubredditButton",
+                    {   kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-header",
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "myRedditTitle",
@@ -101,27 +101,27 @@ enyo.kind({
                         showing: false,
                         components: [
                         
-                            {   kind: "reddOS.component.SubredditButton",
+                            {   kind: "reddOS.component.TopMenuSubredditButton",
                                 name: "myRedditSubmitted",
                                 onclick: "sendObject",
                                 content: "Submitted",
                             },
-                            {   kind: "reddOS.component.SubredditButton",
+                            {   kind: "reddOS.component.TopMenuSubredditButton",
                                 name: "myRedditLiked",
                                 onclick: "sendObject",
                                 content: "Liked",
                             },
-                            {   kind: "reddOS.component.SubredditButton",
+                            {   kind: "reddOS.component.TopMenuSubredditButton",
                                 name: "myRedditDisliked",
                                 onclick: "sendObject",
                                 content: "Disliked",
                             },
-							{   kind: "reddOS.component.SubredditButton",
+							{   kind: "reddOS.component.TopMenuSubredditButton",
                                 name: "myRedditSaved",
                                 onclick: "sendObject",
                                 content: "Saved",
                             },
-                            {   kind: "reddOS.component.SubredditButton",
+                            {   kind: "reddOS.component.TopMenuSubredditButton",
                                 className: "reddos-topmenu-subreddit-button-last",
                                 name: "myRedditHidden",
                                 onclick: "sendObject",
@@ -133,7 +133,7 @@ enyo.kind({
                         showing: true,
                         components: [
                         
-                            {   kind: "reddOS.component.SubredditButton",
+                            {   kind: "reddOS.component.TopMenuSubredditButton",
                                 className: "reddos-topmenu-subreddit-button-last reddos-topmenu-subreddit-button-loading",
                                 cssNamespace: "reddos-topmenu-subreddit-button-loading",
                                 content: "These options will become available when logged in.",
@@ -148,7 +148,7 @@ enyo.kind({
             {name: "subredditList",
                 className: "reddos-topmenu-buttongroup", 
                 components: [
-                    {kind: "reddOS.component.SubredditButton",
+                    {kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-header reddos-topmenu-subreddit-button-header-hasmenu",
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "subredditListTitle",
@@ -156,7 +156,7 @@ enyo.kind({
                         onclick: "openSubredditMetaMenu",
                     },
                     {   name: "subredditListLoading", 
-                        kind: "reddOS.component.SubredditButton",
+                        kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
                         cssNamespace: "reddos-topmenu-subreddit-button-loading",
                         content: "Loading...",
@@ -266,7 +266,7 @@ enyo.kind({
         
             var temp =  {
                 owner: this,
-                kind: "reddOS.component.SubredditButton",
+                kind: "reddOS.component.TopMenuSubredditButton",
                 className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
                 cssNamespace: "reddos-topmenu-subreddit-button-loading",
                 content: "Log in to see a list of your subscribed subreddits.",
@@ -280,7 +280,7 @@ enyo.kind({
                 var temp =  {
                     owner: this,
                     onclick: "sendObject", 
-                    kind: "reddOS.component.SubredditButton",
+                    kind: "reddOS.component.TopMenuSubredditButton",
                     content: subredditList[i].data.display_name,
                     subreddit: subredditList[i],
                 };
