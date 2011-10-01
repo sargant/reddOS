@@ -10,6 +10,7 @@ enyo.kind({
     
     create: function() {
         this.inherited(arguments);
+        this.$.subredditContentsWebService.setTimeout(this.timeout);
     },
     
     /***************************************************************************
@@ -22,7 +23,7 @@ enyo.kind({
     },
     
     published: {
-        timeout: "10000",
+        timeout: 20000,
     },
     
     currentSubreddit: "/",
