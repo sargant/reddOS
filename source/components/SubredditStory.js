@@ -45,6 +45,7 @@ enyo.kind({
         this.oddChanged();
         this.visitedChanged();
         this.likesChanged();
+        this.setMode("normal");
     },
     
     titleChanged: function () {
@@ -91,6 +92,8 @@ enyo.kind({
     
     components: [
         {   kind: "enyo.VFlexBox", 
+            name: "linkBlock",
+            showing: false,
             onclick: "storyClick",
             flex: 1, 
             components: [
@@ -109,6 +112,8 @@ enyo.kind({
             ],
         },
         {   kind: "enyo.VFlexBox",
+            name: "buttonBlock",
+            showing: false,
             pack: "start",
             align: "end",
             components: [
@@ -131,13 +136,59 @@ enyo.kind({
                     onmousehold: "cancelEvent",
                 },
             ]
-        }, 
+        },
+        {   name: "loadingBlock",
+            className: "reddos-subreddit-item-loading",
+            layoutKind: "HFlexLayout",
+            flex: 1,
+            showing: false,
+            align: "center",
+            pack: "center",
+            components: [
+                {   kind: "enyo.Spinner",
+                    showing: true
+                }
+            ]
+        },
+        {   name: "finalizeBlock",
+            className: "reddos-subreddit-item-finalize",
+            layoutKind: "HFlexLayout",
+            flex: 1,
+            showing: false,
+            align: "center",
+            pack: "center",
+            components: [
+                {   content: "No more stories!",
+                }
+            ]
+        },
     ],
     
     /***************************************************************************
      * Methods
      */
      
+    setMode: function (mode) {
+    
+        this.$.linkBlock.hide();
+        this.$.buttonBlock.hide();
+        this.$.loadingBlock.hide();
+        this.$.finalizeBlock.hide();
+    
+        switch (mode) {
+            case "loading":
+                this.$.loadingBlock.show();
+                break;
+            case "finalize":
+                this.$.finalizeBlock.show();
+                break;
+            default:
+                this.$.linkBlock.show();
+                this.$.buttonBlock.show();
+                break;
+        }
+    },
+    
     storyClick: function (inSender, inEvent) {
         this.doStoryClick(inEvent);
     },

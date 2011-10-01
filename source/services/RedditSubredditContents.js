@@ -75,6 +75,10 @@ enyo.kind({
         
         if(reddOS_Kind.isListing(inResponse) == false) {
             this.doFailure();
+        } else if (inResponse.data.children.length === 0) {
+        
+            this.doSuccess(null);
+        
         } else {
             
             for(var i in inResponse.data.children) {

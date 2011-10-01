@@ -85,29 +85,18 @@ enyo.kind({
         
             // Rendered View
             
-            {kind: "enyo.Scroller", name: "subredditScroller", flex: 1, components: [
-            
-                {name: "subredditContents", 
-                    kind: "VirtualRepeater", 
-                    onSetupRow: "subredditContentsRender",
-                    components: [
-                        
-                        {name: "subredditSingleItem", 
-                            kind: "reddOS.component.SubredditStory",
-                            onStoryClick: "subredditStoryItemClick",
-                            onCommentClick: "subredditStoryCommentClick",
-                        },
-                    ],
-                },
-                
-                {name: "loadMoreStoriesButton", 
-                    kind: "enyo.CustomButton", 
-                    caption: "",
-                    onclick: "loadSubredditMore",
-                    style: "padding: 20px 5px 20px 5px; font-weight: bold; text-align: center",
-                },
-            ]},
-        
+            {name: "subredditContents", 
+                kind: "enyo.VirtualList", 
+                onSetupRow: "subredditContentsRender",
+                components: [
+                    
+                    {name: "subredditSingleItem", 
+                        kind: "reddOS.component.SubredditStory",
+                        onStoryClick: "subredditStoryItemClick",
+                        onCommentClick: "subredditStoryCommentClick",
+                    },
+                ],
+            },
         ]},
         
         {kind: "enyo.Toolbar",
@@ -154,7 +143,7 @@ enyo.kind({
     itemSelected: function (rowIndex, type) {
         var obj = this.subredditContentsCache[rowIndex];
         reddOS_History.addVisited(obj.data.name);
-        this.$.subredditContents.renderRow(rowIndex);
+        this.$.subredditContents.updateRow(rowIndex);
         obj.target = type;
         this.doObjectSend(obj);
     },
@@ -172,7 +161,9 @@ enyo.kind({
         
         this.$.subredditPane.selectView(this.$.subredditLoading);
         
-        this.$.subredditScroller.setScrollTop(0);
+        this.$.subredditContents.punt();
+        this.subredditContentsCache.length = 0;
+        this.finalize = false;
         
         var display_name = this.subredditCache.data.display_name;
         var url = this.subredditCache.data.url;
@@ -195,25 +186,49 @@ enyo.kind({
     },
     
     loadSubredditMore: function() {
-        this.$.loadMoreStoriesButton.setCaption(this.moreButtonCaptions.loading);
         this.$.subredditContentsService.loadStories();
     },
     
     refresh: function() {
-        this.$.subredditScroller.setScrollTop(0);
+        this.$.subredditContents.punt(0);
         this.$.subredditPane.selectView(this.$.subredditLoading);
         this.$.subredditContentsService.reset();
+        this.subredditContentsCache.length = 0;
         this.$.subredditContentsService.loadStories();
     },
     
     incomingSubredditContents: function(inSender, inData) {
-        this.subredditContentsCache = inData;
-        this.$.subredditContents.render();
-        this.$.loadMoreStoriesButton.setCaption(this.moreButtonCaptions.ok);
-        this.$.subredditPane.selectView(this.$.subredditScroller);
+    
+        if(inData === null) {
+            this.subredditContentsFinalize();
+        } else {
+            this.subredditContentsCache = inData;
+            this.$.subredditContents.refresh();
+            this.$.subredditContents.update();
+        }
+         
+        this.$.subredditPane.selectView(this.$.subredditContents);
+    },
+    
+    subredditContentsFinalize: function() {
+        this.finalize = true;
+        this.$.subredditContents.updateRow(this.subredditContentsCache.length);
     },
     
     subredditContentsRender: function(inSender, inIndex) {
+    
+        if(inIndex == this.subredditContentsCache.length) {
+        
+            if(this.finalize) {
+                this.$.subredditSingleItem.setMode("finalize");
+            } else {
+                this.$.subredditSingleItem.setMode("loading");
+                this.loadSubredditMore();
+            }
+            return true;
+        }
+        
+        this.$.subredditSingleItem.setMode("normal");
         
         try {
             var r = this.subredditContentsCache[inIndex];

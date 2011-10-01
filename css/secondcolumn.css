@@ -86,3 +86,10 @@
     background-color: #9494FF;
     background-image: url("../images/bg-subreddit-votedown.png");
 }
+
+.reddos-subreddit-item-finalize,
+.reddos-subreddit-item-loading {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+}
