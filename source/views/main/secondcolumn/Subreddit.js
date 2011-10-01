@@ -229,9 +229,7 @@ enyo.kind({
             
             var titleLine = r.data.title;
             
-            if(r.data.over_18) {
-                titleLine = "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span> " + titleLine;
-            }
+            if(r.data.over_18) this.$.subredditSingleItem.setNsfw(true);
             
             if(reddOS_History.isVisited(r.data.name) && !dontTrackVisited) {
                 this.$.subredditSingleItem.setVisited(true);

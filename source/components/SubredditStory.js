@@ -27,6 +27,7 @@ enyo.kind({
         title: "",
         domain: "",
         meta: "",
+        nsfw: false,
         votes: 0,
         comments: 0,
         odd: false,
@@ -38,6 +39,7 @@ enyo.kind({
         this.titleChanged();
         this.domainChanged();
         this.metaChanged();
+        this.nsfwChanged();
         this.votesChanged();
         this.commentsChanged();
         this.oddChanged();
@@ -46,7 +48,8 @@ enyo.kind({
     },
     
     titleChanged: function () {
-        this.$.postTitle.setContent(this.title);
+        nsfw_string = (this.nsfw) ? "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span>"  : "";
+        this.$.postTitle.setContent(nsfw_string + this.title);
     },
     
     domainChanged: function () {
@@ -55,6 +58,10 @@ enyo.kind({
     
     metaChanged: function () {
         this.$.postMeta.setContent(this.meta);
+    },
+    
+    nsfwChanged: function () {
+        this.titleChanged();
     },
     
     votesChanged: function () {
