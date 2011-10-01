@@ -29,7 +29,7 @@
             className: "reddos-toolbar",
             components: [
                 {kind: "HtmlContent", name: "commentToolbarTitle", flex: 1,
-                    style: "margin-left: 8px; font-size: 16px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+                    style: "margin-left: 8px; font-size: 18px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
                 },
             ]
         },
@@ -39,35 +39,54 @@
             flex: 1, 
             transitionKind: "enyo.transitions.Simple",
             components: [
-        
-                {kind: "enyo.VFlexBox", name: "commentLoading", flex: 1,
-                    align: "center", pack: "center", components: [
-                        {kind: "enyo.SpinnerLarge", showing: true},
-                        {name: "commentLoadingMessage", showing: false, style: "font-size: 18px; font-weight: bold; margin-top: 2em; color: #888888"},
+                {   kind: "enyo.VFlexBox", 
+                    name: "commentLoading",
+                    flex: 1,
+                    align: "center",
+                    pack: "center",
+                    components: [
+                        {   kind: "enyo.SpinnerLarge",
+                            showing: true
+                        },
+                        {   name: "commentLoadingMessage", 
+                            showing: false,
+                            style: "font-size: 18px; font-weight: bold; margin-top: 2em; color: #888888"
+                        },
                     ]
                 },
-            
-                {kind: "enyo.VFlexBox", name: "commentError", flex: 1,
-                    align: "center", pack: "center", components: [
+                {   kind: "enyo.VFlexBox",
+                    name: "commentError",
+                    flex: 1,
+                    align: "center",
+                    pack: "center",
+                    components: [
                         {content: "There was an error."},
                     ]
                 },
-        
-                {kind: "ekl.Scroller.ScrollBarsScroller", 
-                    name: "commentScroller", 
+                {   kind: "ekl.Scroller.ScrollBarsScroller", 
+                    name: "commentContents", 
                     flex: 1, 
                     autoHorizontal: false, 
                     horizontal: false, 
                     components: [
-                        {name: "headerBlock", 
+                        {   name: "headerBlock", 
                             className: "reddos-comments-header", 
                             components: [
-                                {name: "commentTitle", className: "reddos-comments-title", allowHtml: true},
-                                {name: "commentMeta", className: "reddos-comments-meta"},
+                                {   name: "commentTitle",
+                                    className: "reddos-comments-title",
+                                    allowHtml: true
+                                },
+                                {   name: "commentMeta",
+                                    className: "reddos-comments-meta"
+                                },
                             ],
                         },
-                        {name: "commentSelftext", allowHtml: true, className: "reddos-comments-selftext"},
-                        {name: "commentsBlock", className: "reddos-comments-block",
+                        {   name: "commentSelftext",
+                            allowHtml: true,
+                            className: "reddos-comments-selftext"
+                        },
+                        {   name: "commentsBlock",
+                            className: "reddos-comments-block",
                             flex: 1,
                         },
                     ]
@@ -75,24 +94,24 @@
             ]
         },
         
-        {kind: "enyo.Toolbar", 
+        {   kind: "enyo.Toolbar", 
             className: "reddos-toolbar",
             components: [
-                {kind: enyo.GrabButton},
-                
-                {kind: "enyo.ToolButton", 
+                {   kind: "enyo.GrabButton"
+                },
+                {   kind: "enyo.ToolButton", 
                     name: "toolbarLinkButton", 
                     icon: "images/menu-icon-link.png", 
                     onclick: "loadLink",
                 },
-                
-                {kind: "enyo.Spacer"},
-                {kind: "enyo.ToolButton", 
+                {   kind: "enyo.Spacer"
+                },
+                {   kind: "enyo.ToolButton", 
                     name: "commentShareButton",
                     icon: "images/menu-icon-share.png", 
                     onclick: "shareComments",
                 },
-                {kind: "enyo.ToolButton", 
+                {   kind: "enyo.ToolButton", 
                     name: "toolbarRefreshButton",
                     icon: "images/menu-icon-refresh.png", 
                     onclick: "refreshComments",
@@ -131,7 +150,7 @@
     },
     
     goReady: function () {
-        this.$.commentViewPane.selectView(this.$.commentScroller);
+        this.$.commentViewPane.selectView(this.$.commentContents);
     },
     
     goError: function () {
@@ -176,8 +195,8 @@
             return false;
         }
         
-        this.$.commentScroller.setScrollTop(0);
-        this.$.commentScroller.setScrollLeft(0);
+        this.$.commentContents.setScrollTop(0);
+        this.$.commentContents.setScrollLeft(0);
         
         if(this.renderHeaderFromCache() && this.renderCommentsFromCache()) {
             this.goReady();
