@@ -8,6 +8,7 @@
     
     linkCache: null,
     commentsCache: null,
+    flatCommentsCache: null,
     
     events: {
         onToggleView: "",
@@ -63,31 +64,21 @@
                         {content: "There was an error."},
                     ]
                 },
-                {   kind: "ekl.Scroller.ScrollBarsScroller", 
+                {   kind: "enyo.VFlexBox", 
                     name: "commentContents", 
                     flex: 1, 
                     autoHorizontal: false, 
                     horizontal: false, 
                     components: [
-                        {   name: "headerBlock", 
-                            className: "reddos-comments-header", 
+                        {name: "commentBlock", 
+                            kind: "enyo.VirtualList", 
+                            onSetupRow: "commentRender",
+                            flex: 1, 
                             components: [
-                                {   name: "commentTitle",
-                                    className: "reddos-comments-title",
-                                    allowHtml: true
-                                },
-                                {   name: "commentMeta",
-                                    className: "reddos-comments-meta"
+                                {   name: "commentContent", 
+                                    kind: "reddOS.component.NormalComment",
                                 },
                             ],
-                        },
-                        {   name: "commentSelftext",
-                            allowHtml: true,
-                            className: "reddos-comments-selftext"
-                        },
-                        {   name: "commentsBlock",
-                            className: "reddos-comments-block",
-                            flex: 1,
                         },
                     ]
                 },
@@ -172,10 +163,6 @@
     
     incomingComments: function(inSender, inResults) {
         this.goNotReady("Reticulating splines...");
-        enyo.nextTick(this, this.incomingCommentsTick, inSender, inResults);
-    },
-    
-    incomingCommentsTick: function(inSender, inResults) {
         
         if(!inResults || !reddOS_Kind.isArray(inResults) || inResults.length != 2) {
             this.goError();
@@ -195,17 +182,44 @@
             return false;
         }
         
-        this.$.commentContents.setScrollTop(0);
-        this.$.commentContents.setScrollLeft(0);
+        this.flatCommentsCache = this.flattenComments(this.commentsCache, 0);
         
-        if(this.renderHeaderFromCache() && this.renderCommentsFromCache()) {
-            this.goReady();
-        } else {
-            this.goError();
-        }
+        this.$.commentBlock.punt();
+        
+        this.goReady();
     },
     
-    renderHeaderFromCache: function () {
+    flattenComments: function (inComments, depth) {
+    
+        var retval = [];
+        var subarray = [];
+        retval.length = 0;
+        subarray.length = 0;
+        
+        for (var i in inComments) {
+        
+            if(reddOS_Kind.isComment(inComments[i]) == false) continue;
+            
+            retval.push(enyo.mixin(inComments[i], {reddos_depth: depth}));
+            
+            try {
+            
+                if(inComments[i].data.replies.data.children.length == 0) continue;
+                if(!reddOS_Kind.isComment(inComments[i].data.replies.data.children[0])) continue;
+                
+                subarray.length = 0;
+                subarray = this.flattenComments(inComments[i].data.replies.data.children, depth+1);
+                
+                for (var j in subarray) retval.push(subarray[j]);
+                
+            } catch(e) {
+                continue;
+            }
+        }
+        return retval;
+    },
+    
+/*     renderHeaderFromCache: function () {
         
         var linkData = this.linkCache.data;
         
@@ -228,7 +242,41 @@
         }
         
         return true;
+    }, */
+    
+    commentRender: function(inSender, inIndex) {
+    
+        if(inIndex == 0) {
+        
+            var linkData = this.linkCache.data;
+            if(!linkData) { this.goError(); return false; }
+            
+            var metadata = "posted "+reddOS_Date.timeSince(linkData.created_utc)+" ago by "+linkData.author+" to "+linkData.subreddit;
+            var selftext = reddOS_Markdown.makeHtml(linkData.selftext.unescapeHtml());
+            
+            this.$.commentContent.headerMode(linkData.title, metadata, selftext);
+            return true;
+        }
+    
+        try {
+            var r = this.flatCommentsCache[inIndex-1];
+        } catch (e) {
+            return false;
+        }
+        
+        if (reddOS_Kind.isComment(r)) {
+            this.$.commentContent.setAuthor(r.data.author);
+            this.$.commentContent.setScore(r.data.ups-r.data.downs);
+            this.$.commentContent.setCreated(r.data.created_utc);
+            this.$.commentContent.setComment(r.data.body);
+            this.$.commentContent.setDepth(r.reddos_depth);
+            this.$.commentContent.setOp(this.linkCache.data.author);
+            return true;
+        }
+        return false;
     },
+    
+    /*
     
     renderCommentsFromCache: function() {
         
@@ -280,6 +328,8 @@
         
         return returnObject;
     },
+    
+    */
     
     loadLink: function () {
         this.doToggleView();

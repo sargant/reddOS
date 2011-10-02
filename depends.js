@@ -19,6 +19,7 @@ enyo.depends(
     "source/utilities/Kind.js",
     "source/utilities/Settings.js",
     
+    "source/components/NormalComment.js",
     "source/components/RecursiveComment.js",
     "source/components/SubredditStory.js",
     "source/components/TopMenuSubredditButton.js",

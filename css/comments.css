@@ -1,41 +1,5 @@
-.reddos-comments {
-    font-size: 15px;
-}
-
-.reddos-comments-header {
-    padding: 15px;
-    background-color: #CEE3F8;
-    margin: 0;
-}
-
-.reddos-comments-title {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.reddos-comments-meta {
-    margin-top: 5px;
-    color: #444444;
-}
-
-.reddos-comments-selftext {
-    margin: 1em;
-    padding: 1em;
-    background-color: #E9F2FC;
-    border-radius: 10px;
-}
-
-/******************************************************************************/
-
 .reddos-comments-block {
     padding: 15px;
-}
-
-.reddos-comments-block hr {
-    border: 0;
-    color: #444;
-    background-color: #444;
-    height: 1px;
 }
 
 .reddos-comments-selftext p,
@@ -49,8 +13,37 @@
 }
 
 .reddos-comment-item {
-   margin: 1em 0 0 0;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    border: 0;
+    background-image: url("../images/comment_lines.png");
 }
+
+.reddos-comment-item-header {
+    background-color: #E9F2FC;
+    padding: 15px;
+    font-size: 15px;
+}
+
+.reddos-comment-item-header-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reddos-comment-item-header-meta {
+}
+
+.reddos-comment-item-header-selftext {
+    margin-top: 2em;
+}
+
+.reddos-comment-wrapper {
+    border: 0;
+    padding: 0;
+    background-color: #FFF;
+    padding: 0.75em 1em 1em 0;
+};
 
 .reddos-comment-item:first-of-type {
    margin: 0;
@@ -104,7 +97,6 @@
     padding: 0.5em 0.5em 0.5em 0.8em;
     color: #444;
     background-color: #EEE;
-   /* background: -webkit-gradient(linear, left top, right top, color-stop(50%,#EEE), color-stop(90%,#FFF)); */
     border-radius: 5px;
  }
 
