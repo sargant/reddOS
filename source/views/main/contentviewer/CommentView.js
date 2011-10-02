@@ -185,6 +185,7 @@
         this.flatCommentsCache = this.flattenComments(this.commentsCache, 0);
         
         this.$.commentBlock.punt();
+        this.$.toolbarLinkButton.setShowing(this.linkCache.data.is_self);
         
         this.goReady();
     },
