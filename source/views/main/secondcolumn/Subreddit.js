@@ -199,7 +199,7 @@ enyo.kind({
     
     incomingSubredditContents: function(inSender, inData) {
     
-        if(inData === null) {
+        if(inData == null) {
             this.subredditContentsFinalize();
         } else {
             this.subredditContentsCache = inData;
