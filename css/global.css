@@ -12,3 +12,11 @@ body {
 .enyo-grabbutton {
     position: static !important;
 }
+
+hr {
+    border: 0;
+    color: #444;
+    background-color: #444;
+    height: 1px;
+}
+
