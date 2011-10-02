@@ -184,7 +184,11 @@ else
 
             // attacklab: Restore tildes
             text = text.replace(/~T/g, "~");
-
+            
+                        
+            text = text.replace(/([\W_]|^)(~~)(?=\S)([^\r]*?\S~*)\2([\W_]|$)/g,
+            "$1<del>$3</del>$4");
+            
             text = pluginHooks.postConversion(text);
 
             g_html_blocks = g_titles = g_urls = null;
@@ -1049,7 +1053,7 @@ else
 
             text = text.replace(/([\W_]|^)(\*|_)(?=\S)([^\r\*_]*?\S)\2([\W_]|$)/g,
             "$1<em>$3</em>$4");
-
+            
             return text;
         }
 

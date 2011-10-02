@@ -97,7 +97,7 @@ enyo.kind({
         this.$.headerTitle.setContent(title);
         this.$.headerMeta.setContent(meta);
         if(selftext) {
-            this.$.headerSelftext.setContent(selftext);
+            this.$.headerSelftext.setContent("<hr/>\n"+selftext);
             this.$.headerSelftext.show();
         }
     },
