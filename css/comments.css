@@ -2,7 +2,7 @@
     padding: 15px;
 }
 
-.reddos-comments-selftext p,
+.reddos-comment-item-header-selftextt p,
 .reddos-comment-content p {
     margin: 0 0 0.5em 0;
 }
@@ -91,12 +91,16 @@
     margin-top: 1em;
 }
 
-.reddos-comments-selftext blockquote,
+.reddos-comment-item-header-selftext blockquote,
 .reddos-comment-content blockquote {
     margin: 0 0 0.5em 0.5em;
     padding: 0.5em 0.5em 0.5em 0.8em;
     color: #444;
     background-color: #EEE;
     border-radius: 5px;
+ }
+ 
+ .reddos-comment-item-header-selftext blockquote {
+    background-color: #FFF;
  }
 
