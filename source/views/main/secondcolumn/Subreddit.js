@@ -38,6 +38,10 @@ enyo.kind({
             kind: "reddOS.main.view.popup.SubredditDescription"
         },
         
+        {   name: "historyManager",
+            kind: "reddOS.service.HistoryManager"
+        },
+        
         //
         // UI
         //
@@ -142,7 +146,7 @@ enyo.kind({
     
     itemSelected: function (rowIndex, type) {
         var obj = this.subredditContentsCache[rowIndex];
-        reddOS_History.addVisited(obj.data.name);
+        this.$.historyManager.setVisited(obj.data.name);
         this.$.subredditContents.updateRow(rowIndex);
         obj.target = type;
         this.doObjectSend(obj);
@@ -246,7 +250,7 @@ enyo.kind({
             
             if(r.data.over_18) this.$.subredditSingleItem.setNsfw(true);
             
-            if(reddOS_History.isVisited(r.data.name) && !dontTrackVisited) {
+            if(this.$.historyManager.isVisited(r.data.name) && !dontTrackVisited) {
                 this.$.subredditSingleItem.setVisited(true);
             }
             

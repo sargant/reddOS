@@ -15,7 +15,6 @@ enyo.depends(
     
     "source/utilities/Date.js",
     "source/utilities/ExtendedObjects.js",
-    "source/utilities/History.js",
     "source/utilities/Kind.js",
     "source/utilities/Settings.js",
     
@@ -24,6 +23,7 @@ enyo.depends(
     "source/components/SubredditStory.js",
     "source/components/TopMenuSubredditButton.js",
     
+    "source/services/HistoryManager.js",
     "source/services/RedditAuthentication.js",
     "source/services/RedditComments.js",
     "source/services/RedditSubredditContents.js",
