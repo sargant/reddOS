@@ -34,6 +34,12 @@ Pagedown
 EKL - Enyo Kind Library
     <https://github.com/dcousineau/EKL>
 
+Gentleface Toolbar Icon Set
+    <http://gentleface.com/free_icon_set.html>
+
+Iconic Icon Set
+    <http://somerandomdude.com/projects/iconic/>
+
 
 
 Licences for these items follow:
@@ -93,3 +99,22 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+
+Gentleface Toolbar Icon Set
+===========================
+Originals available from <http://gentleface.com/free_icon_set.html>
+
+Made available under the Creative Commons CC BY-NC 3.0 licence
+<http://creativecommons.org/licenses/by-nc/3.0/>
+
+
+
+Iconic Icon Set
+===============
+Originals available from <http://somerandomdude.com/projects/iconic/>
+
+Made available under the Creative Commons BY-SA 3.0 licence
+<http://creativecommons.org/licenses/by-sa/3.0/us/>
+
