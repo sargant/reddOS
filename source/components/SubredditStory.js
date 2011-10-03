@@ -49,7 +49,7 @@ enyo.kind({
     },
     
     titleChanged: function () {
-        nsfw_string = (this.nsfw) ? "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span>"  : "";
+        var nsfw_string = (this.nsfw) ? "<span class=\"reddos-subreddit-item-nsfw\">NSFW</span>"  : "";
         this.$.postTitle.setContent(nsfw_string + this.title);
     },
     
