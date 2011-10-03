@@ -14,6 +14,10 @@ enyo.kind({
         this.reload();
     },
     
+    events: {
+        onUpdate: "",
+    },
+    
     /**
      * When one instance of a history manager saves back to event storage,
      * it sends a global event. This captures the event and reloads the data
@@ -24,7 +28,8 @@ enyo.kind({
     },
     
     /**
-     * Reload the history from localStorage
+     * Reload the history from localStorage. Fires an event when finished,
+     * allowing owners to handle the new data
      */
     reload: function () {
         this.cache.length = 0;
@@ -39,6 +44,8 @@ enyo.kind({
         if(!enyo.isArray(this.cache)) {
             this.cache = [];
         }
+        
+        this.doUpdate(this.cache);
     },
     
     /**
