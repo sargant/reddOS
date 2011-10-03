@@ -59,8 +59,4 @@ reddOS_Kind = {
             && typeof a.data.fake_subreddit != "undefined" 
             && a.data.fake_subreddit == true;
     },
-    
-    isArray: function(a) {
-        return a.constructor == Array;
-    },
 };

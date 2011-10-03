@@ -8,7 +8,7 @@ reddOS_History = {
         
         var historyArray = enyo.json.parse(temp);
         
-        if(reddOS_Kind.isArray(historyArray) == false) return false;
+        if(enyo.isArray(historyArray) == false) return false;
         
         return (historyArray.indexOf(name) != -1);
     },
@@ -25,7 +25,7 @@ reddOS_History = {
         } else {
             historyArray = enyo.json.parse(temp);
         
-            if(reddOS_Kind.isArray(historyArray) == false) {
+            if(enyo.isArray(historyArray) == false) {
                 historyArray = [];
                 historyArray.length = 0;
             }

@@ -59,7 +59,7 @@ enyo.kind({
     },
     
     commentsWebServiceSuccess: function(inSender, inResponse, inRequest) {
-        if(reddOS_Kind.isArray(inResponse) == false) {
+        if(enyo.isArray(inResponse) == false) {
             this.doFailure();
         } else {
             this.doSuccess(inResponse);

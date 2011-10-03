@@ -165,7 +165,7 @@
     incomingComments: function(inSender, inResults) {
         this.goNotReady("Reticulating splines...");
         
-        if(!inResults || !reddOS_Kind.isArray(inResults) || inResults.length != 2) {
+        if(!inResults || !enyo.isArray(inResults) || inResults.length != 2) {
             this.goError();
             return false;
         }
@@ -283,7 +283,7 @@
         
         var commentsArray = this.commentsCache;
         
-        if(reddOS_Kind.isArray(commentsArray) == false) {
+        if(enyo.isArray(commentsArray) == false) {
             return false;
         }
         
