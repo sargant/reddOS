@@ -9,6 +9,7 @@
 enyo.kind({
     
     name: "reddOS.service.StoredObjectManager",
+    kind: "reddOS.service.GenericManager",
     
     keyName: "reddOS.stored-object",
     
@@ -22,7 +23,7 @@ enyo.kind({
      */
     getItem: function (searchname) {
         var index = this.__getItemIndex(searchname);
-        return (index < 0) ? null : this.cache[i].object;
+        return (index < 0) ? null : this.cache[index].object;
     },
     
     /**

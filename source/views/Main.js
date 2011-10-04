@@ -26,11 +26,11 @@ enyo.kind({
     },
     
     userInfoChanged: function() {
-        localStorage.setItem("reddOS_userInfo", enyo.json.stringify(this.getUserInfo()));
+        this.$.storedObjectManager.setItem("user_info", this.getUserInfo());
     },
     
     subredditsChanged: function() {
-        localStorage.setItem("reddOS_subreddits", enyo.json.stringify(this.getSubreddits()));
+        this.$.storedObjectManager.setItem("subscribed_subreddits", this.getSubreddits());
     },
     
     /***************************************************************************
@@ -181,15 +181,15 @@ enyo.kind({
         this.$.reddOSUpdatesService.check();
         
         // Load cached user info & subreddit details
-        var userInfo = localStorage.getItem("reddOS_userInfo");
-        var subreddits = localStorage.getItem("reddOS_subreddits");
+        var userInfo = this.$.storedObjectManager.getItem("user_info");
+        var subreddits = this.$.storedObjectManager.getItem("subscribed_subreddits");
         
         if(userInfo != null && userInfo != "null") {
-            this.incomingUserInfo(null, enyo.json.parse(userInfo));
+            this.incomingUserInfo(null, userInfo);
         }
         
         if(subreddits != null && subreddits != "null") {
-            this.incomingSubscribedSubreddits(null, enyo.json.parse(subreddits));
+            this.incomingSubscribedSubreddits(null, subreddits);
         }
         
         // Attempt to refresh data too
