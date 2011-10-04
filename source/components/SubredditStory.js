@@ -145,8 +145,7 @@ enyo.kind({
             align: "center",
             pack: "center",
             components: [
-                {   kind: "enyo.Spinner",
-                    showing: true
+                {   content: "Loading...",
                 }
             ]
         },
