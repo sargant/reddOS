@@ -56,7 +56,8 @@ enyo.kind({
     },
     
     /**
-     * Write the current cache to localStorage
+     * Write the current cache to localStorage, and flag to other instances
+     * that the data has changed
      */
     store: function () {
         if (this.keyName) {

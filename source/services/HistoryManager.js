@@ -22,6 +22,9 @@ enyo.kind({
      * "isVisited" for true/false values
      */
     __isVisitedIndex: function (searchname) {
+        
+        searchname = new String(searchname);
+        
         var i = this.cache.length;
         while (i--) {
             if (this.cache[i].name && this.cache[i].name == searchname) {
@@ -36,6 +39,8 @@ enyo.kind({
      * it will use the current time.
      */
     setVisited: function (fullname, time_visited) {
+        
+        fullname = new String(fullname);
     
         if(!fullname) return false;
         if(!time_visited) time_visited = reddOS_Date.now();
