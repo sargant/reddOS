@@ -73,6 +73,11 @@ enyo.kind({
             onUpdateAvailable: "handleUpdateAvailable",
         },
         
+        {   name: "storedObjectManager",
+            kind: "reddOS.service.StoredObjectManager",
+            //onUpdate: "",
+        },
+        
         //
         // Popups
         //
