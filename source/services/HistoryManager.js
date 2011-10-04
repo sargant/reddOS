@@ -1,59 +1,13 @@
 enyo.kind({
     
     name: "reddOS.service.HistoryManager",
-    kind: "enyo.Component",
+    kind: "reddOS.service.GenericManager",
     
     keyName: "reddOS.history",
     defaultLifespan: 14 * 24 * 3600,
     
-    cache: [],
-    
     create: function () {
         this.inherited(arguments);
-        enyo.dispatcher.rootHandler.addListener(this);
-        this.reload();
-    },
-    
-    events: {
-        onUpdate: "",
-    },
-    
-    /**
-     * When one instance of a history manager saves back to event storage,
-     * it sends a global event. This captures the event and reloads the data
-     * in all active instances
-     */
-    reddOSHistoryUpdatedHandler: function (inSender, inEvent) {
-        this.reload();
-    },
-    
-    /**
-     * Reload the history from localStorage. Fires an event when finished,
-     * allowing owners to handle the new data
-     */
-    reload: function () {
-        this.cache.length = 0;
-        var contents = window.localStorage.getItem(this.keyName);
-        
-        if (!contents) {
-            this.cache = [];
-        } else {
-            this.cache = enyo.json.parse(contents);
-        }
-        
-        if(!enyo.isArray(this.cache)) {
-            this.cache = [];
-        }
-        
-        this.doUpdate(this.cache);
-    },
-    
-    /**
-     * Write the current history to localStorage
-     */
-    store: function () {
-        window.localStorage.setItem(this.keyName, enyo.json.stringify(this.cache));
-        enyo.dispatch({type: "reddOSHistoryUpdated"});
     },
     
     /**
@@ -121,14 +75,6 @@ enyo.kind({
         
         this.cache.length = 0;
         this.cache = newcache;
-        this.store();
-    },
-    
-    /**
-     * Clears the entire link history
-     */
-    clear: function () {
-        this.cache.length = 0;
         this.store();
     },
 });

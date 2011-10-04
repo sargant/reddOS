@@ -23,6 +23,7 @@ enyo.depends(
     "source/components/SubredditStory.js",
     "source/components/TopMenuSubredditButton.js",
     
+    "source/services/GenericManager.js",
     "source/services/HistoryManager.js",
     "source/services/RedditAuthentication.js",
     "source/services/RedditComments.js",
