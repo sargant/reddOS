@@ -284,10 +284,12 @@ enyo.kind({
             
             var titleLine = r.data.title;
             
-            if(r.data.over_18) this.$.subredditSingleItem.setNsfw(true);
+            this.$.subredditSingleItem.setNsfw(r.data.over_18 ? true : false);
             
             if(this.$.historyManager.isVisited(r.data.name) && !dontTrackVisited) {
                 this.$.subredditSingleItem.setVisited(true);
+            } else {
+                this.$.subredditSingleItem.setVisited(false);
             }
             
             this.$.subredditSingleItem.setTitle(titleLine);
