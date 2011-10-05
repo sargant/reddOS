@@ -27,6 +27,7 @@ enyo.depends(
     "source/services/HistoryManager.js",
     "source/services/RedditAuthentication.js",
     "source/services/RedditComments.js",
+    "source/services/RedditHide.js",
     "source/services/RedditSubredditContents.js",
     "source/services/RedditSubscribedSubreddits.js",
     "source/services/RedditUserInformation.js",

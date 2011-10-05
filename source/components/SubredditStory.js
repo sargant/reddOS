@@ -21,6 +21,7 @@ enyo.kind({
     events: {
         onStoryClick: "",
         onVoteClick: "",
+        onHideClick: "",
         onCommentClick: "",
     },
     
@@ -34,6 +35,7 @@ enyo.kind({
         odd: false,
         visited: false,
         likes: null,
+        hidden: false,
     },
     
     updateAllFields: function () {
@@ -46,6 +48,7 @@ enyo.kind({
         this.oddChanged();
         this.visitedChanged();
         this.likesChanged();
+        this.hiddenChanged();
         this.setMode("normal");
     },
     
@@ -82,6 +85,10 @@ enyo.kind({
         this.$.postTitle.addRemoveClass("reddos-subreddit-item-title-visited", this.visited);
     },
     
+    hiddenChanged: function () {
+        this.addRemoveClass("reddos-subreddit-item-hidden", this.hidden);
+    },
+    
     likesChanged: function () {
         this.$.voteCount.addRemoveClass("reddos-subreddit-item-votebutton-like", this.likes === true);
         this.$.voteCount.addRemoveClass("reddos-subreddit-item-votebutton-dislike", this.likes === false);
@@ -99,12 +106,14 @@ enyo.kind({
                 {kind: "enyo.MenuItem", name: "voteCancelOption", score: 0, caption: "Cancel vote", onclick: "castVote"},
                 {kind: "enyo.MenuItem", name: "voteDownOption", score: -1, caption: "Downvote", onclick: "castVote"},
             ]},
+            {name: "hideOption", caption: "Hide", onclick: "toggleHidden"},
         ]},
     
         {   kind: "enyo.VFlexBox", 
             name: "linkBlock",
             showing: false,
             onclick: "storyClick",
+            onmousehold: "voteClick",
             flex: 1, 
             components: [
                 {   name: "postTitle", 
@@ -210,11 +219,26 @@ enyo.kind({
         this.$.voteCancelOption.setDisabled(this.likes === null);
         this.$.voteDownOption.setDisabled(this.likes === false);
         
+        this.$.hideOption.setCaption(this.hidden ? "Unhide" : "Hide");
+        
         this.$.voteMenu.openAtEvent(inEvent);
     },
     
     castVote: function (inSender, inEvent) {
+    
+        var likes = null;
+        if (inSender.score === 1) { likes = true; }
+        if (inSender.score === -1) { likes = false; }
+        
+        this.setLikes(likes);
+        
         this.doVoteClick(inEvent, this.$.voteMenu.rowIndex, inSender.score);
+    },
+     
+    toggleHidden: function (inSender, inEvent) {
+        var hidden_status = !this.getHidden();
+        this.setHidden(hidden_status);
+        this.doHideClick(inEvent, this.$.voteMenu.rowIndex, hidden_status);
     },
     
     commentClick: function (inSender, inEvent) {

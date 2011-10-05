@@ -13,6 +13,10 @@
     background-color: #E9F2FC;
 }
 
+.reddos-subreddit-item-hidden {
+    background-color: #DDDDDD;
+}
+
 .reddos-subreddit-item-title {
     font-weight: bold;
     min-height: 2em;

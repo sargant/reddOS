@@ -38,6 +38,10 @@ enyo.kind({
             kind: "reddOS.service.RedditVote",
         },
         
+        {   name: "hideService",
+            kind: "reddOS.service.RedditHide",
+        },
+        
         {name: "descriptionPopup",
             kind: "reddOS.main.view.popup.SubredditDescription"
         },
@@ -106,6 +110,7 @@ enyo.kind({
                         kind: "reddOS.component.SubredditStory",
                         onStoryClick: "subredditStoryItemClick",
                         onVoteClick: "subredditStoryVoteClick",
+                        onHideClick: "subredditStoryHideClick",
                         onCommentClick: "subredditStoryCommentClick",
                     },
                 ],
@@ -151,13 +156,19 @@ enyo.kind({
         if (score === 1) { likes = true; }
         if (score === -1) { likes = false; }
         
-        this.subredditContentsCache[rowIndex].data.likes = likes;
-        this.$.subredditContents.updateRow(rowIndex);
-        
         var currentUser = this.$.storedObjectManager.getItem("user_info");
         
         if (reddOS_Kind.isAccount(currentUser)) {
             this.$.voteService.doVote(currentUser.data.modhash, this.subredditContentsCache[rowIndex].data.name, score);
+        }
+    },
+    
+    subredditStoryHideClick: function(inSender, inEvent, rowIndex, hidden) {
+    
+        var currentUser = this.$.storedObjectManager.getItem("user_info");
+        
+        if (reddOS_Kind.isAccount(currentUser)) {
+            this.$.hideService.doHidden(currentUser.data.modhash, this.subredditContentsCache[rowIndex].data.name, hidden);
         }
     },
        
@@ -285,6 +296,12 @@ enyo.kind({
             this.$.subredditSingleItem.setComments(r.data.num_comments);
             this.$.subredditSingleItem.setVotes(r.data.score);
             this.$.subredditSingleItem.setLikes(r.data.likes);
+            
+            if(this.subredditCache.data.fake_subreddit && this.subredditCache.data.display_name == "Hidden") {
+                this.$.subredditSingleItem.setHidden(true);
+            } else {
+                this.$.subredditSingleItem.setHidden(r.data.hidden);
+            }
             
             return true;
         }
