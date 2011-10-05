@@ -34,12 +34,20 @@ enyo.kind({
             onFailure: "incomingSubredditContents",
         },
         
+        {   name: "voteService",
+            kind: "reddOS.service.RedditVote",
+        },
+        
         {name: "descriptionPopup",
             kind: "reddOS.main.view.popup.SubredditDescription"
         },
         
         {   name: "historyManager",
             kind: "reddOS.service.HistoryManager"
+        },
+        
+        {   name: "storedObjectManager",
+            kind: "reddOS.service.StoredObjectManager"
         },
         
         //
@@ -97,6 +105,7 @@ enyo.kind({
                     {name: "subredditSingleItem", 
                         kind: "reddOS.component.SubredditStory",
                         onStoryClick: "subredditStoryItemClick",
+                        onVoteClick: "subredditStoryVoteClick",
                         onCommentClick: "subredditStoryCommentClick",
                     },
                 ],
@@ -134,6 +143,22 @@ enyo.kind({
     
     changeSubredditView: function(inSender, inEvent) {
         this.loadSubreddit(inSender.value);
+    },
+    
+    subredditStoryVoteClick: function(inSender, inEvent, rowIndex, score) {
+        
+        var likes = null;
+        if (score === 1) { likes = true; }
+        if (score === -1) { likes = false; }
+        
+        this.subredditContentsCache[rowIndex].data.likes = likes;
+        this.$.subredditContents.updateRow(rowIndex);
+        
+        var currentUser = this.$.storedObjectManager.getItem("user_info");
+        
+        if (reddOS_Kind.isAccount(currentUser)) {
+            this.$.voteService.doVote(currentUser.data.modhash, this.subredditContentsCache[rowIndex].data.name, score);
+        }
     },
        
     subredditStoryCommentClick: function(inSender, inEvent) {

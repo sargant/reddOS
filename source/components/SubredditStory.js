@@ -20,6 +20,7 @@ enyo.kind({
      
     events: {
         onStoryClick: "",
+        onVoteClick: "",
         onCommentClick: "",
     },
     
@@ -91,6 +92,15 @@ enyo.kind({
      */
     
     components: [
+    
+        {kind: "enyo.Menu", name: "voteMenu", width: "150px", lazy: false, components: [
+            {caption: "Vote...", components: [
+                {kind: "enyo.MenuItem", name: "voteUpOption", score: 1, caption: "Upvote", onclick: "castVote"},
+                {kind: "enyo.MenuItem", name: "voteCancelOption", score: 0, caption: "Cancel vote", onclick: "castVote"},
+                {kind: "enyo.MenuItem", name: "voteDownOption", score: -1, caption: "Downvote", onclick: "castVote"},
+            ]},
+        ]},
+    
         {   kind: "enyo.VFlexBox", 
             name: "linkBlock",
             showing: false,
@@ -194,6 +204,17 @@ enyo.kind({
     
     voteClick: function (inSender, inEvent) {
         this.cancelEvent(inSender, inEvent);
+        
+        this.$.voteMenu.rowIndex = inEvent.rowIndex;
+        this.$.voteUpOption.setDisabled(this.likes === true);
+        this.$.voteCancelOption.setDisabled(this.likes === null);
+        this.$.voteDownOption.setDisabled(this.likes === false);
+        
+        this.$.voteMenu.openAtEvent(inEvent);
+    },
+    
+    castVote: function (inSender, inEvent) {
+        this.doVoteClick(inEvent, this.$.voteMenu.rowIndex, inSender.score);
     },
     
     commentClick: function (inSender, inEvent) {
