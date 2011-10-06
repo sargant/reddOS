@@ -41,6 +41,7 @@ enyo.kind({
             method: "POST",
             onSuccess: "loginReturnSuccess", 
             onFailure: "loginReturnFailure",
+            headers: {"Origin": "http://www.reddit.com"},
         },
         
         {name: "logoutWebService", 
