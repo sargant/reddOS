@@ -107,7 +107,7 @@ enyo.kind({
     },
     
     openReply: function(inSender, inEvent) {
-        this.doOpenReply(inEvent, this.$.commentMenu.rowIndex);
+        this.doOpenReply(inEvent, this.$.commentMenu.rowIndex - 1);
     },
      
     headerMode: function (title, meta, selftext) {

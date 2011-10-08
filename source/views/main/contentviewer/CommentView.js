@@ -23,7 +23,12 @@
         },
         
         {   name: "commentReplyPopup",
-            kind: "reddOS.main.view.popup.CommentReply"
+            kind: "reddOS.main.view.popup.CommentReply",
+            onNewComment: "insertNewComment",
+        },
+        
+        {   name: "storedObjectManager",
+            kind: "reddOS.service.StoredObjectManager"
         },
         
         {kind: "enyo.Menu", name: "commentShareMenu", components: [
@@ -227,6 +232,26 @@
             }
         }
         return retval;
+    },
+    
+    insertNewComment: function (inSender, parentRowIndex, inNewID, inComment) {
+        var newComment = new Object;
+        newComment.kind = reddOS_Kind.COMMENT;
+        newComment.reddos_depth = (this.flatCommentsCache[parentRowIndex].reddos_depth + 1);
+        newComment.data = {};
+        
+        var currentUser = this.$.storedObjectManager.getItem("user_info");
+        
+        newComment.data.body = inComment;
+        newComment.data.author = currentUser.data.name;
+        newComment.data.ups = 1;
+        newComment.data.downs = 0;
+        newComment.data.created_utc = reddOS_Date.now();
+        newComment.data.likes = true;
+        newComment.data.id = inNewID;
+        
+        this.flatCommentsCache.splice(parentRowIndex + 1, 0, newComment);
+        this.$.commentBlock.refresh();
     },
     
 /*     renderHeaderFromCache: function () {

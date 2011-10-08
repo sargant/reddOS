@@ -9,6 +9,9 @@ enyo.kind({
     
     width: "600px",
     
+    parentComment: null,
+    rowIndex: null,
+    
     create: function() {
         this.inherited(arguments);
         this.addClass("reddos-comment-reply-popup");
@@ -19,6 +22,7 @@ enyo.kind({
      */
     
     events: {
+        onNewComment: "",
     },
     
     /***************************************************************************
@@ -26,6 +30,16 @@ enyo.kind({
      */
     
     components: [
+    
+        {name: "submitCommentService",
+            kind: "reddOS.service.RedditSubmitComment",
+            onSuccess: "submitCommentSuccess",
+            onFailure: "submitCommentFailure",
+        },
+        
+        {   name: "storedObjectManager",
+            kind: "reddOS.service.StoredObjectManager"
+        },
     
         {kind: "enyo.Group", components: [
             {   kind: "enyo.Scroller",
@@ -52,8 +66,9 @@ enyo.kind({
                 flex: 1,
             },
             
-            {kind: "enyo.Button", 
+            {kind: "enyo.ActivityButton", 
                 className: "enyo-button-affirmative",
+                name: "submitButton",
                 content: "Submit", 
                 onclick: "submit",
                 flex: 1
@@ -65,12 +80,36 @@ enyo.kind({
      * Methods 
      */
      
-    openAndPopulate: function (inComment, rowIndex) {
-        this.setCaption("Reply to " + inComment.data.author);
+    openAndPopulate: function (inParent, rowIndex) {
+        this.parentComment = inParent;
+        this.rowIndex = rowIndex;
+        this.setCaption("Reply to " + this.parentComment.data.author);
+        this.$.submitButton.setActive(false);
         this.openAtCenter();
     },
     
+    submit: function () {
+        this.$.submitButton.setActive(true);
+        
+        var currentUser = this.$.storedObjectManager.getItem("user_info");
+        
+        if (reddOS_Kind.isAccount(currentUser)) {
+            this.$.submitCommentService.submitComment(currentUser.data.modhash, this.parentComment.data.name, this.$.commentInput.getValue());
+        }
+    },
+    
+    submitCommentSuccess: function (inSender, inID, inCommentContents) {
+        this.doNewComment(this.rowIndex, inID, inCommentContents);
+        this.dismiss();
+    },
+    
+    submitCommentFailure: function () {
+        this.$.submitButton.setActive(false);
+        this.$.submitButton.setCaption("Failed. Try again?");
+    },
+    
     dismiss: function () {
+        this.parent = null;
         this.$.commentInput.setValue("");
         this.setCaption("Reply");
         this.$.inputScroller.scrollTo(0,0);

@@ -31,6 +31,7 @@ enyo.depends(
     "source/services/RedditSave.js",
     "source/services/RedditSubredditContents.js",
     "source/services/RedditSubscribedSubreddits.js",
+    "source/services/RedditSubmitComment.js",
     "source/services/RedditUserInformation.js",
     "source/services/RedditVote.js",
     "source/services/reddOSUpdates.js",
