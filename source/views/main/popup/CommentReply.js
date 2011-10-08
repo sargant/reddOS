@@ -83,7 +83,13 @@ enyo.kind({
     openAndPopulate: function (inParent, rowIndex) {
         this.parentComment = inParent;
         this.rowIndex = rowIndex;
-        this.setCaption("Reply to " + this.parentComment.data.author);
+        
+        if (rowIndex == -1) {
+            this.setCaption("New comment");
+        } else {
+            this.setCaption("Reply to " + this.parentComment.data.author);
+        }
+        
         this.$.submitButton.setActive(false);
         this.openAtCenter();
     },

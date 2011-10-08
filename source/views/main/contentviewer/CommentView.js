@@ -108,6 +108,11 @@
                 {   kind: "enyo.Spacer"
                 },
                 {   kind: "enyo.ToolButton", 
+                    name: "commentNewButton",
+                    icon: "images/menu-icon-pencil.png", 
+                    onclick: "newComment",
+                },
+                {   kind: "enyo.ToolButton", 
                     name: "commentShareButton",
                     icon: "images/menu-icon-share.png", 
                     onclick: "shareComments",
@@ -140,6 +145,10 @@
     
     openReplyPopup: function (inSender, inEvent, inRowIndex) {
         this.$.commentReplyPopup.openAndPopulate(this.flatCommentsCache[inRowIndex], inRowIndex);
+    },
+    
+    newComment: function() {
+        this.$.commentReplyPopup.openAndPopulate(this.linkCache, -1);
     },
     
     goNotReady: function (message) {
@@ -237,7 +246,13 @@
     insertNewComment: function (inSender, parentRowIndex, inNewID, inComment) {
         var newComment = new Object;
         newComment.kind = reddOS_Kind.COMMENT;
-        newComment.reddos_depth = (this.flatCommentsCache[parentRowIndex].reddos_depth + 1);
+        
+        if(parentRowIndex == -1) {
+            newComment.reddos_depth = 0;
+        } else {
+            newComment.reddos_depth = (this.flatCommentsCache[parentRowIndex].reddos_depth + 1);
+        }
+        
         newComment.data = {};
         
         var currentUser = this.$.storedObjectManager.getItem("user_info");
