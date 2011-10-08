@@ -225,13 +225,6 @@ enyo.kind({
     },
     
     castVote: function (inSender, inEvent) {
-    
-        var likes = null;
-        if (inSender.score === 1) { likes = true; }
-        if (inSender.score === -1) { likes = false; }
-        
-        this.setLikes(likes);
-        
         this.doVoteClick(inEvent, this.$.voteMenu.rowIndex, inSender.score);
     },
      

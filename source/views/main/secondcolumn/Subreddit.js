@@ -152,9 +152,28 @@ enyo.kind({
     
     subredditStoryVoteClick: function(inSender, inEvent, rowIndex, score) {
         
-        var likes = null;
-        if (score === 1) { likes = true; }
-        if (score === -1) { likes = false; }
+        var r = this.subredditContentsCache[rowIndex];
+        var currentStatusScore = 0;
+        
+        if(r.data.likes === true) currentStatusScore = 1;
+        if(r.data.likes === false) currentStatusScore = -1;
+        
+        // New score
+        r.data.score += (score - currentStatusScore);
+        
+        switch (score) {
+            case 1:
+                r.data.likes = true;
+                break;
+            case 0:
+                r.data.likes = null;
+                break;
+            case -1:
+                r.data.likes = false;
+                break;
+        }
+        
+        this.$.subredditContents.updateRow(rowIndex);
         
         var currentUser = this.$.storedObjectManager.getItem("user_info");
         
