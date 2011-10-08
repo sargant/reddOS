@@ -86,7 +86,7 @@ enyo.kind({
     },
     
     dismiss: function () {
-        this.caption = "Subreddit Description";
+        this.setCaption("Subreddit Description");
         this.$.descriptionContent.setContent("");
         this.$.descriptionScroller.scrollTo(0,0);
         this.close();
