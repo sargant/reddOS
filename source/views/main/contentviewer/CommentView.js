@@ -17,9 +17,13 @@
     components: [
     
         {name: "commentsService",
-            kind: "reddOS.service.RedditComments",
+            kind: "reddOS.service.RedditLoadComments",
             onSuccess: "incomingComments",
             onFailure: "incomingComments",
+        },
+        
+        {   name: "commentReplyPopup",
+            kind: "reddOS.main.view.popup.CommentReply"
         },
         
         {kind: "enyo.Menu", name: "commentShareMenu", components: [
@@ -77,6 +81,7 @@
                             components: [
                                 {   name: "commentContent", 
                                     kind: "reddOS.component.NormalComment",
+                                    onOpenReply: "openReplyPopup",
                                 },
                             ],
                         },
@@ -126,6 +131,10 @@
         
             this.refreshComments();
         }
+    },
+    
+    openReplyPopup: function (inSender, inEvent, inRowIndex) {
+        this.$.commentReplyPopup.openAndPopulate(this.flatCommentsCache[inRowIndex], inRowIndex);
     },
     
     goNotReady: function (message) {

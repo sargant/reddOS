@@ -1,6 +1,6 @@
 enyo.kind({
     
-    name: "reddOS.service.RedditComments",
+    name: "reddOS.service.RedditLoadComments",
     kind: "enyo.Component",
     
     errorResponses: {

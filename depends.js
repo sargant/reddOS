@@ -26,7 +26,7 @@ enyo.depends(
     "source/services/GenericManager.js",
     "source/services/HistoryManager.js",
     "source/services/RedditAuthentication.js",
-    "source/services/RedditComments.js",
+    "source/services/RedditLoadComments.js",
     "source/services/RedditHide.js",
     "source/services/RedditSave.js",
     "source/services/RedditSubredditContents.js",
@@ -37,6 +37,7 @@ enyo.depends(
     "source/services/StoredObjectManager.js",
     
     "source/views/main/popup/About.js",
+    "source/views/main/popup/CommentReply.js",
     "source/views/main/popup/Login.js",
     "source/views/main/popup/Settings.js",
     "source/views/main/popup/SubredditDescription.js",

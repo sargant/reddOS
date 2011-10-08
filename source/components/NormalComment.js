@@ -24,15 +24,24 @@ enyo.kind({
         this.commentChanged();
     },
     
+    events: {
+        onOpenReply: "",
+    },
+    
     /***************************************************************************
      * Components
      */
     
     components: [
     
+        {kind: "enyo.Menu", name: "commentMenu", lazy: false, components: [
+            {name: "commentMenuReplyOption", caption: "Reply", onclick: "openReply"},
+        ]},
+    
         {   kind: "enyo.VFlexBox",
             className: "reddos-comment-wrapper",
             name: "wrapper",
+            onclick: "openCommentMenu",
             components: [
                 {   kind: "enyo.HFlexBox", 
                     className: "reddos-comment-header",
@@ -90,6 +99,16 @@ enyo.kind({
     /***************************************************************************
      * Methods
      */
+     
+    openCommentMenu: function(inSender, inEvent) {
+        this.$.commentMenu.rowIndex = inEvent.rowIndex;
+        this.$.commentMenuReplyOption.setCaption("Reply to " + this.getAuthor());
+        this.$.commentMenu.openAtEvent(inEvent);
+    },
+    
+    openReply: function(inSender, inEvent) {
+        this.doOpenReply(inEvent, this.$.commentMenu.rowIndex);
+    },
      
     headerMode: function (title, meta, selftext) {
         this.$.wrapper.hide();
