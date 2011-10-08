@@ -42,6 +42,10 @@ enyo.kind({
             kind: "reddOS.service.RedditHide",
         },
         
+        {   name: "saveService",
+            kind: "reddOS.service.RedditSave",
+        },
+        
         {name: "descriptionPopup",
             kind: "reddOS.main.view.popup.SubredditDescription"
         },
@@ -111,6 +115,7 @@ enyo.kind({
                         onStoryClick: "subredditStoryItemClick",
                         onVoteClick: "subredditStoryVoteClick",
                         onHideClick: "subredditStoryHideClick",
+                        onSaveClick: "subredditStorySaveClick",
                         onCommentClick: "subredditStoryCommentClick",
                     },
                 ],
@@ -184,10 +189,26 @@ enyo.kind({
     
     subredditStoryHideClick: function(inSender, inEvent, rowIndex, hidden) {
     
+        this.subredditContentsCache[rowIndex].hiddenStrict = true;
+        this.subredditContentsCache[rowIndex].data.hidden = hidden;
+        this.$.subredditContents.updateRow(rowIndex);
+    
         var currentUser = this.$.storedObjectManager.getItem("user_info");
         
         if (reddOS_Kind.isAccount(currentUser)) {
             this.$.hideService.doHidden(currentUser.data.modhash, this.subredditContentsCache[rowIndex].data.name, hidden);
+        }
+    },
+    
+    subredditStorySaveClick: function(inSender, inEvent, rowIndex, saved) {
+    
+        this.subredditContentsCache[rowIndex].data.saved = saved;
+        this.$.subredditContents.updateRow(rowIndex);
+    
+        var currentUser = this.$.storedObjectManager.getItem("user_info");
+        
+        if (reddOS_Kind.isAccount(currentUser)) {
+            this.$.saveService.doSaved(currentUser.data.modhash, this.subredditContentsCache[rowIndex].data.name, saved);
         }
     },
        
@@ -317,8 +338,9 @@ enyo.kind({
             this.$.subredditSingleItem.setComments(r.data.num_comments);
             this.$.subredditSingleItem.setVotes(r.data.score);
             this.$.subredditSingleItem.setLikes(r.data.likes);
+            this.$.subredditSingleItem.setSaved(r.data.saved);
             
-            if(this.subredditCache.data.fake_subreddit && this.subredditCache.data.display_name == "Hidden") {
+            if(this.subredditCache.data.fake_subreddit && this.subredditCache.data.display_name == "Hidden" && !r.hiddenStrict) {
                 this.$.subredditSingleItem.setHidden(true);
             } else {
                 this.$.subredditSingleItem.setHidden(r.data.hidden);

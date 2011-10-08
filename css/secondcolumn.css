@@ -13,6 +13,12 @@
     background-color: #E9F2FC;
 }
 
+.reddos-subreddit-item-saved {
+    background-image:url('../images/fav-star.png');
+    background-repeat:no-repeat;
+    background-position:center
+}
+
 .reddos-subreddit-item-hidden {
     background-color: #DDDDDD;
     border-color: #BBBBBB;

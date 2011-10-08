@@ -22,6 +22,7 @@ enyo.kind({
         onStoryClick: "",
         onVoteClick: "",
         onHideClick: "",
+        onSaveClick: "",
         onCommentClick: "",
     },
     
@@ -36,6 +37,7 @@ enyo.kind({
         visited: false,
         likes: null,
         hidden: false,
+        saved: false,
     },
     
     updateAllFields: function () {
@@ -49,6 +51,7 @@ enyo.kind({
         this.visitedChanged();
         this.likesChanged();
         this.hiddenChanged();
+        this.savedChanged();
         this.setMode("normal");
     },
     
@@ -89,6 +92,10 @@ enyo.kind({
         this.addRemoveClass("reddos-subreddit-item-hidden", this.hidden);
     },
     
+    savedChanged: function () {
+        this.addRemoveClass("reddos-subreddit-item-saved", this.saved);
+    },
+    
     likesChanged: function () {
         this.$.voteCount.addRemoveClass("reddos-subreddit-item-votebutton-like", this.likes === true);
         this.$.voteCount.addRemoveClass("reddos-subreddit-item-votebutton-dislike", this.likes === false);
@@ -107,6 +114,7 @@ enyo.kind({
                 {kind: "enyo.MenuItem", name: "voteDownOption", score: -1, caption: "Downvote", onclick: "castVote"},
             ]},
             {name: "hideOption", caption: "Hide", onclick: "toggleHidden"},
+            {name: "saveOption", caption: "Save", onclick: "toggleSaved"},
         ]},
     
         {   kind: "enyo.VFlexBox", 
@@ -220,6 +228,7 @@ enyo.kind({
         this.$.voteDownOption.setDisabled(this.likes === false);
         
         this.$.hideOption.setCaption(this.hidden ? "Unhide" : "Hide");
+        this.$.saveOption.setCaption(this.saved ? "Unsave": "Save");
         
         this.$.voteMenu.openAtEvent(inEvent);
     },
@@ -232,6 +241,12 @@ enyo.kind({
         var hidden_status = !this.getHidden();
         this.setHidden(hidden_status);
         this.doHideClick(inEvent, this.$.voteMenu.rowIndex, hidden_status);
+    },
+    
+    toggleSaved: function (inSender, inEvent) {
+        var saved_status = !this.getSaved();
+        this.setSaved(saved_status);
+        this.doSaveClick(inEvent, this.$.voteMenu.rowIndex, saved_status);
     },
     
     commentClick: function (inSender, inEvent) {
