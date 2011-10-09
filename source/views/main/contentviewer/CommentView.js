@@ -263,7 +263,7 @@
         newComment.data.downs = 0;
         newComment.data.created_utc = reddOS_Date.now();
         newComment.data.likes = true;
-        newComment.data.id = inNewID;
+        newComment.data.name = inNewID;
         
         this.flatCommentsCache.splice(parentRowIndex + 1, 0, newComment);
         this.$.commentBlock.refresh();

@@ -90,6 +90,8 @@ enyo.kind({
             this.setCaption("Reply to " + this.parentComment.data.author);
         }
         
+        this.$.submitButton.setCaption("Submit");
+        
         this.$.submitButton.setActive(false);
         this.openAtCenter();
     },
@@ -115,6 +117,7 @@ enyo.kind({
     },
     
     dismiss: function () {
+        this.$.submitButton.setCaption("Submit");
         this.parent = null;
         this.$.commentInput.setValue("");
         this.setCaption("Reply");
