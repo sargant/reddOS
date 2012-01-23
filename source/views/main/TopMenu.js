@@ -1,19 +1,33 @@
+/**
+ * reddOS.view.main.TopMenu
+ *
+ * The top level hierarchical menu. This serves as the main entry point to
+ * reading content on reddit itself.
+ */
+
 enyo.kind({
     
+    // Class identifier
     name: "reddOS.view.main.TopMenu",
+    
+    // Parent class
     kind: "enyo.VFlexBox",
     
+    // Constructor
     create: function() {
+    
         this.inherited(arguments);
         this.addClass("reddos-topmenu");
         
+        // Add this kind to the list of listeners for global events
         enyo.dispatcher.rootHandler.addListener(this);
     },
     
     /***************************************************************************
      * Published Items
      */
-     
+    
+    // Cache received subreddit data objects
     subredditCache: [],
     
     events: {
@@ -27,76 +41,97 @@ enyo.kind({
     
     components: [
     
-        // Sort menu for subreddit pane
+        ////////////
+        //
+        //  Popup Menus
+        //
+        ////////////
         
-        {name: "subredditMetaMenu",
+        // Subreddit sorting options
+        {   name: "subredditMetaMenu",
             kind: "enyo.Menu", 
             width: "200px",
             components: [
-                {caption: "Refresh", onclick: "refreshSubredditList"},
-                {caption: "Sort by...", components: [
-                    {name: "sortOptionDefault", 
-                        content: "Popularity", 
-                        onclick: "sortSubredditList",
-                        sortkind: "default", 
-                        checked: true
-                    },
-                    {name: "sortOptionAlpha", 
-                        content: "A-Z", 
-                        onclick: "sortSubredditList", 
-                        sortkind: "alpha"
-                    },
-                ]},
+                {   caption: "Refresh",
+                    onclick: "refreshSubredditList"
+                },
+                {   caption: "Sort by...",
+                    components: [
+                        {   name: "sortOptionDefault", 
+                            content: "Popularity", 
+                            onclick: "sortSubredditList",
+                            sortkind: "default", 
+                            checked: true
+                        },
+                        {   name: "sortOptionAlpha", 
+                            content: "A-Z", 
+                            onclick: "sortSubredditList", 
+                            sortkind: "alpha"
+                        },
+                    ]
+                },
             ]
         },
         
-        {kind: "Scroller", flex: 1, components: [
+        ////////////
+        //
+        //  Visual Components
+        //
+        ////////////
         
-            // Default components
-            
-            {className: "reddos-topmenu-buttongroup", name: "defaultGroup",
-                components: [
-                
-                    {kind: "reddOS.component.TopMenuSubredditButton",
-                        className: "reddos-topmenu-subreddit-button-first",
-                        onclick: "sendObject",
-                        content: "Front Page",
-                        subreddit: {
-                            kind: reddOS_Kind.SUBREDDIT,
-                            data: {
-                                display_name: "Front Page",
-                                url: "/",
-                            }
-                        },
-                    },
+        // Main scroller, containing all menu options
+        {   kind: "Scroller",
+            flex: 1, 
+            components: [
+        
+                // Default components
+                {   className: "reddos-topmenu-buttongroup",
+                    name: "defaultGroup",
+                    components: [
                     
-                    {kind: "reddOS.component.TopMenuSubredditButton",
-                        className: "reddos-topmenu-subreddit-button-last",
-                        onclick: "sendObject",
-                        content: "All Subreddits",
-                        subreddit: {
-                            kind: reddOS_Kind.SUBREDDIT,
-                            data: {
-                                display_name: "All Subreddits",
-                                url: "/r/all",
-                            }
+                        // Front page listings
+                        {   kind: "reddOS.component.TopMenuSubredditButton",
+                            className: "reddos-topmenu-subreddit-button-first",
+                            onclick: "sendObject",
+                            content: "Front Page",
+                            subreddit: {
+                                kind: reddOS_Kind.SUBREDDIT,
+                                data: {
+                                    display_name: "Front Page",
+                                    url: "/",
+                                }
+                            },
                         },
-                    },
-                ],
-            },
+                        // All subreddit listings
+                        {   kind: "reddOS.component.TopMenuSubredditButton",
+                            className: "reddos-topmenu-subreddit-button-last",
+                            onclick: "sendObject",
+                            content: "All Subreddits",
+                            subreddit: {
+                                kind: reddOS_Kind.SUBREDDIT,
+                                data: {
+                                    display_name: "All Subreddits",
+                                    url: "/r/all",
+                                }
+                            },
+                        },
+                    ],
+                },
             
-            // User-orientated lists
-            
-            {   name: "myRedditList",
-                className: "reddos-topmenu-buttongroup", 
-                components: [
+                // User-orientated lists
+                {   name: "myRedditList",
+                    className: "reddos-topmenu-buttongroup", 
+                    components: [
                 
+                    // Header
                     {   kind: "reddOS.component.TopMenuSubredditButton",
                         className: "reddos-topmenu-subreddit-button-header",
                         cssNamespace: "reddos-topmenu-subreddit-button-header",
                         name: "myRedditTitle",
                         content: "My Reddit",
                     },
+                    
+                    // Components only available when logged in
                     {   name: "myRedditLoggedIn", 
                         showing: false,
                         components: [
@@ -129,6 +164,8 @@ enyo.kind({
                             },
                         ]
                     },
+                    
+                    // Components only available when logged out
                     {   name: "myRedditLoggedOut",
                         showing: true,
                         components: [
@@ -143,33 +180,38 @@ enyo.kind({
                 ]
             },
             
-            // Subreddit Lists
-            
-            {name: "subredditList",
-                className: "reddos-topmenu-buttongroup", 
-                components: [
-                    {kind: "reddOS.component.TopMenuSubredditButton",
-                        className: "reddos-topmenu-subreddit-button-header reddos-topmenu-subreddit-button-header-hasmenu",
-                        cssNamespace: "reddos-topmenu-subreddit-button-header",
-                        name: "subredditListTitle",
-                        content: "Subreddits",
-                        onclick: "openSubredditMetaMenu",
-                    },
-                    {   name: "subredditListLoading", 
-                        kind: "reddOS.component.TopMenuSubredditButton",
-                        className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
-                        cssNamespace: "reddos-topmenu-subreddit-button-loading",
-                        content: "Loading...",
-                    },
-                    {name: "subredditListContainer", components: []},
-                ]
-            },
-        ]},
+                // Subreddit Lists
+                {   name: "subredditList",
+                    className: "reddos-topmenu-buttongroup", 
+                    components: [
+                        {   kind: "reddOS.component.TopMenuSubredditButton",
+                            className: "reddos-topmenu-subreddit-button-header reddos-topmenu-subreddit-button-header-hasmenu",
+                            cssNamespace: "reddos-topmenu-subreddit-button-header",
+                            name: "subredditListTitle",
+                            content: "Subreddits",
+                            onclick: "openSubredditMetaMenu",
+                        },
+                        {   name: "subredditListLoading", 
+                            kind: "reddOS.component.TopMenuSubredditButton",
+                            className: "reddos-topmenu-subreddit-button-loading reddos-topmenu-subreddit-button-last",
+                            cssNamespace: "reddos-topmenu-subreddit-button-loading",
+                            content: "Loading...",
+                        },
+                        // Dynamically populated container
+                        {   name: "subredditListContainer",
+                            components: []
+                        },
+                    ]
+                },
+            ]
+        },
     ],
         
     /***************************************************************************
      * Methods
      */
+     
+     // TODO
     
     refreshSubredditList: function () {
         this.setLoading();

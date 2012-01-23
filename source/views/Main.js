@@ -10,7 +10,7 @@ enyo.kind({
     // Class identifier
     name: "reddOS.view.Main",
     
-    // Parent class
+    // Base class
     kind: "VFlexBox",
     
     // This will hold a global timer for updating user information. It needs

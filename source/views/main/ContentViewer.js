@@ -10,7 +10,7 @@ enyo.kind({
     // Class identifier
     name: "reddOS.view.main.StoryViewer",
     
-    // Parent class
+    // Base class
     kind: "VFlexBox",
     
     // Constructor

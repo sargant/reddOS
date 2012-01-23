@@ -10,7 +10,7 @@ enyo.kind({
     // Class identifier
     name: "reddOS.view.main.HeaderBar",
     
-    // Parent class
+    // Base class
     kind: "enyo.Control",
     
     // Inherited properties from parent class
