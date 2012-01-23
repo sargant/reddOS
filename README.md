@@ -1,7 +1,7 @@
 reddOS
 ======
 
-** A delightful webOS-based reddit client for the HP TouchPad **
+**A delightful webOS-based reddit client for the HP TouchPad**
 
 Instructions on desktop testing
 -------------------------------
