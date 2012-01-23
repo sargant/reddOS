@@ -6,7 +6,7 @@ reddOS
 Instructions on desktop testing
 -------------------------------
 
-* **Note:** the web browser component is a special webOS component and will not work in a desktop browser, therefore you will not be able to visit links within the app. Click the "pop-out" button in the story viewer to open the link in a new browser window. *
+**Note:** *the web browser component is a special webOS component and will not work in a desktop browser, therefore you will not be able to visit links within the app. Click the "pop-out" button in the story viewer to open the link in a new browser window.*
 
 You will need:
 
