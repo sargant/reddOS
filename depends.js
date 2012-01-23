@@ -1,5 +1,14 @@
+/**
+ * Central dependencies list
+ *
+ * This contains a list of all files required for running an instance
+ * of reddOS. Order is important, kinds must be listed in such an order
+ * that later kinds have no unfulfilled dependencies
+ */
+
 enyo.depends(
 
+    // CSS Stylesheets
     "css/about.css",
     "css/comments.css",
     "css/global.css",
@@ -10,19 +19,23 @@ enyo.depends(
     "css/subredditdescription.css",
     "css/topmenu.css",
     
+    // 3rd Party Components
     "source/3rdparty/pagedown.js",
     "source/3rdparty/ScrollBarsScroller.js",
     
+    // Standalone utility objects
     "source/utilities/Date.js",
     "source/utilities/ExtendedObjects.js",
     "source/utilities/Kind.js",
     "source/utilities/Settings.js",
     
+    // Individual, reusable UI components
     "source/components/NormalComment.js",
     "source/components/RecursiveComment.js",
     "source/components/SubredditStory.js",
     "source/components/TopMenuSubredditButton.js",
     
+    // Internet and local services
     "source/services/GenericManager.js",
     "source/services/HistoryManager.js",
     "source/services/RedditAuthentication.js",
@@ -37,6 +50,7 @@ enyo.depends(
     "source/services/reddOSUpdates.js",
     "source/services/StoredObjectManager.js",
     
+    // Views, in reverse order of hierarchy
     "source/views/main/popup/About.js",
     "source/views/main/popup/CommentReply.js",
     "source/views/main/popup/Login.js",
@@ -53,5 +67,6 @@ enyo.depends(
     "source/views/main/TopMenu.js",
     "source/views/main/SecondColumn.js",
     
+    // Main application object
     "source/views/Main.js"
 );

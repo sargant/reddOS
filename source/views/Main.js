@@ -1,3 +1,10 @@
+/**
+ * reddOS.view.Main
+ *
+ * The top-level app component, which organizes all other components,
+ * services and globally accessible properties
+ */
+
 enyo.kind({
     
     // Class identifier
@@ -6,7 +13,8 @@ enyo.kind({
     // Parent class
     kind: "VFlexBox",
     
-    // This will hold a timer for updating user information
+    // This will hold a global timer for updating user information. It needs
+    // highest scope as the main constructor & destructor will generate it
     userInfoInterval: null,
     
     // Constructor
@@ -267,12 +275,14 @@ enyo.kind({
         // All other garbage collection is automatic
     },
     
-    // TODO: from here
-    
+    ////////////
     //
-    // Popup Handling
+    //  Popup Handling
     //
+    ////////////
     
+    // Allow the "reddit is down" popup to dismiss itself, as it does not
+    // have its own kind
     closeRedditIsDownPopup: function () {
         this.$.redditIsDownPopup.close();
     },
@@ -289,117 +299,165 @@ enyo.kind({
         this.$.aboutPopup.openAtCenter();
     },
     
+    ////////////
     //
-    // Authentication Callbacks
+    //  Authentication Service Callbacks
     //
+    ////////////
     
+    // Request an asynchronous login attempt with a given name and password
     authLoginRequest: function(inSender, username, password) {
         this.$.authService.doLogin(username, password);
     },
     
+    // Callback on successful authentication
     authLoginSuccess: function() {
+    
+        // Dismiss login dialog
         this.$.loginPopup.dismiss();
+        
+        // Refresh all user data
         this.refreshUserInfo();
         this.refreshSubredditInfo();
     },
     
+    // Callback on failed authentication
     authLoginFailure: function(inSender, message) {
+    
+        // Display error, do not dismiss dialog
         this.$.loginPopup.loginFailure(message);
     },
     
+    // Request an asynchronous logout attempt
     authLogoutRequest: function() {
+    
+        // Only perform request if there is a valid logged in user
         if(reddOS_Kind.isAccount(this.getUserInfo())) {
             this.$.headerBar.setNotReady();
             this.$.authService.doLogout(this.getUserInfo().data.modhash);
         }
     },
     
+    // Callback on successful user logout
     authLogoutSuccess: function() {
+        
+        // Set all user data to null
         this.setUserInfo(null);
         this.setSubreddits(null);
+        
         this.$.headerBar.setReady(false);
+        
+        // Dispatch events that user information has been changed 
         enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
         enyo.dispatch({type: "onSubscribedSubredditsUpdate", data: this.getSubreddits()});
     },
     
+    // Callback on failed logout attempt - only cause can be that reddit is down
     authLogoutFailure: function() {
         this.$.redditIsDownPopup.openAtCenter();
         this.$.headerBar.setReady();
     },
         
-    // 
-    // User Info Callbacks
+    ////////////
     //
+    // User Information Service Callbacks
+    //
+    ////////////
     
+    // Request updated user information
+    //
+    // Wrapper function, which will dispatch an event warning that user info
+    // may be about to be updated
     refreshUserInfo: function() {
         enyo.dispatch({type: "onUserInfoBeforeUpdate"});
         this.$.userInfoService.refreshData();
     },
     
-      
+    // Request updated user information due to a background process
+    //
+    // As this is invoked by a timer regardless of login status, do not keep
+    // trying to send requests if we are certain the user is logged out.
     refreshUserInfoBackground: function () {
         if(reddOS_Kind.isAccount(this.userInfo)) this.refreshUserInfo();
     },
     
+    // Callback for successful response from user information service
     incomingUserInfo: function(inSender, inUserData) {
         
+        // Check the returned data is valid. If not, remove invalid stored data.
         if(reddOS_Kind.isAccount(inUserData) == false) {
             this.setUserInfo(null);
         } else {
             this.setUserInfo(inUserData);
         }
         
-        // Fire a custom event
+        // Dispatch an event notifying of updated user information
         enyo.dispatch({type: "onUserInfoUpdate", data: this.getUserInfo()});
     },
     
+    ////////////
     //
-    // Subscribed Subreddits Callbacks
+    // Subscriptions Service Callbacks
     //
+    ////////////
     
+    // Request updated subscription data
+    //
+    // Wrapper function, which will dispatch an event warning that the
+    // subscription list may be about to be updated
     refreshSubredditInfo: function() {
         enyo.dispatch({type: "onSubscribedSubredditsBeforeUpdate"});
         this.$.subscribedSubredditsService.refreshData();
     },
     
+    // Callback for successful response from subscriptionn information service
     incomingSubscribedSubreddits: function(inSender, inSubredditData) {
         
+        // If data is not valid, remove invalid subscription list
         if(typeof inSubredditData == 'undefined') {
             this.setSubreddits(null);
         } else {
             this.setSubreddits(inSubredditData);
         }
         
-        // Fire a custom event
+        // Dispatch an event notifying of updated subscription data
         enyo.dispatch({type: "onSubscribedSubredditsUpdate", data: this.getSubreddits()});
     },
     
+    ////////////
     //
-    // Message Passing
+    //  Propagated Events
     //
+    ////////////
     
+    // Receive an object from child components, and pass it to the appropriate
+    // sibling based on its kind
     dispatchObject: function(inSender, inObject) {
         
         if(reddOS_Kind.isSubreddit(inObject)) {
-            
             this.$.paneSecondMenu.receiveObject(inObject);
-            
         } else if (reddOS_Kind.isLink(inObject)) {
-        
             this.$.paneStoryViewer.receiveObject(inObject);
-            
         }
     },
     
-        
+    ////////////
+    //
+    //  Event Handling
+    //
+    ////////////
+    
     // reddOS update available callback
     handleUpdateAvailable: function (inSender, inVersion, inUrl) {
-        
-        // Notify the header bar view
         this.$.headerBar.updateAvailable(inVersion, inUrl);
     },
     
+    // Override the default onLinkClick event
+    //
+    // Because the app is not running on the reddit.com domain, we need to
+    // handle relative links and attach the domain correctly
     onLinkClickHandler: function(inSender, inEvent) {
+        
         var inUrl = inEvent.url;
         
         // Handle basic relative links
@@ -412,6 +470,7 @@ enyo.kind({
             inUrl = "http://www.reddit.com" + inUrl.substr(7);
         }
         
+        // Open the link in a new browser instance
         window.open(inUrl);
     },
 });
