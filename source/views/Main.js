@@ -1,18 +1,25 @@
 enyo.kind({
     
-    //
-    // Required properties
-    //
+    // Class identifier
     name: "reddOS.view.Main",
+    
+    // Parent class
     kind: "VFlexBox",
     
+    // This will hold a timer for updating user information
     userInfoInterval: null,
     
-    //
     // Constructor
-    //  
+    //
+    // App startup takes place in this.appEventLoad(), as this gives
+    // all child kinds and views time to initialize
+    
     create: function() {
+        
+        // Pass constructor up to parent class
         this.inherited(arguments);
+        
+        // Add this kind to the list of listeners for global events
         enyo.dispatcher.rootHandler.addListener(this);
     },
     
@@ -26,10 +33,14 @@ enyo.kind({
     },
     
     userInfoChanged: function() {
+        
+        // Update the cached user info
         this.$.storedObjectManager.setItem("user_info", this.getUserInfo());
     },
     
     subredditsChanged: function() {
+        
+        // Update the cached subreddits list
         this.$.storedObjectManager.setItem("subscribed_subreddits", this.getSubreddits());
     },
     
@@ -39,16 +50,25 @@ enyo.kind({
     
     components: [
     
+        ////////////
+        //
+        //  Register methods for global application events
+        //
+        ////////////
+    
         {   kind: "enyo.ApplicationEvents", 
             onLoad: "appEventLoad",
             onUnload: "appEventUnload",
         },
     
+        ////////////
         //
-        // Services
+        //  Register global services and callback methods
         //
+        ////////////
         
-        {name: "authService",
+        // Authentication service for login credentials
+        {   name: "authService",
             kind: "reddOS.service.RedditAuthentication",
             onLoginSuccess: "authLoginSuccess",
             onLoginFailure: "authLoginFailure",
@@ -56,44 +76,57 @@ enyo.kind({
             onLogoutFailure: "authLogoutFailure",
         },
     
-        {name: "userInfoService",
+        // User information service for logged in user
+        {   name: "userInfoService",
             kind: "reddOS.service.RedditUserInformation",
             onSuccess: "incomingUserInfo",
             onFailure: "authLogoutFailure",
         },
         
-        {name: "subscribedSubredditsService",
+        // Subscribed subreddits service for gathering subscription data
+        {   name: "subscribedSubredditsService",
             kind: "reddOS.service.RedditSubscribedSubreddits",
             onSuccess: "incomingSubscribedSubreddits",
             onFailure: "incomingSubscribedSubreddits",
         },
         
+        // reddOS update availability service
         {   name: "reddOSUpdatesService",
             kind: "reddOS.service.reddOSUpdates",
             onUpdateAvailable: "handleUpdateAvailable",
         },
         
+        // Local data caching service
         {   name: "storedObjectManager",
             kind: "reddOS.service.StoredObjectManager",
-            //onUpdate: "",
         },
         
+        ////////////
         //
-        // Popups
+        //  Register modal dialogs and popups
         //
+        ////////////
         
+        // Authentication request UI
         {   name: "loginPopup",
             kind: "reddOS.view.main.popup.Login", 
             onLoginRequest: "authLoginRequest",
         },
         
+        // Settings UI
         {   name: "settingsPopup",
             kind: "reddOS.view.main.popup.Settings",
         },
         
+        // Application information dialog
         {   name: "aboutPopup",
             kind: "reddOS.view.main.popup.About",
         },
+        
+        // "API is down" alert dialog
+        //
+        // This is global as the errors will be thrown by the global services
+        // registered above.
         
         {   name: "redditIsDownPopup",
             kind: "enyo.ModalDialog",
@@ -111,70 +144,91 @@ enyo.kind({
             ]
         },
         
+        ////////////
         //
-        // App Menu
+        // Register components for the webOS app menu (open with CTRL+` in debugging)
         //
+        ////////////
         
-        {kind: "enyo.AppMenu", components: [
-            {caption: "Settings", onclick: "openSettingsPopup"},
-            {caption: "About", onclick: "openAboutPopup"},
-        ]},
+        {   kind: "enyo.AppMenu", 
+            components: [
+                {   caption: "Settings", 
+                    onclick: "openSettingsPopup"
+                },
+                {   caption: "About", 
+                    onclick: "openAboutPopup"
+                },
+            ]
+        },
         
+        ////////////
         //
-        // Main UI
+        //  Arrange the main GUI components
         //
+        ////////////
         
-        {name: "headerBar",
+        // Header bar - title, user details, authentication options
+        {   name: "headerBar",
             kind: "reddOS.view.main.HeaderBar",
             onRequestLogin: "openLoginPopup",
             onRequestLogout: "authLogoutRequest",
         },
         
-        
-        {kind: "SlidingPane", flex: 1, components: [
+        // Main three-pane view
+        {   kind: "SlidingPane", 
+            flex: 1, 
+            components: [
             
-            {dragAnywhere: false, width: "242px", components: [
-                
-                {name: "paneTopMenu", 
-                    kind: "reddOS.view.main.TopMenu",
-                    flex: 1, 
-                    onObjectSend: "dispatchObject",
-                    onRequestSubredditRefresh: "refreshSubredditInfo",
+                // First view
+                {   dragAnywhere: false, 
+                    width: "242px", 
+                    components: [
+                        {   name: "paneTopMenu", 
+                            kind: "reddOS.view.main.TopMenu",
+                            flex: 1, 
+                            onObjectSend: "dispatchObject",
+                            onRequestSubredditRefresh: "refreshSubredditInfo",
+                        },
+                    ]
                 },
                 
-            ]},
+                // Second view
+                {   dragAnywhere: false, 
+                    width: "390px", 
+                    components: [
+                        {   name: "paneSecondMenu",
+                            kind: "reddOS.view.main.SecondColumn", 
+                            flex: 1, 
+                            onObjectSend: "dispatchObject"
+                        }
+                    ]
+                },
             
-            {dragAnywhere: false, width: "390px", components: [
-                
-                {name: "paneSecondMenu",
-                    kind: "reddOS.view.main.SecondColumn", 
-                    flex: 1, 
-                    onObjectSend: "dispatchObject"
-                }
-                
-            ]},
-            
-            {dragAnywhere: false, minWidth: "378px", components: [
-            
-                {name: "paneStoryViewer",
-                    flex: 1,
-                    kind: "reddOS.view.main.StoryViewer"
-                }
-            
-            ]},
-            
-        ]}
-        
+                // Third view
+                {   dragAnywhere: false,
+                    minWidth: "378px",
+                    components: [
+                        {   name: "paneStoryViewer",
+                            flex: 1,
+                            kind: "reddOS.view.main.StoryViewer"
+                        }
+                    ]
+                },
+            ]
+        }
     ],
         
     /***************************************************************************
      * Methods
      */
     
+    ////////////
     //
-    // Global Events
+    //  Global application event methods
     //
+    ////////////
         
+    // Called once application is fully initialized
     appEventLoad: function() {
     
         // Start an update check, once per launch
@@ -184,6 +238,10 @@ enyo.kind({
         var userInfo = this.$.storedObjectManager.getItem("user_info");
         var subreddits = this.$.storedObjectManager.getItem("subscribed_subreddits");
         
+        // If we have cached data, pass this to the service callbacks
+        // immediately so that the UI can update before we send out an internet
+        // API request
+        
         if(userInfo != null && userInfo != "null") {
             this.incomingUserInfo(null, userInfo);
         }
@@ -192,37 +250,24 @@ enyo.kind({
             this.incomingSubscribedSubreddits(null, subreddits);
         }
         
-        // Attempt to refresh data too
+        // Ask the services to fetch user and subreddit data over the internet
         this.refreshUserInfo();
         this.refreshSubredditInfo();
 
-        // Refresh user info every two minutes
+        // Set the app to perform refreshes of the user's information in the
+        // background once every two minutes
         this.userInfoInterval = setInterval(enyo.hitch(this, "refreshUserInfoBackground"), 1000 * 120);
     },
     
+    // Called when application is closed
     appEventUnload: function () {
+        
+        // Stop the timer
         clearInterval(this.userInfoInterval);
+        // All other garbage collection is automatic
     },
     
-    handleUpdateAvailable: function (inSender, inVersion, inUrl) {
-        this.$.headerBar.updateAvailable(inVersion, inUrl);
-    },
-    
-    onLinkClickHandler: function(inSender, inEvent) {
-        var inUrl = inEvent.url;
-        
-        // Handle basic relative links
-        if(inUrl.charAt(0) == "/") {
-            inUrl = "http://www.reddit.com" + inUrl;
-        }
-        
-        // Handle links now pointing at filesystem for unknown reasons
-        if(inUrl.substr(0,7) == "file://") {
-            inUrl = "http://www.reddit.com" + inUrl.substr(7);
-        }
-        
-        window.open(inUrl);
-    },
+    // TODO: from here
     
     //
     // Popup Handling
@@ -344,5 +389,29 @@ enyo.kind({
             this.$.paneStoryViewer.receiveObject(inObject);
             
         }
+    },
+    
+        
+    // reddOS update available callback
+    handleUpdateAvailable: function (inSender, inVersion, inUrl) {
+        
+        // Notify the header bar view
+        this.$.headerBar.updateAvailable(inVersion, inUrl);
+    },
+    
+    onLinkClickHandler: function(inSender, inEvent) {
+        var inUrl = inEvent.url;
+        
+        // Handle basic relative links
+        if(inUrl.charAt(0) == "/") {
+            inUrl = "http://www.reddit.com" + inUrl;
+        }
+        
+        // Handle links now pointing at filesystem for unknown reasons
+        if(inUrl.substr(0,7) == "file://") {
+            inUrl = "http://www.reddit.com" + inUrl.substr(7);
+        }
+        
+        window.open(inUrl);
     },
 });
