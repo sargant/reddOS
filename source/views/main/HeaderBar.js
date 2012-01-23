@@ -48,7 +48,7 @@ enyo.kind({
     
         ////////////
         //
-        //  Relevant Modal Dialogs
+        //  Relevant modal dialogs
         //
         ///////////
         {   name: "logoutConfirmationPopup",
@@ -69,6 +69,12 @@ enyo.kind({
                 },
             ],
         },
+        
+        ////////////
+        //
+        //  Visible components
+        //
+        ////////////
         
         // Main Title
         {name: "viewTitle", 
