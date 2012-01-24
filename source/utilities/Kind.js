@@ -1,5 +1,13 @@
+/**
+ * reddOS_Kind namespace
+ *
+ * Provides methods for identifying the type of raw data returned by
+ * the Reddit APIs
+ */
+
 reddOS_Kind = {
     
+    // Identifying kinds, translated to human readable values
     COMMENT: "t1",
     ACCOUNT: "t2",
     LINK: "t3",
@@ -7,6 +15,8 @@ reddOS_Kind = {
     SUBREDDIT: "t5",
     LISTING: "Listing",
     
+    // Returns whether data "a" is of kind "k".
+    // Use the isComment/isAccount/isLink etc. methods externally
     isKind: function(a, k) {
         
         if(a == null) {
@@ -28,32 +38,39 @@ reddOS_Kind = {
         }
     },
     
+    // Returns whether data represents a comment
     isComment: function(a) {
         return this.isKind(a, this.COMMENT);
     },
     
+    // Returns whether data represents a user account
     isAccount: function(a) {
         return this.isKind(a, this.ACCOUNT);
     },
         
+    // Returns whether data represents a link
     isLink: function(a) {
         return this.isKind(a, this.LINK);
     },
     
+    // Returns whether data represents a private message
     isMessage: function(a) {
         return this.isKind(a, this.MESSAGE);
     },
     
+    // Returns whether data represents a subreddit's details
     isSubreddit: function(a) {
         return this.isKind(a, this.SUBREDDIT);
     },
     
+    // Returns whether data is a listing
     isListing: function(a) {
         return this.isKind(a, this.LISTING);
     },
     
     //////////
     
+    // Returns whether the data represents a fake subreddit (e.g. saved, hidden)
     isFakeSubreddit: function(a) {
         return this.isKind(a, this.SUBREDDIT) 
             && typeof a.data.fake_subreddit != "undefined" 
