@@ -10,7 +10,7 @@ enyo.kind({
     // Class identifier
     name: "reddOS.view.main.TopMenu",
     
-    // Parent class
+    // Base class
     kind: "enyo.VFlexBox",
     
     // Constructor
@@ -211,74 +211,164 @@ enyo.kind({
      * Methods
      */
      
-     // TODO
+    ////////////
+    //
+    //  Message dispatch
+    //
+    ////////////
     
-    refreshSubredditList: function () {
-        this.setLoading();
-        this.doRequestSubredditRefresh();
+    // Pass selected objects for handling by the parent class, to delegate
+    // to other views
+    sendObject: function(inSender) {
+        if(typeof inSender.subreddit != "undefined") {
+            this.doObjectSend(inSender.subreddit);
+        }
     },
+     
+    ////////////
+    //
+    //  Subreddit menu methods
+    //
+    ////////////
     
-    openSubredditMetaMenu: function() {
-        this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
-    },
-    
-    onSettingsUpdateHandler: function (inSender, inEvent) {
-        var inEventData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
-        var subredditSortOrder = (typeof inEventData.subredditSortOrder == "undefined") ? "default" : inEventData.subredditSortOrder;
-        this.sortSubredditList({sortkind: subredditSortOrder});
-    },
-    
+    // Switch to a loading view
     setLoading: function () {
         this.$.subredditListContainer.hide();
         this.$.subredditListLoading.show();
     },
     
+    // Switch to a ready view
     setReady: function () {
         this.$.subredditListContainer.show();
         this.$.subredditListLoading.hide();
     },
     
-    onUserInfoUpdateHandler: function(inSender, inEvent) {
+    // Request a refresh of the subscription data
+    refreshSubredditList: function () {
         
-        var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        this.setLoading();
         
-        if(reddOS_Kind.isAccount(inUserData) == false) {
-            this.$.myRedditLoggedIn.hide();
-            this.$.myRedditLoggedOut.show();
-        } else {
-            this.$.myRedditSubmitted.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Submitted", url: "/user/"+inUserData.data.name+"/submitted"}}
-            this.$.myRedditLiked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Liked", url: "/user/"+inUserData.data.name+"/liked"}}
-            this.$.myRedditDisliked.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Disliked", url: "/user/"+inUserData.data.name+"/disliked"}}
-			this.$.myRedditSaved.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Saved", url: "/saved"}}
-            this.$.myRedditHidden.subreddit = {kind: reddOS_Kind.SUBREDDIT, data: {fake_subreddit: true, display_name: "Hidden", url: "/user/"+inUserData.data.name+"/hidden"}}
-            
-            this.$.myRedditLoggedIn.show();
-            this.$.myRedditLoggedOut.hide();
-        }
+        // Send the actual request to the parent class
+        this.doRequestSubredditRefresh();
     },
     
+    // Show sort order menu  
+    openSubredditMetaMenu: function() {
+        this.$.subredditMetaMenu.openAtControl(this.$.subredditListTitle, {left: 150});
+    },
+    
+    ////////////
+    //
+    //  External event listeners
+    //
+    ////////////
+    
+    // Before the subscription list is updated, update the UI
     onSubscribedSubredditsBeforeUpdateHandler: function () {
         if(this.subredditCache.length == 0) {
             this.setLoading();
         }
     },
     
+    // Rebuild the subscription listings from new data
     onSubscribedSubredditsUpdateHandler: function (inSender, inEvent) {
         
+        // Check we have valid data
         var inSubredditData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
         
+        // Clear out existing cache
         this.subredditCache.length = 0;
         
         for(var i in inSubredditData) {
             
+            // If it passes a sanity check, add to the cache list
             if (reddOS_Kind.isSubreddit(inSubredditData[i])) {
                 this.subredditCache.push(inSubredditData[i]);
             }
         }
         
+        // Sort the subscription list according to user preference
         this.sortSubredditList({sortkind: reddOS_Settings.getSetting("subredditSortOrder")});
     },
     
+    // Listen for changed settings, and re-render the list based on user's 
+    // sort preferences
+    onSettingsUpdateHandler: function (inSender, inEvent) {
+        var inEventData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        var subredditSortOrder = (typeof inEventData.subredditSortOrder == "undefined") ? "default" : inEventData.subredditSortOrder;
+        this.sortSubredditList({sortkind: subredditSortOrder});
+    },
+    
+    // Listen to changes in logged in user data
+    onUserInfoUpdateHandler: function(inSender, inEvent) {
+        
+        // If we do not have a data property, set it to null so as not to
+        // break what follows
+        var inUserData = (typeof inEvent.data == "undefined") ? null : inEvent.data;
+        
+        if(reddOS_Kind.isAccount(inUserData) == false) {
+            // If we do not have a valid logged in account, show as logged out
+            this.$.myRedditLoggedIn.hide();
+            this.$.myRedditLoggedOut.show();
+        } else {
+            
+            // Build the meta-subscriptions menu based on username
+            this.$.myRedditSubmitted.subreddit = {
+                kind: reddOS_Kind.SUBREDDIT,
+                data: {
+                    fake_subreddit: true,
+                    display_name: "Submitted",
+                    url: "/user/"+inUserData.data.name+"/submitted"
+                }
+            }
+            this.$.myRedditLiked.subreddit = {
+                kind: reddOS_Kind.SUBREDDIT,
+                data: {
+                    fake_subreddit: true,
+                    display_name: "Liked",
+                    url: "/user/"+inUserData.data.name+"/liked"
+                }
+            }
+            this.$.myRedditDisliked.subreddit = {
+                kind: reddOS_Kind.SUBREDDIT,
+                data: {
+                    fake_subreddit: true,
+                    display_name: "Disliked",
+                    url: "/user/"+inUserData.data.name+"/disliked"
+                }
+            }
+			this.$.myRedditSaved.subreddit = {
+                kind: reddOS_Kind.SUBREDDIT,
+                data: {
+                    fake_subreddit: true,
+                    display_name: "Saved", url: "/saved"
+                }
+            }
+            this.$.myRedditHidden.subreddit = {
+                kind: reddOS_Kind.SUBREDDIT,
+                data: {
+                    fake_subreddit: true,
+                    display_name: "Hidden",
+                    url: "/user/"+inUserData.data.name+"/hidden"
+                }
+            }
+            
+            // Show the options
+            this.$.myRedditLoggedIn.show();
+            this.$.myRedditLoggedOut.hide();
+        }
+    },
+    
+
+    ////////////
+    //
+    //  Subscription display renderes
+    //
+    ////////////
+
+    
+    // Sort the subscription list. We do not directly modify the cached data,
+    // as the original sort order is somewhat arbitrary
     sortSubredditList: function(inSender) {
         
         // Bodge for javascript's inability to copy stuff
@@ -288,6 +378,7 @@ enyo.kind({
             // do nothing
         } else if(inSender.sortkind == "alpha") {
             
+            // Perform a case-insensitive alphabetical sort
             k.sort(function(x,y){
                 a = x.data.display_name.toLowerCase();
                 b = y.data.display_name.toLowerCase();
@@ -296,16 +387,20 @@ enyo.kind({
             });
         }
         
+        // Ask the subscription list to re-render
         this.rebuildSubredditList(k);
     },
     
+    // Renders the list of subscriptions
     rebuildSubredditList: function (subredditList) {
     
+        // Clear out all existing controls
         var c = this.$.subredditListContainer;
         c.destroyControls();
         
         if(subredditList.length == 0) {
         
+            // If we have no subscriptions to show, display a logged out message
             var temp =  {
                 owner: this,
                 kind: "reddOS.component.TopMenuSubredditButton",
@@ -317,6 +412,8 @@ enyo.kind({
             c.createComponent(temp);
             
         } else {
+        
+            // Build a list of subscriptions
             for(var i in subredditList) {
             
                 var temp =  {
@@ -327,21 +424,18 @@ enyo.kind({
                     subreddit: subredditList[i],
                 };
             
+                // Put fancy design on last item in list
                 if(i == (subredditList.length - 1)) {
                     temp.className = "reddos-topmenu-subreddit-button-last";
                 }
             
+                // Add component
                 c.createComponent(temp);
             }
         }
         
+        // Render the list and show that we are ready
         c.render();
         this.setReady();
     },
-    
-    sendObject: function(inSender) {
-        if(typeof inSender.subreddit != "undefined") {
-            this.doObjectSend(inSender.subreddit);
-        }
-    },    
 });
