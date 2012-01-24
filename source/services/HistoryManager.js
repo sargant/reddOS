@@ -1,26 +1,39 @@
+/**
+ * reddOS.service.HistoryManager
+ *
+ * A kind for emulating "visited links" history in web browsers
+ */
+
 enyo.kind({
     
+    // Class identifier
     name: "reddOS.service.HistoryManager",
+    
+    // Base class
     kind: "reddOS.service.GenericManager",
     
+    // Inherited properties
     keyName: "reddOS.history",
+    
+    // Local properties
     defaultLifespan: 14 * 24 * 3600,
     
+    // Constructor
     create: function () {
         this.inherited(arguments);
     },
     
-    /**
-     * Checks if a link is visited, by reddit fullname
+    /***************************************************************************
+     * Methods
      */
+    
+    // Checks if a link is visited, by reddit fullname
     isVisited: function (searchname) {
         return (this.__isVisitedIndex(searchname) == -1) ? false : true;
     },
     
-    /**
-     * Returns the cache index of the link if visited. Use the wrapper function
-     * "isVisited" for true/false values
-     */
+    // Returns the cache index of the link if visited. Use the wrapper function
+    // "isVisited" for true/false values
     __isVisitedIndex: function (searchname) {
         
         searchname = new String(searchname);
@@ -34,10 +47,8 @@ enyo.kind({
         return -1;
     },
 
-    /**
-     * Adds a visited link to the list. If supplied with one argument,
-     * it will use the current time.
-     */
+    // Adds a visited link to the list. If supplied with one argument,
+    // it will use the current time.
     setVisited: function (fullname, time_visited) {
         
         fullname = new String(fullname);
@@ -60,10 +71,8 @@ enyo.kind({
         return true;
     },
     
-    /**
-     * Removes links from the list older than a certain threshold. Defaults
-     * to the value in this.defaultLifespan
-     */
+    // Removes links from the list older than a certain threshold. Defaults
+    // to the value in this.defaultLifespan
     prune: function (maxage) {
     
         if(!maxage) maxage = this.defaultLifespan;

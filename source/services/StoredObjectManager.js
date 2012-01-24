@@ -1,4 +1,6 @@
 /**
+ * reddOS.service.StoredObjectManager
+ *
  * A general kind for storing an array of unrelated objects
  * 
  * The primary use for this is for caching JSON objects in "hibernation" mode,
@@ -8,29 +10,33 @@
 
 enyo.kind({
     
+    // Class identifier
     name: "reddOS.service.StoredObjectManager",
+    
+    // Base class
     kind: "reddOS.service.GenericManager",
     
+    // Inherited properties
     keyName: "reddOS.stored-object",
     
+    // Constructor
     create: function () {
         this.inherited(arguments);
     },
     
-    /**
-     * Returns the object if found in the array, otherwise returns
-     * EXACTLY null.
+    /***************************************************************************
+     * Methods
      */
+    
+    // Returns the object if found in the array, otherwise returns
+    // EXACTLY null.
     getItem: function (searchname) {
         var index = this.__getItemIndex(searchname);
         return (index < 0) ? null : this.cache[index].object;
     },
     
-    /**
-     * Gets the ID of the searched item in the array. Only useful internally,
-     * use getItem instead.
-     */
-    
+    // Gets the ID of the searched item in the array. Only useful internally,
+    // use getItem instead.
     __getItemIndex: function (searchname) {
         
         searchname = new String(searchname);
@@ -45,9 +51,7 @@ enyo.kind({
         return -1;
     },
     
-    /**
-     * Sets the item by keyname. Will overwrite old values.
-     */
+    // Sets the item by keyname. Will overwrite old values.
     setItem: function (keyname, inObject) {
         
         keyname = new String(keyname);
