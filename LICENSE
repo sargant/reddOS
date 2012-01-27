@@ -1,3 +1,5 @@
+For all files except those in /source/3rdparty and /framework:
+
 Copyright (c) 2011, Robert Sargant
 <http://www.sargant.com/>
 All rights reserved.
@@ -28,6 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 The following third party components are used in reddOS:
 
+HP Enyo Framework
+    <http://www.enyojs.com>
+
 Pagedown 
     <http://code.google.com/p/pagedown/>
     
@@ -43,6 +48,15 @@ Iconic Icon Set
 
 
 Licences for these items follow:
+
+
+
+ENYO
+====
+The Enyo framework is made available under the Apache Licence v 2.0
+Full licence details can be found in /framework/LICENSE-2.0.txt
+
+
 
 PAGEDOWN
 ========
