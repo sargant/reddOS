@@ -71,15 +71,21 @@
         },
     
         // Main web browser window
-        {   name: "webBrowser",
-            kind: "WebView",
-            minFontSize: 0,
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            onLoadStarted: "webBrowserLoadStarted",
-            onLoadStopped: "webBrowserLoadStopped",
-            onPageTitleChanged: "webBrowserTitleChanged",
+        {   kind: "enyo.Pane", 
+            name: "webViewPane", 
+            flex: 1, 
+            transitionKind: "enyo.transitions.Simple",
+            components: [
+                {   name: "webBrowser",
+                    kind: "WebView",
+                    minFontSize: 0,
+                    width: "100%",
+                    height: "100%",
+                    onLoadStarted: "webBrowserLoadStarted",
+                    onLoadStopped: "webBrowserLoadStopped",
+                    onPageTitleChanged: "webBrowserTitleChanged",
+                },
+            ]
         },
         
         // Bottom toolbar
